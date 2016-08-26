@@ -1,0 +1,3 @@
+module GorClothingHelper
+
+end
