@@ -2,7 +2,7 @@
 
 // Setting up route
 
-angular.module('GodsOfRiotry', ['ui-router', 'templates', 'Devise'])
+angular.module('GodsOfRiotry', ['ui-router', 'templates'])
 	.config(['$stateProvider', '$urlRouteProvider',
 	function($stateProvider, $urlRouterProvider) {
 

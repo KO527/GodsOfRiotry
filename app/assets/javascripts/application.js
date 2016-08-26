@@ -12,9 +12,8 @@
  * files in this directory. It is generally better to create a new file per
  * style scope.
  *= require angular
- *= require angular-devise
  *= require angular-ui-router
- *= rwquire angular-rail-templates
+ *= require angular-rail-templates
  *= require_tree .
  *= require_self
  */
