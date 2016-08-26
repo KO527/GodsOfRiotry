@@ -13,7 +13,6 @@
  * style scope.
  *= require angular
  *= require angular-ui-router
- *= require angular-rail-templates
  *= require_tree .
  *= require_self
  */
