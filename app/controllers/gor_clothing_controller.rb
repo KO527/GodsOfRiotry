@@ -7,6 +7,10 @@ def index
      @Gor_Clothings = Gor_Clothing.all
 end
 
+def show
+     @Gor_Clothing = Gor_Clothing.find(params[:id])
+end
+
 def new
      @Gor_Clothing = Gor_Clothing.new
 end
@@ -20,6 +24,7 @@ def edit
 end
 
 def update
+	@Gor_Clothing = Gor_Clothing.find(params[:id])
 	if @Gor_Clothing.update_attributes(Clothing_params)
 		flash[:success] = "Profile updated"
 		redirect_to @Gor_Clothing
