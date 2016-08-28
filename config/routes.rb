@@ -4,8 +4,9 @@ Rails.application.routes.draw do
   
   root to: 'application#angular'
   
-
+  resources :users
   resources :gor_clothings
+  resources :event_tickets
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
