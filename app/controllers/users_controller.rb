@@ -1,12 +1,22 @@
 class UsersController < ApplicationController
-	before_action :logged_in_user, only: [:edit, :update]	
+	before_action :logged_in_user, only: [:index, :edit, :update]	
 	before_action :correct_user, only: [:edit, :update]
+	before_action :admin_user, only: [:index] 
+	
+
+	def index
+		@users = User.paginate(page: params[:page])
+	end
+
 	def show
 		@user = User.find(params[:id])
 	end
 
 	def new
 		@user = User.new
+	end
+
+	def edit
 	end
 
 	def create
@@ -30,6 +40,9 @@ class UsersController < ApplicationController
 		end
 	end
 #before filters
+
+	private
+
 	def logged_in_user
 	    unless logged_in?
 	    	store_location
@@ -43,9 +56,7 @@ class UsersController < ApplicationController
 		redirect_to(root_url) unless current_user?(@user)
 	end
 
-	private
-
-		def user_params
-			params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
-		end
+	def user_params
+		params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+	end
 end
