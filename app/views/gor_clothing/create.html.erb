@@ -1,0 +1,37 @@
+<%= form_for @GorClothing, html: {multipart: true} do |f| %>
+  <% if @GorClothing.errors.any? %>
+    <div id="error-explanation">
+    	<h2><%= pluralize(@GorClothing.errors.count, "error")%> prohibited this image from being saved: </h2>
+
+	    <ul>
+	    	<% @GorClothing.error.full_messages each do |message|%>
+	    	   <li><%= message %></li>
+	    	<% end %>
+	    </ul>
+    </div>
+    <%end%>
+
+     <div class="field">
+     	<%= f.label :image %><br>
+     	<%= f.file_field :image %>
+     </div>
+     <div class="field">
+     	<%= f.label :price %><br>
+     	<%= f.text_field :price %>
+     </div>
+     <div class="field">
+     	<%= f.label :description %><br>
+     	<%= f.text_area :description%>
+     </div>
+     <div class = "field">
+     	<%= f.label :quantity %>
+     	<%= f.text_field :quantity %>
+     </div> 
+     <div class="field">
+     	<%= f.label :size %>
+	<%= f.select :sizes, ['XS','S', 'M', 'L'. 'XL']%>
+     </div>
+      <div class="actions">
+      	<%= f.submit "Upload new merch", class: "btn btn-primary" %>
+      </div>
+   <% end %>
