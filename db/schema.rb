@@ -11,7 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160825190452) do
+ActiveRecord::Schema.define(version: 20160829233727) do
+
+  create_table "event_tickets", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "gor_clothings", force: :cascade do |t|
     t.datetime "created_at",         null: false
@@ -24,6 +29,11 @@ ActiveRecord::Schema.define(version: 20160825190452) do
     t.text     "description"
     t.float    "sizes"
     t.integer  "quantity"
+  end
+
+  create_table "songs", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
