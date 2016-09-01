@@ -5,10 +5,6 @@ class ApplicationController < ActionController::Base
 
   respond_to :json
 
-  def angular
-  	render 'layouts/application'
-  end
-
   include UsersHelper
   include SessionsHelper
 end
