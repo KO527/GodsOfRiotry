@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Godsofriotry</title>
-  <%= stylesheet_link_tag    'application', media: 'all' %>
-  <%= javascript_include_tag 'application' %>
+  <title><%= yield(:title) %>| GodsOfRiotry </title>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+<%= render 'layouts/header' %>
 <div class="col-md-6 col-md-offset-3">
-	<div ng-include='core/_header.html.erb'></div>
 	<%= yield %>
 </div>
 </body>
