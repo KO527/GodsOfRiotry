@@ -2,11 +2,22 @@ Rails.application.routes.draw do
 
 
   
-  root to: 'application#angular'
+  root               'gor_main#main'
+  
+  get '/help', to: 'gor_main#help'
+  get '/contact', to: 'gor_main#contact'
+  get '/logout', to: 'sessions#destroy'
+  get '/login', to: 'sessions#create'
+  get '/edit', to: 'users#edit'
+
+  namespace :admin do
+  	resources :gor_clothings
+  end  	
+	# except gor_clothings#show
   
   resources :users
-  resources :gor_clothings
   resources :event_tickets
+  resources :songs
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
