@@ -13,7 +13,8 @@ Rails.application.routes.draw do
   namespace :admin do
   	resources :gor_clothings
   end  	
-	# except gor_clothings#show
+
+# except gor_clothings#show
   
   resources :users
   resources :event_tickets
