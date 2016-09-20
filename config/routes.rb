@@ -1,14 +1,17 @@
-Rails.application.routes.draw do
-
-
+ Rails.application.routes.draw do
   
-  root               'gor_main#main'
+
+  root               'sessions#new'
   
   get '/help', to: 'gor_main#help'
   get '/contact', to: 'gor_main#contact'
   get '/logout', to: 'sessions#destroy'
   get '/login', to: 'sessions#create'
   get '/edit', to: 'users#edit'
+  get '/soundcloud/connect', :to => 'soundcloud#connect'
+  get '/soundcloud/oauth-callback', to: 'soundcloud#connected'
+  get '/soundcloud/destroy', to: 'soundcloud#destroy'
+  get '/signup', to: 'users#new'
 
   namespace :admin do
   	resources :gor_clothings
@@ -18,7 +21,9 @@ Rails.application.routes.draw do
   
   resources :users
   resources :event_tickets
-  resources :songs
+  # resources :songs
+
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
