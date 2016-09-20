@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
 
 	def remember
 		self.remember_token = User.new_token
-		update_attribute(:remmeber_digest, User.digest(remember_token))
+		update_attribute(:remember_digest, User.digest(remember_token))
 	end
 
 	def authenticated?(remember_token)
@@ -38,5 +38,13 @@ class User < ActiveRecord::Base
 
 	def forget
 		update_attribute(:remember_digest, nil)
+	end
+
+	def self.create_from_soundcloud(access_token)
+
+		create! do |user|
+			user.soundcloud_user_id = soundcloud_user["id"]
+			user.soundcloud_access_token = access_token["access_token"]
+		end
 	end
 end
