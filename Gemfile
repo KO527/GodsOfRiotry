@@ -23,9 +23,11 @@ gem 'bcrypt', '~> 3.1.11'
 
 gem 'responders', '~> 2.0'
 
+gem 'soundcloud', '~> 0.3.3'
 # gem 'bootstrap', '~> 5.0.0.1'
+gem 'envyable', '~> 1.1.0'
 
-
+gem 'certified', '~> 1.0.0'
 # gem 'bootstrap-sprockets', '~> 3.3.6'
 # Use Unicorn as the app server
 # gem 'unicorn'
