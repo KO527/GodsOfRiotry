@@ -1,5 +1,4 @@
 require 'date'
-
 require 'active_support/all'
 require 'active_support/concern'
 
@@ -32,7 +31,7 @@ class EventsProcessor
           		date do |date_now, date_sixmonths|
           		self.class.get('/2/events?q=rap', @options)
           		end
-          	end
+          end
 
           	#sample parameters for instantiation of class
           	# {'datetime_local.asc', 'score.desc'}, {'concert', 'music_festival'}, 'date_now', 'date_sixmonths', true, '100mi'
