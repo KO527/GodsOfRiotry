@@ -3,14 +3,15 @@
 
   root               'sessions#new'
   
+  get '/gor_main', to: 'gor_main#main'
   get '/help', to: 'gor_main#help'
   get '/contact', to: 'gor_main#contact'
   get '/logout', to: 'sessions#destroy'
   get '/login', to: 'sessions#create'
   get '/edit', to: 'users#edit'
-  get '/soundcloud/connect', :to => 'soundcloud#connect'
-  get '/soundcloud/oauth-callback', to: 'soundcloud#connected'
-  get '/soundcloud/destroy', to: 'soundcloud#destroy'
+  get '/sessions/:page' => "sessions#show"
+  get '/soundcloud/oauth-callback', to: 'sessions#omniauth_create'
+  # get 'auth/failure', to: 'sessions#failure'
   get '/signup', to: 'users#new'
 
   namespace :admin do
