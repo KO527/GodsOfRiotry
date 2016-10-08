@@ -3,6 +3,10 @@ class SessionsController < ApplicationController
 	def new
 	end
 
+	def show
+		render template: "sessions/#{params[:page]}"
+	end
+	
 	def create
 		user = User.find_by(email: params[:session][:email].downcase)
 		if user && user.authenticate(params[:session][:password])
@@ -15,9 +19,29 @@ class SessionsController < ApplicationController
 		end
 	end
 
-	def destroy 
-		log_out if logged_in?
-		redirect_to root_url
+	def omniauth_create
+		auth = request.env['omniauth.auth']
+		return "hello" unless auth
+		session[:omniauth] = auth.except('extra')
+		user = User.sign_in_from_omniauth(auth)
+		session[:user_id] = user
+		redirect_to '/gor_main', notice: "Signed in as auth"
 	end
 
+	def failure
+		flash[:notice] = params[:message]
+		redirect '/'
+	end	
+
+	def destroy 
+		log_out if logged_in?
+		session[:omniauth] = nil
+		redirect_to root_url, notice: 'SIGNED OUT'
+	end
+
+	protected 
+
+		def auth_hash
+			request.env['omniauth.auth']
+		end
 end
