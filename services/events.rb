@@ -11,6 +11,7 @@ class EventsProcessor
 	base_uri 'api.seatgeek.com'  
 	default_params api_key: 'Mzk5NjE5MXwxNDUwNDExNzQ3'
 
+	#refer to soundcloud-ruby to chain together different parameters
 	def initialize(sort_by, type_of_event, datetime_local_gte, datetime_less_than, geoip, range)
 		@options = {query: {:sort => '#{sort_by}', :taxonomies.name => '#{type_of_event}', :datetime_local.gte => '#{datetime_local_gte}', :datetime_local.lte => '#{datetime_less_than}', :geoip => '#{geoip}', :range => '#{range}' }}
 	end
