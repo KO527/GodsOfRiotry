@@ -23,7 +23,14 @@ gem 'bcrypt', '~> 3.1.11'
 
 gem 'responders', '~> 2.0'
 
-gem 'soundcloud', '~> 0.3.3'
+gem 'omniauth-oauth2', '~>1.1.0' 
+
+gem 'omniauth-soundcloud', '~> 1.0.0'
+
+gem 'omniauth-twitter', '~> 1.2.1'
+
+gem 'omniauth-facebook', '~> 2.0.0.pre1'
+
 # gem 'bootstrap', '~> 5.0.0.1'
 gem 'envyable', '~> 1.1.0'
 
