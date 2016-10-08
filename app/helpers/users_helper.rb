@@ -4,9 +4,6 @@ module UsersHelper
 	    redirect_to(root_url) unless current_user.admin?
 	end
 
-	def correct_user 
-
-	end
 
 	def remember(user)
    	    user.remember
