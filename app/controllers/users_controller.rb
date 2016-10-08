@@ -56,7 +56,8 @@ class UsersController < ApplicationController
 		redirect_to(root_url) unless current_user?(@user)
 	end
 
+
 	def user_params
-		params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+		params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :soundcloud_user_id, :soundcloud_name, :soundcloud_user_location, :soundcloud_user_followers_count, :soundcloud_user_playlist_count, :soundcloud_user_full_name, :provider, :uid, :soundcloud_access_token)
 	end
 end
