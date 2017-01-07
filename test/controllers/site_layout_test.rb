@@ -1,9 +1,14 @@
 require 'test_helper'
 
 class SiteLayoutTest < ActionDispatch::IntegrationTest
-  test "root_path leads to home page" do
-       get "/gor_main"
-       assert_response :success
+  test "show leads to user profile and contains" do
+
+       def setup
+             @user = users(:michael) 
+       end
+    
+       get "/users/show"
+       assert_template 'users/show'
        assert_template partial: 'songs/_songs'       
        assert_template partial: 'gor_clothing/_show'
        assert_template partial: 'event_tickets/_event_tickets'
