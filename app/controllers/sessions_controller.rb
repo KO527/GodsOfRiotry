@@ -25,7 +25,7 @@ class SessionsController < ApplicationController
 		session[:omniauth] = auth.except('extra')
 		user = User.sign_in_from_omniauth(auth)
 		session[:user_id] = user
-		redirect_to '/gor_main', notice: "Signed in as auth"
+		redirect_to '/users/show', notice: "Signed in as auth"
 	end
 
 	def failure
@@ -36,12 +36,12 @@ class SessionsController < ApplicationController
 	def destroy 
 		log_out if logged_in?
 		session[:omniauth] = nil
-		redirect_to root_url, notice: 'SIGNED OUT'
+ 		redirect_to root_url, notice: 'SIGNED OUT'
 	end
 
-	protected 
+	# protected 
 
-		def auth_hash
-			request.env['omniauth.auth']
-		end
+	# 	def auth_hash
+	# 		request.env['omniauth.auth']
+	# 	end
 end
