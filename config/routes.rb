@@ -10,8 +10,14 @@
   get '/login', to: 'sessions#create'
   get '/edit', to: 'users#edit'
   get '/sessions/:page' => "sessions#show"
-  get '/soundcloud/oauth-callback', to: 'sessions#omniauth_create'
-  # get 'auth/failure', to: 'sessions#failure'
+  # get '/soundcloud/oauth-callback', to: 'sessions#omniauth_create'
+
+  resources :users do
+  	member do
+  		get :wardrobe
+  	end
+  end
+
   get '/signup', to: 'users#new'
 
   namespace :admin do
