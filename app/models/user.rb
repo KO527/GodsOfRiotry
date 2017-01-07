@@ -22,7 +22,6 @@ class User < ActiveRecord::Base
 		BCrypt::Password.create(string, cost: cost)
 	end
 
-	# def User.digest(soundclou)
 
 	def User.new_token
 		SecureRandom.urlsafe_base64
