@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	before_action :logged_in_user, only: [:index, :edit, :update]	
+	before_action :logged_in_user, only: [:show, :index, :edit, :update]	
 	before_action :correct_user, only: [:edit, :update]
 	before_action :admin_user, only: [:index] 
 	
@@ -58,6 +58,6 @@ class UsersController < ApplicationController
 
 
 	def user_params
-		params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :soundcloud_user_id, :soundcloud_name, :soundcloud_user_location, :soundcloud_user_followers_count, :soundcloud_user_playlist_count, :soundcloud_user_full_name, :provider, :uid, :soundcloud_access_token)
+		params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :uid, :provider_location, :provider_full_name, :provider_nickname, :access_token)
 	end
 end
