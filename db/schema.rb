@@ -11,12 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160927173439) do
+ActiveRecord::Schema.define(version: 20170112042639) do
 
-  create_table "event_tickets", force: :cascade do |t|
+  create_table "artists", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "event_tickets", force: :cascade do |t|
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "venue"
+    t.datetime "happening"
+    t.string   "name"
+    t.integer  "favorite_tally"
+  end
+
+  add_index "event_tickets", ["happening"], name: "index_event_tickets_on_away_team_and_away_team_and_happening", unique: true
+  add_index "event_tickets", ["happening"], name: "index_event_tickets_on_happening", unique: true
+  add_index "event_tickets", ["happening"], name: "index_event_tickets_on_home_team_and_away_team_and_happening", unique: true
+  add_index "event_tickets", ["name", "happening"], name: "index_event_tickets_on_artist_name_and_name_and_happening", unique: true
+  add_index "event_tickets", ["name", "happening"], name: "index_event_tickets_on_performer_name_and_name_and_happening", unique: true
 
   create_table "gor_clothings", force: :cascade do |t|
     t.datetime "created_at",         null: false
@@ -31,7 +46,30 @@ ActiveRecord::Schema.define(version: 20160927173439) do
     t.integer  "quantity"
   end
 
+  create_table "performers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "performers", [nil], name: "index_performers_on_name"
+
+  create_table "preferences", force: :cascade do |t|
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.datetime "time_favorited"
+  end
+
+  add_index "preferences", ["time_favorited"], name: "index_preferences_on_time_favorited", unique: true
+
   create_table "songs", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "songs", [nil, nil, nil], name: "index_songs_on_song_name_and_artist_name_and_favorite_tally"
+  add_index "songs", [nil, nil], name: "index_songs_on_song_name_and_artist_name", unique: true
+
+  create_table "teams", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
