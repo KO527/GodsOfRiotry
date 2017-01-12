@@ -4,6 +4,14 @@ class User < ActiveRecord::Base
 
 	before_save {self.email = email.downcase}
 	
+	has_many :favorited_events, through: :preferences
+	has_many :favorited_songs, through: :songs
+	has_many :favorited_events, through: :preferences
+	has_many :preferences
+	has_many :favorited_outfits, through: :preferences
+	has_many :favorited_artists, through: :preferences
+	has_one :playlist
+
 	validates :first_name, presence: true, length: {maximum: 15}
 	validates :last_name, presence: true, length: {maximum: 15}
 
