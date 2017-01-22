@@ -1,6 +1,12 @@
  Rails.application.routes.draw do
   
 
+  get 'event_tickets_api/create'
+
+  get 'event_tickets_api/update'
+
+  get 'event_tickets_api/destroy'
+
   root               'sessions#new'
   
   get '/gor_main', to: 'gor_main#main'
@@ -24,11 +30,16 @@
   	resources :gor_clothings
   end  	
 
+constraints subdomain: 'api' do
+	namespace :api, path: '/' do
+		resources :event_tickets
+	end
+end
+
 # except gor_clothings#show
   
-  resources :users
-  resources :event_tickets
-  # resources :songs
+resources :users
+   # resources :songs
 
   
   # The priority is based upon order of creation: first created -> highest priority.
