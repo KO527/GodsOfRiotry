@@ -31,6 +31,7 @@ gem 'omniauth-twitter', '~> 1.2.1'
 
 gem 'omniauth-facebook', '~> 2.0.0.pre1'
 
+gem 'httparty', '~> 0.13.7'
 #ScrollMagic for Rails
 gem 'scrollmagicjs-rails', '~> 0.0.1'
 
