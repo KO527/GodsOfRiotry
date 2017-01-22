@@ -11,20 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112042639) do
+ActiveRecord::Schema.define(version: 20170120134231) do
 
   create_table "artists", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "fav_count"
   end
 
   create_table "event_tickets", force: :cascade do |t|
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string   "venue"
     t.datetime "happening"
     t.string   "name"
-    t.integer  "favorite_tally"
+    t.integer  "fav_count"
   end
 
   add_index "event_tickets", ["happening"], name: "index_event_tickets_on_away_team_and_away_team_and_happening", unique: true
@@ -53,21 +54,22 @@ ActiveRecord::Schema.define(version: 20170112042639) do
 
   add_index "performers", [nil], name: "index_performers_on_name"
 
-  create_table "preferences", force: :cascade do |t|
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.datetime "time_favorited"
-  end
-
-  add_index "preferences", ["time_favorited"], name: "index_preferences_on_time_favorited", unique: true
-
-  create_table "songs", force: :cascade do |t|
+  create_table "playlists", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "songs", [nil, nil, nil], name: "index_songs_on_song_name_and_artist_name_and_favorite_tally"
-  add_index "songs", [nil, nil], name: "index_songs_on_song_name_and_artist_name", unique: true
+  create_table "preferences", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "fav_count"
+  end
+
+  create_table "songs", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "fav_count"
+  end
 
   create_table "teams", force: :cascade do |t|
     t.datetime "created_at", null: false
