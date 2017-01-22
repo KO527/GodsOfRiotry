@@ -6,7 +6,6 @@ class User < ActiveRecord::Base
 	
 	has_many :favorited_events, through: :preferences
 	has_many :favorited_songs, through: :songs
-	has_many :favorited_events, through: :preferences
 	has_many :preferences
 	has_many :favorited_outfits, through: :preferences
 	has_many :favorited_artists, through: :preferences
