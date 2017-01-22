@@ -6,5 +6,5 @@ class Preference < ActiveRecord::Base
 	has_many :favorited_events, class_name: "Events", foreign_key: "subscriber_id", dependent: :destroy
 	has_many :favorited_outfits, class_name: "Gor_clothing", foreign_key: "subscriber_id", dependent: :destroy
 
-	validates :time_favorited, presence: true, format: {}
+	validates :fav_count, presence: true, numericality: {integer: true}, allow_nil: true
 end
