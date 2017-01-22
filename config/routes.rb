@@ -5,8 +5,6 @@
 
   get 'event_tickets_api/update'
 
-  get 'event_tickets_api/destroy'
-
   root               'sessions#new'
   
   get '/gor_main', to: 'gor_main#main'
