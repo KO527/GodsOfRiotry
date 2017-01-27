@@ -12,10 +12,9 @@ class EventTicketsController < ApplicationController
 		@Event_ticket = Event_ticket.find(params[:id])
 		if @Event_ticket.unfavorited?
 			@Event_ticket.status == :favorited
-			#if associated model is artist, performer or team, figure out how to increment or decrement fav_count
+			#if associated model is artist, performer or team, figure out how to increment or decrement fav_count or switch status
 		else
 			@Event_ticket.favorited!
-
 
 	end
 
