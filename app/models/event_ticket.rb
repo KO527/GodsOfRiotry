@@ -1,8 +1,8 @@
 class EventTicket < ActiveRecord::Base
-	
- 	has_many :artists
- 	has_many :performers
- 	has_many :teams
+	enum status: [:favorited, :unfavorited]
+ 	has_and_belongs_to_many :artists
+ 	has_and_belongs_to_many :acts
+ 	has_and_belongs_to_many :teams
  	belongs_to :subscriber_id, class_name: "User"
 
  	validates :fav_count, presence: true, numericality: {only_integer: true}, allow_nil: true

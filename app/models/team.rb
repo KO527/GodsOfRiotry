@@ -3,7 +3,7 @@ class Team < ActiveRecord::Base
 	validates :away_team, presence: true, length: {maximum: 50}, numericality: {equal_to: 2}, if: :two_away_teams_valid?
 	validates :away_team, presence: true, length: {maximum: 50}, if: :home_team_valid?
 
-	belongs_to :event_tickets
+	has_and_belongs_to_many :event_tickets
 
 	def home_team_valid
 		Proc.new{ |a| if a.away_team.count < 2 && a.performers.nil? && a.artists.nil?}
