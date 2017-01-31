@@ -4,11 +4,12 @@ class User < ActiveRecord::Base
 
 	before_save {self.email = email.downcase}
 	
-	has_many :favorited_events, through: :preferences
-	has_many :favorited_songs, through: :preferences
-	has_many :favorited_outfits, through: :preferences
-	has_many :favorited_artists, through: :preferences
-	has_many :preferences, primary_key: :user_id
+	has_many :favorited_events, through: :preferences, class_name: "Event_ticket"
+	has_many :favorited_songs, through: :preferences, class_name: "Aong"
+	has_many :favorited_outfits, through: :preferences, class_name: "Gor_clothing"
+	has_many :favorited_artists, through: :preferences, class_name: "Artist"
+	has_many :preferences, foreign_key: "user_id", dependent: :destroy
+	validates :preferences, presence: true
 
 	has_one :playlist
 
@@ -22,7 +23,6 @@ class User < ActiveRecord::Base
 	has_secure_password
 
 	validates :password, presence: true, length: {minimum: 6}, allow_nil: true
-
 
 	def User.digest(string)
 		cost = ActiveRecord::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
@@ -49,24 +49,36 @@ class User < ActiveRecord::Base
 		update_attribute(:remember_digest, nil)
 	end
 
+	def subscribe_to(resource)
+		preferences << resource 
+	end
 
-	#put inside of soundcloud service
-	def self.sign_in_from_omniauth(auth)
-		find_by(provider: auth['provider'], uid: auth['uid']) || create_from_omniauth_hash(auth)
+	def unsubscribe_to(resource)
+		preferences.delete(resource)
 	end
+
+	def subscribed_to?(resource)
+		preferences.include?(resource)
+	end
+
+
+	# #put inside of soundcloud service
+	# def self.sign_in_from_omniauth(auth)
+	# 	find_by(provider: auth['provider'], uid: auth['uid']) || create_from_omniauth_hash(auth)
+	# end
 	
-	def self.create_from_omniauth(auth)
-		#create new user if self.soundcloud_user_playlist !== 
-		# return "hello" unless auth_hash
-		create!(
-			provider: auth['provider'],
-			uid: auth['uid'],
-			provider_location: auth['provider_location'],
-			provider_full_name: auth['provider_full_name'],
-			provider_nickname: auth['provider_nickname'],
-			access_token: auth['credentials']['token']
-		)
-	end
+	# def self.create_from_omniauth(auth)
+	# 	#create new user if self.soundcloud_user_playlist !== 
+	# 	# return "hello" unless auth_hash
+	# 	create!(
+	# 		provider: auth['provider'],
+	# 		uid: auth['uid'],
+	# 		provider_location: auth['provider_location'],
+	# 		provider_full_name: auth['provider_full_name'],
+	# 		provider_nickname: auth['provider_nickname'],
+	# 		access_token: auth['credentials']['token']
+	# 	)
+	# end
 
 
 
