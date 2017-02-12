@@ -8,7 +8,7 @@ gem 'sqlite3'
 # Use SCSS for stylesheets
 # gem 'sass-rails', '~> 5.0'
 
-
+gem 'figaro'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -30,6 +30,8 @@ gem 'omniauth-soundcloud', '~> 1.0.0'
 gem 'omniauth-twitter', '~> 1.2.1'
 
 gem 'omniauth-facebook', '~> 2.0.0.pre1'
+
+gem 'rake', '~> 12.0.0'
 
 gem 'httparty', '~> 0.13.7'
 #ScrollMagic for Rails
