@@ -19,3 +19,4 @@
 #Ignore all files containing Soundcloud and env. variables
 /config/env.yml
 /config/secrets.yml
+/config/application.yml
