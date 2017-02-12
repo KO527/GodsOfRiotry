@@ -11,11 +11,13 @@ class EventTicketsController < ApplicationController
 	def update
 		@Event_ticket = Event_ticket.find(params[:id])
 		if @Event_ticket.unfavorited?
-			@Event_ticket.status == :favorited
+			@Event_ticket.status = :favorited
+			@Event_ticket.save
+			current_user.subscribe_to(@Event_ticket)
 			#if associated model is artist, performer or team, figure out how to increment or decrement fav_count or switch status
 		else
 			@Event_ticket.favorited!
-
+		end
 	end
 
 
