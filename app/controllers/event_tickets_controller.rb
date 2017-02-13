@@ -20,5 +20,29 @@ class EventTicketsController < ApplicationController
 		end
 	end
 
+# class EventTicketsApiController < ApplicationController
+  
+#   def index
+#   	@Event_ticketsImm = Event_tickets_api.GiveMeImmEvents
+#   	@Event_ticketsPopular = Event_tickets_api.ParsePopularFests
+#   end
+  
+#   def create
+#   	@search_item = params[:looking_for] || {}
+#   	@events = Event_tickets_api.for(@search_item)
+#   end
+
+#   def update
+  	
+#   end
+
+#   def destroy
+
+#   end
+
+#   private
+
+#   	params.require(:event_tickets_api).permit(:looking_for)
+# end
 
 end
