@@ -20,4 +20,16 @@ module UsersHelper
 	    @current_user = nil
 	end
 
+	def subscribe_to(resource)
+		preferences << resource 
+	end
+
+	def unsubscribe_to(resource)
+		preferences.delete(resource)
+	end
+
+	def subscribed_to?(resource)
+		preferences.include?(resource)
+	end
+
 end
