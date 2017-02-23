@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170127184522) do
+ActiveRecord::Schema.define(version: 20170223182917) do
 
   create_table "acts", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -66,8 +66,8 @@ ActiveRecord::Schema.define(version: 20170127184522) do
   add_index "event_tickets", ["user_id"], name: "index_event_tickets_on_user_id"
 
   create_table "gor_clothings", force: :cascade do |t|
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.float    "price"
     t.string   "image_file_name"
     t.string   "image_content_type"
@@ -76,7 +76,20 @@ ActiveRecord::Schema.define(version: 20170127184522) do
     t.text     "description"
     t.float    "sizes"
     t.integer  "quantity"
+    t.integer  "gender",             default: 0, null: false
+    t.integer  "purchase_status",    default: 0, null: false
+    t.integer  "status",             default: 0, null: false
+    t.string   "colors_available"
   end
+
+  create_table "images", force: :cascade do |t|
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "type_of_image", default: 0, null: false
+    t.string   "picture"
+  end
+
+  add_index "images", ["type_of_image"], name: "index_images_on_type_of_image", unique: true
 
   create_table "playlists", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -119,8 +132,6 @@ ActiveRecord::Schema.define(version: 20170127184522) do
     t.string   "remember_digest"
     t.string   "password_digest"
     t.string   "email"
-    t.string   "first_name"
-    t.string   "last_name"
     t.string   "provider"
     t.string   "uid"
     t.string   "provider_name"
@@ -130,6 +141,8 @@ ActiveRecord::Schema.define(version: 20170127184522) do
     t.string   "provider_full_name"
     t.string   "provider_nickname"
     t.string   "access_token"
+    t.boolean  "admin"
+    t.string   "full_name"
   end
 
 end
