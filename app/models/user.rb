@@ -5,21 +5,24 @@ class User < ActiveRecord::Base
 	before_save {self.email = email.downcase}
 	
 	has_many :favorited_events, through: :preferences, class_name: "Event_ticket"
-	has_many :favorited_songs, through: :preferences, class_name: "Aong"
+	has_many :favorited_songs, through: :preferences, class_name: "Song"
 	has_many :favorited_outfits, through: :preferences, class_name: "Gor_clothing"
 	has_many :favorited_artists, through: :preferences, class_name: "Artist"
 	has_many :preferences, foreign_key: "user_id", dependent: :destroy
+	has_many :Gor_clothings
+	has_one :playlist
+	has_many :songs, through: :playlist
+	has_many :event_tickets
+
 	validates :preferences, presence: true
 
-	has_one :playlist
-
-	validates :first_name, presence: true, length: {maximum: 15}
-	validates :last_name, presence: true, length: {maximum: 15}
+	validates :full_name, presence: true, length: {maximum: 15}
 
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 	validates :email, presence: true, length: {maximum: 255},
 		     	   format: {with: VALID_EMAIL_REGEX},
 		     	   uniqueness: { case_sensitive: false}
+	
 	has_secure_password
 
 	validates :password, presence: true, length: {minimum: 6}, allow_nil: true
@@ -48,19 +51,6 @@ class User < ActiveRecord::Base
 	def forget
 		update_attribute(:remember_digest, nil)
 	end
-
-	def subscribe_to(resource)
-		preferences << resource 
-	end
-
-	def unsubscribe_to(resource)
-		preferences.delete(resource)
-	end
-
-	def subscribed_to?(resource)
-		preferences.include?(resource)
-	end
-
 
 	# #put inside of soundcloud service
 	# def self.sign_in_from_omniauth(auth)
