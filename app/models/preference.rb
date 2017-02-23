@@ -1,6 +1,6 @@
 class Preference < ActiveRecord::Base
 
-	belongs_to :subscriber_id, class_name: "User", foreign_key: "user_id"
+	belongs_to :subscriber_id, class_name: "User", primary_key: "user_id"
 	has_many :favorited_artists, -> {where status: favorited}, class_name: "Artist", dependent: :destroy
 	has_many :favorited_songs, -> {where status: favorited}, class_name: "Song", dependent: :destroy
 	has_many :favorited_events, -> {where status: favorited}, class_name: "Event_ticket",  dependent: :destroy
