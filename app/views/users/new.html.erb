@@ -4,18 +4,15 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_for(@user) do |f| %>
-      <%= f.label :first_name %>
-      <%= f.text_field :first_name %>
+      <%= f.label :full_name %>
+      <%= f.text_field :full_name %>
       
-      <%= f.label :last_name %>
-      <%= f.text_field :last_name %>
-
       <%= f.label :email %>
       <%= f.email_field :email %>
 
       <%= f.label :password %>
       <%= f.password_field :password %>
-
+      
       <%= f.label :password_confirmation, "Confirmation" %>
       <%= f.password_field :password_confirmation %>
 
@@ -23,3 +20,7 @@
     <% end %>
   </div>
 </div>
+
+
+	
+      
