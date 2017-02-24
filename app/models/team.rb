@@ -5,12 +5,12 @@ class Team < ActiveRecord::Base
 
 	has_and_belongs_to_many :event_tickets
 
-	def home_team_valid
-		Proc.new{ |a| if a.away_team.count < 2 && a.performers.nil? && a.artists.nil?}
-	end
+	# def home_team_valid
+	# 	Proc.new{ |a| if a.away_team.count < 2 && a.performers.nil? && a.artists.nil?}
+	# end
 
-	def two_away_teams_valid
-		Proc.new{ |b| if b.home_team.nil? && b.performers.nil? && b.artists.nil?}
-	end
+	# def two_away_teams_valid
+	# 	Proc.new{ |b| if b.home_team.nil? && b.performers.nil? && b.artists.nil?}
+	# end
 
 end

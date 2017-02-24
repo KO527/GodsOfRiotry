@@ -5,11 +5,11 @@ class Song < ActiveRecord::Base
 	belongs_to :preferences, foreign_key: "preference_id"
 	belongs_to :playlist, foreign_key: "playlist_id"
 
-	validates :name, presence: true, length: {maximum: 50}, unique: {case_sensitive: false}
+	validates :name, presence: true, length: {maximum: 50}, uniqueness: {case_sensitive: false}
 	validates :genre, presence: true, inclusion: {in: %w(#list_of_genres), message: "%{value} is not a valid genre"}
 	validates :fav_count, presence: true, numericality: {only_integer: true}, allow_nil: true
 
-	scope :distinct_songs -> {where.not(subscriber_id.favorited_songs)}
+	# scope :distinct_songs -> {where.not(subscriber_id.favorited_songs)}
 	
 	private
 	

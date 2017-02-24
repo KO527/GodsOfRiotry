@@ -12,7 +12,7 @@ class Preference < ActiveRecord::Base
 
 	#Scope is employed to help user find other users with similar tastes
 	#FIgure out how to come up with user's preferences that share three of the subscriber_id's favorited songs
-	scope :with_shared_song_interests -> {where(preferences: :subscriber_id.favorited_songs.exists?(3))} #alternative exists?(2)
+	# scope :with_shared_song_interests -> {where(preferences: :subscriber_id.favorited_songs.exists?(3))} #alternative exists?(2)
 
 
 	def how_many_fav_outfits
@@ -35,14 +35,14 @@ class Preference < ActiveRecord::Base
 	def num_of_preferences
 		preference = Preference.find_by(params[:id])
 		preference.fav_count = how_many_fav_artists + how_many_fav_songs + how_many_fav_outfits + how_many_fav_events
-		preference.reload
+		puts %{preference.fav_count}
 	end
 	
 	private 
 		#show for admin preference controller index action
 		def show_recent_list
 			preference = Preference.find_by(params[:id])
-			preference.order('created_at desc').limit(25) 
+			preference.order('created_at desc').limit(25)
 		end
 
 end
