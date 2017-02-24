@@ -1,11 +1,19 @@
 class EventTicketsController < ApplicationController
+	require 'Time'
+	require '../models/event_tickets_api'
+	before_filter :format_time, :only => [:create]
+
 	def index #SuggEvents
 		Event_tickets.joins(:artists, :performers, :teams).where(status: 'favorited')
 	end
 
-	def create
+	def index
 		@ImmEvents = Event_tickets.GiveMeImmEvents
 		@PopularFests = Event_tickets.ParsePopularFests
+	end
+	
+	def create
+		#update preferences for remind_of_this_event or if favorited
 	end
 
 	def update
@@ -19,6 +27,15 @@ class EventTicketsController < ApplicationController
 			@Event_ticket.favorited!
 		end
 	end
+
+	private 
+
+		def format_time
+			happening = params[:happening]
+			params[:happening] = Time.strftime(happening, "%Y-%m-%d")
+
+		end
+
 
 # class EventTicketsApiController < ApplicationController
   
