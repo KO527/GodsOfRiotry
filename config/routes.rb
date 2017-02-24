@@ -1,6 +1,7 @@
  Rails.application.routes.draw do
   
 
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   # get 'event_tickets_api/create'
 
   # get 'event_tickets_api/update'
@@ -10,8 +11,10 @@
   get '/help', to: 'gor_main#help'
   get '/contact', to: 'gor_main#contact'
   get '/logout', to: 'sessions#destroy'
-  get '/login', to: 'sessions#create'
-  get '/sessions/:page' => "sessions#show"
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+
+  # get '/sessions/:page' => "sessions#show"
   get '/edit', to: 'users#edit'
 
   # get '/soundcloud/oauth-callback', to: 'sessions#omniauth_create'
