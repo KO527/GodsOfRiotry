@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223182917) do
+ActiveRecord::Schema.define(version: 20170228235750) do
 
   create_table "acts", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -143,6 +143,11 @@ ActiveRecord::Schema.define(version: 20170223182917) do
     t.string   "access_token"
     t.boolean  "admin"
     t.string   "full_name"
+  end
+
+  create_table "wardrobes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
