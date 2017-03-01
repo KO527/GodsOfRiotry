@@ -51,6 +51,13 @@ gem 'certified', '~> 1.0.0'
 # gem 'unicorn'
 gem 'web-console', group: :development
 
+
+gem 'devise'
+
+gem 'rails_admin'
+
+gem 'paloma', '~> 5.0.0'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -66,7 +73,4 @@ group :development, :test do
   gem 'spring'
 end
 
-gem 'devise'
-
-gem 'rails_admin'
 
