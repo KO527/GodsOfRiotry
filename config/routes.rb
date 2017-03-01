@@ -22,7 +22,8 @@
 
    resources :users do
    	resources :event_tickets
-   	resources :gor_clothing, except: [:new]
+   	resources :gor_clothing, except: [:index, :show]
+   	resources :wardrobes
    	resources :playlist, except: [:index, :show]
    	member do
    		resources :preferences, only: [:index, :update, :create, :destroy]
@@ -109,9 +110,6 @@
   	#image upload --> new --> triggered by carrier_wave uploader--> preview action --> render admin_gor_clothing_image_path alert(is show picture ok?)
   	#save image --> create --> 
   	
-  	# def gor_clothing
-  	# 	params.require(gor_clothing_params).permit(:name, :description, :size, :colors_available, :gender, :picture)
-  	# end
 
   	resources :users do
   		member do
