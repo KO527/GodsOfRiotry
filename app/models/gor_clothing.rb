@@ -16,11 +16,12 @@ class GorClothing < ActiveRecord::Base
 	
 	has_many :images
 
-	validates_associated :image
+	validates_associated :image, unless proc {|attributes| attributes[:type_of_image] != :show_picture} on: :create
 	validates_presence_of :image
 	
-	private
+	accepts_nested_parameters_for :image, allow_destroy: true, reject_if: proc {|attributes| attributes[:type_of_image] != :show_picture || :first_shot || :back_shot || :model_shot}
 
+	private
 		def self.add_color(color)
 			
 		end
