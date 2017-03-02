@@ -7,7 +7,7 @@ def index
      @Gor_Clothings = Gor_Clothing.all
 end
 
-def show
+def show #js Show details Price and Description
      @Gor_Clothing = Gor_Clothing.find(params[:id])
 end
 
@@ -18,8 +18,12 @@ end
 
  def create
       @Gor_Clothing.new(Gor_Clothing_params)
-      if @Gor_Clothing.update(gor_clothing_params)
-      	render 'show'
+      if @Gor_Clothing.assign_attributes('description' => params[:description],
+      					   'size' => params[:size],
+      					   'gender' => params[:gender],
+      					   'price' => params[:price],
+      					   'quantitiy' => params[:quantity])
+      	render 'images/preview'
       else
       	render 'new'
       end
@@ -52,7 +56,7 @@ end
 private
 
 	def Gor_Clothing_params
-	    params.require(:Gor_Clothing).permit(:images_attributes: [:picture, :type_of_image], :price, :description, :quantity, :gender, :size)
+	    params.require(:Gor_Clothing).permit(images_attributes: [:picture, :type_of_image, :_destroy], :price, :description, :quantity, :gender, :size)
 	end
 
 end
@@ -61,3 +65,4 @@ end
 
 
 
+ 
