@@ -9,7 +9,6 @@ class WardrobesController < ApplicationController
 		@wardrobe.update
 		if @wardrobe.save
 			flash[:success] = "Latest saved"
-			current_user.past_wardrobes << @wardrobe
 		else
 			flash[:error] = "Something went wrong"
 			render 'new'
@@ -18,9 +17,9 @@ class WardrobesController < ApplicationController
 
 	def index 
 		@gor_clothing = Gor_clothing.all
-		@past_wardrobes = current_user.past_wardrobes
+		@past_wardrobes = current_user.wardrobes
 		@past_wardrobes.all.each do |past_wardrobe| 
-			past_wardrobe.gor_clothing.each do |clothing_piece|
+			past_wardrobe.gor_clothings.each do |clothing_piece|
 				if @gor_clothing.include?(clothing_piece) && @gor_clothing.clothing_piece.count < 5
 					@how_many_left = gor_clothing.clothing_piece.count
 				elsif @gor_clothing.include?(clothing_piece) && @gor_clothing.clothing_piece.count > 5
@@ -34,3 +33,13 @@ class WardrobesController < ApplicationController
 		end
 	end
 
+
+	def update
+	end
+
+	private 
+		def wardrobe_params
+			params.require(:wardrobe).permit(gor_clothing_attributes: [:image, :_destroy])
+		end
+
+end
