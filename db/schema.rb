@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170228235750) do
+ActiveRecord::Schema.define(version: 20170302192744) do
 
   create_table "acts", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -66,19 +66,15 @@ ActiveRecord::Schema.define(version: 20170228235750) do
   add_index "event_tickets", ["user_id"], name: "index_event_tickets_on_user_id"
 
   create_table "gor_clothings", force: :cascade do |t|
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.float    "price"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
     t.text     "description"
     t.float    "sizes"
     t.integer  "quantity"
-    t.integer  "gender",             default: 0, null: false
-    t.integer  "purchase_status",    default: 0, null: false
-    t.integer  "status",             default: 0, null: false
+    t.integer  "gender",           default: 0, null: false
+    t.integer  "purchase_status",  default: 0, null: false
+    t.integer  "status",           default: 0, null: false
     t.string   "colors_available"
   end
 
@@ -148,6 +144,9 @@ ActiveRecord::Schema.define(version: 20170228235750) do
   create_table "wardrobes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
   end
+
+  add_index "wardrobes", ["user_id"], name: "index_wardrobes_on_user_id"
 
 end
