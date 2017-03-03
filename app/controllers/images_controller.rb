@@ -1,5 +1,6 @@
 class ImagesController < ApplicationController
-	before_action :admin, only: [:preview, :new, :create, :update]
+	
+	before_action :admin, only: [:edit, :preview, :new, :create, :update]
 
 	validate :picture_size
 
@@ -17,6 +18,7 @@ class ImagesController < ApplicationController
 		@gor_clothing = Gor_clothing.find(params[:gor_clothing_id])
 		@gor_clothing.images.each do |image|
 			#append destroy_link to images through js
+			image.
 		end
 	end
 
@@ -42,8 +44,9 @@ class ImagesController < ApplicationController
 			@image = Image.create({'type_of_image' => params[:type_of_image],
 				            'picture' => params[:picture]})
 		elsif @gor_clothing.persisted?
-			@image = Image.update({'type_of_image' => params[:type_of_image],
-						  'picture' => params[:picture]}) if @image.valid?
+			@image = Image.new({'type_of_image' => params[:type_of_image],
+						  'picture' => params[:picture]}) 
+			@image.save if @image.valid?
 		end
 
 		render 'detail_page'
