@@ -8,7 +8,8 @@ class GorClothing < ActiveRecord::Base
 	VALID_PRICE_REGEX = /\$?\d*\.?\d+/
 
 	belongs_to :user
-
+	belongs_to :wardrobe
+	
 	validates :quantity, presence: true, numericality: {only_integer: true}
 	validates :sizes, presence: true, inclusion: {in: %w(S M L)}
 	validates :price, format: {with: VALID_PRICE_REGEX}
@@ -18,9 +19,9 @@ class GorClothing < ActiveRecord::Base
 	has_many :images
 
 	validates_associated :image
-	validates_presence_of :image, proc {|attributes| attributes[:type_of_image] == :show_picture} if: proc {|attributes| attributes['gor_clothing']['image'].blank?}
+	validates_presence_of :image, proc {|attributes| attributes[:type_of_image] == :show_picture if attributes['gor_clothing']['image'].blank?}
 	validates_uniqueness_of :image, scope: [:type_of_image]
-	accepts_nested_parameters_for :image, allow_destroy: true, reject_if: proc {|attributes| attributes[:type_of_image] !== :show_picture || :first_shot || :back_shot || :model_shot || {}}
+	accepts_nested_parameters_for :image, allow_destroy: true, reject_if: proc {|attributes| attributes[:type_of_image] !== :show_picture || :first_shot || :back_shot || :model_shot}
 
 	private
 		def self.add_color(color)
