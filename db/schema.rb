@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170302192744) do
+ActiveRecord::Schema.define(version: 20170302210745) do
 
   create_table "acts", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -79,12 +79,14 @@ ActiveRecord::Schema.define(version: 20170302192744) do
   end
 
   create_table "images", force: :cascade do |t|
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.integer  "type_of_image", default: 0, null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "type_of_image",   default: 0, null: false
     t.string   "picture"
+    t.integer  "gor_clothing_id"
   end
 
+  add_index "images", ["gor_clothing_id"], name: "index_images_on_gor_clothing_id"
   add_index "images", ["type_of_image"], name: "index_images_on_type_of_image", unique: true
 
   create_table "playlists", force: :cascade do |t|
