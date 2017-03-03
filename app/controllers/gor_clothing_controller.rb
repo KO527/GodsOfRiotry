@@ -32,7 +32,7 @@ end
 
 
 def edit
-     @Gor_Clothing.find(params[:id]) #create edit page
+     @Gor_Clothing.find(params[:id]) #render edit page
 end
 
 def update
@@ -56,7 +56,7 @@ end
 private
 
 	def Gor_Clothing_params
-	    params.require(:Gor_Clothing).permit(images_attributes: [:picture, :type_of_image, :_destroy], :price, :description, :quantity, :gender, :size)
+	    params.require(:Gor_Clothing).permit(:price, :description, :quantity, :gender, :size, images_attributes: [:picture, :type_of_image, :_destroy])
 	end
 
 end
