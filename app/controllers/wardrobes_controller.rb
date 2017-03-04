@@ -17,8 +17,8 @@ class WardrobesController < ApplicationController
 
 	def index 
 		@gor_clothing = Gor_clothing.all
-		@past_wardrobes = current_user.wardrobes
-		@past_wardrobes.all.each do |past_wardrobe| 
+		@past_wardrobes = current_user.wardrobes.all
+		@past_wardrobes.each do |past_wardrobe| 
 			past_wardrobe.gor_clothings.each do |clothing_piece|
 				if @gor_clothing.include?(clothing_piece) && @gor_clothing.clothing_piece.count < 5
 					@how_many_left = gor_clothing.clothing_piece.count
