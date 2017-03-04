@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170302210745) do
+ActiveRecord::Schema.define(version: 20170303193207) do
 
   create_table "acts", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -76,7 +76,10 @@ ActiveRecord::Schema.define(version: 20170302210745) do
     t.integer  "purchase_status",  default: 0, null: false
     t.integer  "status",           default: 0, null: false
     t.string   "colors_available"
+    t.integer  "wardrobe_id"
   end
+
+  add_index "gor_clothings", ["wardrobe_id"], name: "index_gor_clothings_on_wardrobe_id"
 
   create_table "images", force: :cascade do |t|
     t.datetime "created_at",                  null: false
