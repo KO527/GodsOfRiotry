@@ -1,0 +1,35 @@
+<%= form_for @GorClothing, html: {multipart: true} do |f| %>
+  <% if @GorClothing.errors.any? %>
+    <div id="error-explanation">
+    	<h2><%= pluralize(@GorClothing.errors.count, "error")%> prohibited this image from being saved: </h2>
+
+	    <ul>
+	    	<% @GorClothing.error.full_messages each do |message|%>
+	    	   <li><%= message %></li>
+	    	<% end %>
+	    </ul>
+    </div>
+    <%end%>
+
+    <div class = "field" >
+	<%= f.label :name %>
+	<%= f.name_field :name %>
+    <div>
+    <div class = "field">
+	<%= f.label :description %>
+	<%= f.description_field :description %>
+    </div>
+    <div class = "field">
+	<%= f.label :quantity %>
+	<%= f.quantity_field %>
+    </div>
+    <div class = "field">
+	<%= f.select(:gender, options_for_select([['M', male]['F', female]['A', androgynous]])) %>
+	<%= f.select(:size, options_for_select([['S', small]['M', medium]['L', large])) %>
+    </div>
+    <%= f.fields_for :image do |i| %
+	<span class = "picture">
+		   <%= i.file_field :picture, accept: 'image/jpeg, image/gif, image/png' %>
+	</span>
+    <%end%>
+<%end%>
