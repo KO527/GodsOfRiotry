@@ -1,5 +1,5 @@
-<% form_for(@Gor_Clothing, html: {multipart: true}) do |f| %>
-	<%= f.fields_for :image do |i| %
+<!-- Javascript action should be affiliated with image preview
+ -->	<%= f.fields_for :image do |i| %
 		<% div class = "image_options"%>
 		   <%= i.radio_button :type_of_image, 'show_picture' %>
 		   <%= i.label :type_of_image, "Show Picture" :value => 'show_picture' %>
@@ -8,16 +8,11 @@
 		   <%= i.radio_button :type_of_image, "back_shot")%>
 		   <%= i.label :type_of_image, "Back Shot" :value => 'back_shot' %>
 		   <%= i.radio_button :type_of_image, "model_shot")%>
-		   <%= i.label :type_of_image, "model_shot" :value => 'model_shot' %>
+		   <%= i.label :type_of_image, "Model Shot" :value => 'model_shot' %>
 		<%div%>
 		<span class = "content">
 		    <%= image_tag @Gor_clothing.image.picture.url if @Gor_Clothing.image.picture? %>
 		</span>
 		<%= render 'shared/error_messages', object: i.object %>
 	<%end%>
-<%end%>
 
-<!-- #detail page controller
-		<span class = "picture">
-		   <%= i.file_field :picture, accept: 'image/jpeg, image/gif, image/png' %>
-		</span> -->
