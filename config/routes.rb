@@ -22,7 +22,7 @@
 
    resources :users do
    	resources :event_tickets
-   	resources :gor_clothing, except: [:index, :show]
+   	resources :gor_clothing, only: [:index, :show]
    	resources :wardrobes
    	resources :playlist, except: [:index, :show]
    	member do
