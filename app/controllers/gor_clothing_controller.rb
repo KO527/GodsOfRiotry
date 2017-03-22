@@ -17,12 +17,12 @@ class GorClothingController < ApplicationController
 	end
 
 	 def create
-	      @Gor_Clothing.new(Gor_Clothing_params)
-	      if @Gor_Clothing.assign_attributes('description' => params[:description],
-	      					   'size' => params[:size],
-	      					   'gender' => params[:gender],
-	      					   'price' => params[:price],
-	      					   'quantitiy' => params[:quantity])
+	      if @Gor_Clothing.new('description' => params[:description],
+	      			      'size' => params[:size],
+	      			      'gender' => params[:gender],
+	      	        	                'price' => params[:price],
+	      		                'quantitiy' => params[:quantity],
+	      		                'picture' => params[:image][:picture])
 	      	render 'images/preview'
 	      else
 	      	render 'new'
@@ -51,7 +51,9 @@ class GorClothingController < ApplicationController
 
 		redirect_to Gor_Clothing_path
 	end
-
+	
+	# def detail
+	# end
 private
 
 	def Gor_Clothing_params
