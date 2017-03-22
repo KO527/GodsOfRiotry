@@ -1,49 +1,121 @@
 require 'test_helper'
 
 class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
-	def setup
-	      @gor_clothing = gor_clothing(:flannel_shirt)
-	      @images = @gor_clothing.images
-	end
-
-  test "Creating new merchandise will lead to preview html" do
-  	get new_admin_gor_clothing_path
-  	assert_template 'gor_clothing/new'
-  	picture = fixture_file_upload('test/fixtures/flannel.png', 'image/new')
-  	post new_admin_gor_clothing_path params: { gor_clothing:{name: 'new flannel shirt', 
-  									description: 'The type of shirt that would excellent for a barbecue',
-  									quantity: 6, 
-  									gender: male, 
-  									size: medium, 
-  									image[:picture] => picture }}
-  	assert_template 'images/preview'
+  def setup
+	# @gor_clothing = gor_clothing.all
+	# @images = @gor_clothing.images
+	@gor_clothing = gor_clothings(:flannel_shirt)
+	@green_shorts = gor_clothings(:green_shorts)
+	@black_leather_pants = gor_clothings(:black_leather_skinnys)
+	@user = users(:administrator)
+	@phillip = users(:phillip)
   end
 
-  test "Submitting first-time correct entry to type_of_image leads to gor_clothing show" do
-  	get edit_admin_gor_clothing_path
-  	assert_template 'gor_clothing/edit'
-  	picture = fixture_file_upload('test/fixtures/flannel_show_picture_shot')
-  	post edit_admin_gor_clothing_path params: {gor_clothing: {image[:picture] => picture}}
+  #uploading new images will lead to preview html
+
+  # test "Creating new merchandise will lead to preview html" do
+  # 	get new_admin_gor_clothing_path
+  # 	assert_template 'gor_clothing/new'
+  # 	picture = fixture_file_upload('test/fixtures/flannel.png', 'image/new')
+  # 	post admin_gor_clothing_index_path params: {gor_clothing:{name: 'new flannel shirt', 
+  # 									description: 'The type of shirt that would be excellent for a barbecue',
+  # 									quantity: 6, 
+  # 									gender: male, 
+  # 									size: medium, 
+  # 									image[:picture] => picture }}
+  # 	assert_template 'images/preview'
+  # end
+
+
+  test "verifies uploading new piece for first time should lead to preview html and then to possible matches template and subsequently to gor_clothing/show where show_picture type_of_image is present" do
+   	log_in_as(@user)
+   	get new_admin_gor_clothing_path
+   	assert_template 'admin/gor_clothing/new'
+   	picture = fixture_file_upload('test/fixtures/flannel_show_picture_shot')
+	post admin_gor_clothing_index_path params: {gor_clothing:{name: 'new flannel shirt', 
+  									  description: 'The type of shirt that would be excellent for a barbecue',
+  									  quantity: 6, 
+  									  gender: male, 
+  									  size: medium, 
+  									  image[:picture] => picture }}   	
   	assert_template 'images/preview'
-  	post admin_image_path params:{gor_clothing: {image[:type_of_image] => 'show_picture'}}
-  	assert_template 'gor_clothing/show'
-  	assert_match image_tag @gor_clothing.image.show_picture, response_body
+   	post admin_image_path params:{gor_clothing: {image[:type_of_image] => 'show_picture'}}
+   	assert_template 'possible_matches/new'
+   	assert @green_shorts.picture?
+   	assert @black_leather_pants.picture?
+   	post admin_possible_matches_index_path params: {possible_matches: {suggested_piece_ids: gor_clothing_path(@green_shorts, @black_leather_pants)}}
+   	assert_template 'gor_clothing/show'
+   	#On gor_clothing/show, we should be able to see 
+   	assert_match @gor_clothing.image.show_picture, response.body
+   	assert_match @green_shorts.image.show_picture, response.body
+   	assert_match @black_leather_pants.image.show_picture, response.body
+   	@gor_clothing.suggested_pieces.each do |suggested_piece|
+   		assert_select 'a[href=?]', gor_clothing_path(suggested_piece), suggested_piece.picture
+   	end
   end
+
 
   test "Submitting pre-existing type_of_image entry leads to display of errors" do
-  	get edit_admin_gor_clothing_path
-  	assert_template 'gor_clothing/edit'
+  	log_in_as(@user)
+  	get new_admin_gor_clothing_path
+  	assert_template 'admin/gor_clothing/new'
   	picture = fixture_file_upload('test/fixtures/flannel_show_picture_shot')
-  	post edit_admin_gor_clothing_path params: {gor_clothing: {image[:picture] => picture}}
+  	post gor_clothing_path(@gor_clothing), params: {gor_clothing: {name: 'new flannel shirt', 
+  									      description: 'The type of shirt that would be excellent for a barbecue',
+  									      quantity: 6, 
+  									      gender: male, 
+  									      size: medium, 
+  									      image[:picture] => picture }}  
+  	assert_equal "text/javascript", @response.content_type
   	assert_template 'images/preview'
   	post admin_image_path params:{gor_clothing: {image[:type_of_image] => 'show_picture'}}
   	assert_template 'gor_clothing/show'
-  	get edit_admin_gor_clothing_path
+  	get edit_admin_gor_clothing_path, xhr: true
+  	assert_equal "text/javascript", @response.content_type
   	assert_template 'gor_clothing/edit'
   	picture = fixture_file_upload('test/fixtures/flannel_model_shot')
-  	post edit_admin_gor_clothing_path params: {gor_clothing: {image[:picture] => picture}}
+  	patch gor_clothing_path(@gor_clothing), params: {gor_clothing: {image[:picture] => picture}}
   	assert_template 'images/preview'
+  	assert_equal 'text/javascript', @response.content_type
   	post admin_image_path params: {gor_clothing: {image[:type_of_image] => 'show_picture'}}
-  	assert_match @images.errors, response.body
+  	assert_template 'gor_clothing/edit'
+  	assert_match @images.object.errors, response.body
   end
+
+  test "should verify that there is an new_piece option for edit page" do
+	log_in_as(@user)
+	get detail_admin_gor_clothing_path(@gor_clothing)
+	assert_template 'admin/gor_clothing/detail'
+	assert_select 'a[href=]', new_admin_gor_clothing_path, 1
+  end
+
+  test "should verify that add new piece option should produce new form for gor_clothing" do
+  	log_in_as(@user)
+  	get detail_admin_gor_clothing_path(@gor_clothing)
+  	assert_template 'admin/gor_clothing/detail'
+  	assert_response :success
+  	assert_select "a[href=?]", new_admin_gor_clothing_path, 1, text: 'Create new'
+  	get new_admin_gor_clothing_path
+  	assert_template 'admin/gor_clothing/new'
+  end
+
+  test "should verify that there is a destroy link for gor_clothing pieces and possible_matches on edit" do
+  	log_in_as(@user)
+  	get detail_admin_gor_clothing_path(@gor_clothing)
+  	assert_template 'admin/gor_clothing/detail'
+  	assert_response :success
+  	assert_select 'a', text: 'delete', count: 1
+  	assert_select 'a', text: 'edit', count: 2
+  	get edit_admin_gor_clothing_path(@gor_clothing), xhr: true
+  	assert_equal "text/javascript", @response.content_type
+  	assert_select "a.destroy_link"
+  	@gor_clothing.suggested_pieces.each do |suggested_piece|
+  		assert_select suggested_piece.
+  	end
+  end
+
+  # test "" do
+
+  # end
+
 end
