@@ -91,17 +91,18 @@
 
 
  namespace :admin do
-  	resources :preferences do
-  		member do
-  			resources :event_tickets, :songs, :gor_clothing
-  		end 
-  	end
+  	# resources :preferences do
+  	# 	member do
+  	# 		resources :event_tickets, :songs, :gor_clothing
+  	# 	end 
+  	# end
   	
   	#Set admin restrictions
   	# Linked app/views/gor_clothing/image_setup.html
 
-  	resources :gor_clothing, only: [:new, :create, :edit, :update, :destroy] do
+  	resources :gor_clothing do
   		member do
+  			get '/detail' => 'gor_clothing#detail'
   			resources :images, only: [:new, :show, :edit, :update, :destroy, :index, :preview] #Images controller...how do we specify?
   		end
   	end
