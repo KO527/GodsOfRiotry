@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170304085827) do
+ActiveRecord::Schema.define(version: 20170320110555) do
 
   create_table "acts", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -101,13 +101,13 @@ ActiveRecord::Schema.define(version: 20170304085827) do
   add_index "playlists", ["user_id"], name: "index_Playlists_on_user_id"
 
   create_table "possible_matches", force: :cascade do |t|
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.integer  "evaluated_piece_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "contemplated_piece_id"
     t.integer  "suggested_piece_id"
   end
 
-  add_index "possible_matches", ["evaluated_piece_id"], name: "index_possible_matches_on_evaluated_piece_id"
+  add_index "possible_matches", ["contemplated_piece_id"], name: "index_possible_matches_on_contemplated_piece_id"
   add_index "possible_matches", ["suggested_piece_id"], name: "index_possible_matches_on_suggested_piece_id"
 
   create_table "preferences", force: :cascade do |t|
