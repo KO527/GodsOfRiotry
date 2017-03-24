@@ -78,9 +78,9 @@
   end
 
   resources :event_tickets do
-  	collection do
-  		get 'search'
-  	end
+  	# collection do
+  	# 	get 'search' => 'event_tickets#search'
+  	# end
   	# resources :performers, except: [:new, :edit, update] -> will create, destroy, show under preferences
   	# resources :artists, except: [:new, :edit, update]
   end
@@ -103,6 +103,8 @@
   	resources :gor_clothing do
   		member do
   			get '/detail' => 'gor_clothing#detail'
+  			get '/possible_matches' => 'possible_matches#edit'  #How does two different actions with the same URI differ so that the response knows one action should be the default action?
+  			resources :possible_matches, except: [:show, :edit]
   			resources :images, only: [:new, :show, :edit, :update, :destroy, :index, :preview] #Images controller...how do we specify?
   		end
   	end
