@@ -32,18 +32,21 @@ class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
    	get new_admin_gor_clothing_path
    	assert_template 'admin/gor_clothing/new'
    	picture = fixture_file_upload('test/fixtures/flannel_show_picture_shot')
-	post admin_gor_clothing_index_path params: {gor_clothing:{name: 'new flannel shirt', 
+	post admin_gor_clothing_index_path, params: {gor_clothing:{name: 'new flannel shirt', 
   									  description: 'The type of shirt that would be excellent for a barbecue',
   									  quantity: 6, 
   									  gender: male, 
   									  size: medium, 
   									  image[:picture] => picture }}   	
+  	assert_equal "text/javascript", @response.body
   	assert_template 'images/preview'
-   	post admin_image_path params:{gor_clothing: {image[:type_of_image] => 'show_picture'}}
+   	post admin_image_path, params: {gor_clothing: {image[:type_of_image] => 'show_picture'}}
+  	assert_equal "text/javascript", @response.body
    	assert_template 'possible_matches/new'
    	assert @green_shorts.picture?
    	assert @black_leather_pants.picture?
-   	post admin_possible_matches_index_path params: {possible_matches: {suggested_piece_ids: gor_clothing_path(@green_shorts, @black_leather_pants)}}
+   	post admin_possible_matches_index_path, params: {possible_matches: {suggested_piece_ids: gor_clothing_path(@green_shorts, @black_leather_pants)}}
+   	assert_template "text/javascript", @response.body
    	assert_template 'gor_clothing/show'
    	#On gor_clothing/show, we should be able to see 
    	assert_match @gor_clothing.image.show_picture, response.body
@@ -61,23 +64,23 @@ class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
   	assert_template 'admin/gor_clothing/new'
   	picture = fixture_file_upload('test/fixtures/flannel_show_picture_shot')
   	post gor_clothing_path(@gor_clothing), params: {gor_clothing: {name: 'new flannel shirt', 
-  									      description: 'The type of shirt that would be excellent for a barbecue',
-  									      quantity: 6, 
-  									      gender: male, 
-  									      size: medium, 
-  									      image[:picture] => picture }}  
+  							       		      description: 'The type of shirt that would be excellent for a barbecue',
+  							                          quantity: 6,
+  							      		      gender: :male, 
+  						                                    size: :medium, 
+  							                          image[:picture] => picture}}  
   	assert_equal "text/javascript", @response.content_type
   	assert_template 'images/preview'
-  	post admin_image_path params:{gor_clothing: {image[:type_of_image] => 'show_picture'}}
+  	post admin_image_path, gor_clothing: {image[:type_of_image] => 'show_picture'}
   	assert_template 'gor_clothing/show'
   	get edit_admin_gor_clothing_path, xhr: true
   	assert_equal "text/javascript", @response.content_type
   	assert_template 'gor_clothing/edit'
   	picture = fixture_file_upload('test/fixtures/flannel_model_shot')
-  	patch gor_clothing_path(@gor_clothing), params: {gor_clothing: {image[:picture] => picture}}
+  	patch gor_clothing_path(@gor_clothing), gor_clothing: {image[:picture] => picture}
   	assert_template 'images/preview'
   	assert_equal 'text/javascript', @response.content_type
-  	post admin_image_path params: {gor_clothing: {image[:type_of_image] => 'show_picture'}}
+  	post admin_image_path, gor_clothing: {image[:type_of_image] => 'show_picture'}
   	assert_template 'gor_clothing/edit'
   	assert_match @images.object.errors, response.body
   end
@@ -106,11 +109,11 @@ class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
   	assert_response :success
   	assert_select 'a', text: 'delete', count: 1
   	assert_select 'a', text: 'edit', count: 2
-  	get edit_admin_gor_clothing_path(@gor_clothing), xhr: true
+  	get edit_admin_gor_clothing_path, xhr: true
+  	#Update test to confirm the effect of each edit link
   	assert_equal "text/javascript", @response.content_type
-  	assert_select "a.destroy_link"
-  	@gor_clothing.suggested_pieces.each do |suggested_piece|
-  		assert_select suggested_piece.
+  	assert_select "div.possible_match" do |selectors|
+  			assert_select "span#possible_match_suggested_piece_id", @gor_clothing.possible_matches.count
   	end
   end
 
