@@ -1,0 +1,15 @@
+<div class = "possible_matches">
+	<h2>Possible Matches</h2> | 
+	<span class="subtle">
+		<link_to "Edit", possible_matches_admin_gor_clothing(@gor_clothing, possible_matches.suggested_pieces), remote: true, id: 'edit_possible_matches' %>
+	</span>
+	<% for possible_match in @gor_clothing.possible_matches %>
+	<div class = "possible_match">
+		<span id="possible_match_<%=suggested_piece_id%>">
+			<a href=?, possible_match.suggested_piece.id>
+				<%=possible_match.suggested_piece.image.picture%>
+			</a>
+		</span>
+	</div>
+	<%end%>
+</div>
