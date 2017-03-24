@@ -14,6 +14,8 @@
  *= require angular
  *= require angular-ui-router
  *= require bootstrap
+ *= require jquery
+ *= require jquery_ujs
  *= require_tree .
  *= require_self
  */

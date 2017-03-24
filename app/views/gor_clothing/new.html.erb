@@ -25,7 +25,7 @@
     </div>
     <div class = "field">
 	<%= f.select(:gender, options_for_select([['M', male]['F', female]['A', androgynous]])) %>
-	<%= f.select(:size, options_for_select([['S', small]['M', medium]['L', large])) %>
+	<%= f.select(:size, options_for_select([['S', small]['M', medium]['L', large]])) %>
     </div>
     <%= f.fields_for :image do |i| %
 	<span class = "picture">

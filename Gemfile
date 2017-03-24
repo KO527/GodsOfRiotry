@@ -45,12 +45,13 @@ gem 'scrollmagicjs-rails', '~> 0.0.1'
 # gem 'bootstrap', '~> 5.0.0.1'
 gem 'envyable', '~> 1.1.0'
 
+gem 'jquery-rails'
+
 gem 'certified', '~> 1.0.0'
 # gem 'bootstrap-sprockets', '~> 3.3.6'
 # Use Unicorn as the app server
 # gem 'unicorn'
 gem 'web-console', group: :development
-
 
 gem 'devise'
 

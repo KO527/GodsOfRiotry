@@ -18,19 +18,19 @@ class GorClothing < ActiveRecord::Base
 	# validates :possible_matches, inclusion: {} allow_blank: true
 	
 	has_many :static_pieces, class_name: 'possible_matches',
-				    foreign_key: evaluated_piece_id,
+				    foreign_key: :suggested_piece_id,
 				    dependent: :destroy
 
 	has_many :toggled_pieces, class_name: 'possible_matches',
-			  	       foreign_key: suggested_piece_id,
+			  	       foreign_key: :contemplated_piece_id,
 			  	       dependent: :destroy
 
-	has_many :evaluated_pieces, through: :static_pieces
-	has_many :suggested_pieces, through: :toggled_pieces
+	has_many :suggested_pieces, through: :static_pieces
+	has_many :contemplated_pieces, through: :toggled_pieces
 
 	has_many :images
 	validates_associated :image
-	validates_presence_of :image, proc {|attributes| attributes[:type_of_image] == :show_picture if attributes['gor_clothing_id']['image'].blank?}
+	validates_presence_of :image, accept_if: proc {|attributes| attributes[:type_of_image] == :show_picture if attributes['gor_clothing_id']['image'].blank?}
 	validates_uniqueness_of :image, scope: [:type_of_image]
 	accepts_nested_parameters_for :image, allow_destroy: true, reject_if: proc {|attributes| attributes[:type_of_image] != :show_picture || :first_shot || :back_shot || :model_shot}
 

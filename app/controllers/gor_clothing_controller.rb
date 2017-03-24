@@ -13,7 +13,6 @@ class GorClothingController < ApplicationController
 
 	def new
 	     @Gor_Clothing = Gor_Clothing.new
-	     @Image = Image.new
 	end
 
 	 def create
@@ -23,7 +22,7 @@ class GorClothingController < ApplicationController
 	      	        	                'price' => params[:price],
 	      		                'quantitiy' => params[:quantity],
 	      		                'picture' => params[:image][:picture])
-	      	render 'images/preview'
+	      	redirect_to 'images/new'
 	      else
 	      	render 'new'
 	      end

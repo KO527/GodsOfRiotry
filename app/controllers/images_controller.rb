@@ -49,8 +49,8 @@ class ImagesController < ApplicationController
 			 	            'picture' => params[:picture]})
 		elsif @gor_clothing.persisted?
 			@image = Image.new({'type_of_image' => params[:type_of_image],
-						  'picture' => params[:picture]}) 
-			@image.save if @image.valid?
+						  'picture' => params[:picture]})
+			@image.save
 		end
 
 		render 'gor_clothing/show'
