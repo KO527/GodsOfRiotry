@@ -400,6 +400,7 @@ DEPENDENCIES
   fog (~> 1.38.0)
   httparty (~> 0.13.7)
   jbuilder (~> 2.0)
+  jquery-rails
   jshint
   mini_magick (~> 4.5.1)
   omniauth-facebook (~> 2.0.0.pre1)
@@ -420,4 +421,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   1.13.6
+   1.14.6
