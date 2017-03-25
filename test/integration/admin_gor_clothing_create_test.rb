@@ -102,19 +102,24 @@ class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
   	assert_template 'admin/gor_clothing/new'
   end
 
-  test "should verify that there is a destroy link for gor_clothing pieces and possible_matches on edit" do
+  test "should verify that there is a destroy link for possible_matches on edit" do
   	log_in_as(@user)
   	get detail_admin_gor_clothing_path(@gor_clothing)
   	assert_template 'admin/gor_clothing/detail'
   	assert_response :success
   	assert_select 'a', text: 'delete', count: 1
-  	assert_select 'a', text: 'edit', count: 2
-  	get edit_admin_gor_clothing_path, xhr: true
-  	#Update test to confirm the effect of each edit link
+  	assert_select 'a', text: 'edit', count: 3
+  	get possible_matches_admin_gor_clothing_path(@gor_clothing), xhr: true
   	assert_equal "text/javascript", @response.content_type
-  	assert_select "div.possible_match" do |selectors|
-  			assert_select "span#possible_match_suggested_piece_id", @gor_clothing.possible_matches.count
+  	assert_select "div.possible_match" do
+  		assert_select "span#possible_match_suggested_piece_id", @gor_clothing.possible_matches.count
   	end
+  end
+
+  test "should verify that there is an edit form with destroy_links on images with edit option" do
+  	log_in_as(@user)
+  	get edit_admin_gor_clothing_path(@gor_clothing), xhr: true
+  	assert_template 'admin/gor_clothing/edit'
   end
 
   # test "" do
