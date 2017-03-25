@@ -1,5 +1,4 @@
 class Wardrobe < ActiveRecord::Base
-
 	belongs_to :user
 	has_many :gor_clothings
 	validates_associated :gor_clothing
