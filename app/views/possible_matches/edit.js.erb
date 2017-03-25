@@ -1,0 +1,7 @@
+$(function(){
+	$("#edit_possible_matches").bind("ajax.success", function(event, data){
+		$(data).each(function(){
+			("<%= escape_javascript(render('/destroy')) %>").insertBefore('#possible_matches_' + this.id);
+		});
+	});
+});
