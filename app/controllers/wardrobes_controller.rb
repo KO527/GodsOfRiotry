@@ -16,15 +16,15 @@ class WardrobesController < ApplicationController
 	end
 
 	def index 
-		@gor_clothing = Gor_clothing.all
+		@gor_clothings = Gor_clothing.all
 		@past_wardrobes = current_user.wardrobes.all
 		@past_wardrobes.each do |past_wardrobe| 
 			past_wardrobe.gor_clothings.each do |clothing_piece|
-				if @gor_clothing.include?(clothing_piece) && @gor_clothing.clothing_piece.count < 5
+				if @gor_clothings.include?(clothing_piece) && @gor_clothing.clothing_piece.count < 5
 					@how_many_left = gor_clothing.clothing_piece.count
-				elsif @gor_clothing.include?(clothing_piece) && @gor_clothing.clothing_piece.count > 5
+				elsif @gor_clothings.include?(clothing_piece) && @gor_clothing.clothing_piece.count > 5
 					@how_many_left = {}
-				elsif @gor_clothing.exclude?(clothing_piece)
+				elsif @gor_clothings.exclude?(clothing_piece)
 					@how_many_left = "none exist"
 				else
 					next

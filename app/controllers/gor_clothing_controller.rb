@@ -31,7 +31,7 @@ class GorClothingController < ApplicationController
 
 
 	def edit
-	     @Gor_Clothing.find(params[:id]) #render edit page
+	     @Gor_Clothing = Gor_Clothing.find(params[:id])	      #render edit page
 	end
 
 	def update
