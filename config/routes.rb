@@ -101,14 +101,17 @@
   	# Linked app/views/gor_clothing/image_setup.html
 
   	resources :gor_clothing do
+  		post :preview, on: :new
   		member do
   			get '/detail' => 'gor_clothing#detail'
-  			get '/possible_matches' => 'possible_matches#edit'  #How does two different actions with the same URI differ so that the response knows one action should be the default action?
+  			get '/possible_matches/edit' => 'possible_matches#edit' #How does two different actions with the same URI differ so that the response knows one action should be the default action?
   			resources :possible_matches, except: [:show, :edit]
-  			resources :images, only: [:new, :show, :edit, :update, :destroy, :index, :preview] #Images controller...how do we specify?
+  			resources :images, except: [:edit] do
+  				match :edit_some, via: [:edit, :update], on: :collection #Figure out relationship between update and destroy for edit_some
+  				post :preview, on: :new
+  			end
   		end
   	end
-
 
   	#image upload --> new --> triggered by carrier_wave uploader--> preview action --> render admin_gor_clothing_image_path alert(is show picture ok?)
   	#save image --> create --> 
