@@ -85,7 +85,7 @@ class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
   	assert_match @images.object.errors, response.body
   end
 
-  test "should verify that there is an new_piece option for edit page" do
+  test "should verify that there is an new_piece option for detail page" do
 	log_in_as(@user)
 	get detail_admin_gor_clothing_path(@gor_clothing)
 	assert_template 'admin/gor_clothing/detail'
@@ -102,7 +102,7 @@ class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
   	assert_template 'admin/gor_clothing/new'
   end
 
-  test "should verify that there is a destroy link for possible_matches on edit" do
+  test "should verify that there is a destroy link for possible_matches on edit and no destroy_link when finished with editing" do
   	log_in_as(@user)
   	get detail_admin_gor_clothing_path(@gor_clothing)
   	assert_template 'admin/gor_clothing/detail'
@@ -113,17 +113,29 @@ class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
   	assert_equal "text/javascript", @response.content_type
   	assert_select "div.possible_match" do
   		assert_select "span#possible_match_suggested_piece_id", @gor_clothing.possible_matches.count
+  		assert_select "i.icon-destroy-link", @gor_clothing.possible_matches.count
   	end
+  	assert_select "a[href=?]", admin_possible_matches, text: 'Finished Updating', count: 1
+  	#Seed database with clothes and assert there is a difference with gor_clothing.count once we've followed through with updating
   end
 
-  test "should verify that there is an edit form with destroy_links on images with edit option" do
+  test "should verify that there is an edit form for gor_clothing after following edit option" do
   	log_in_as(@user)
   	get edit_admin_gor_clothing_path(@gor_clothing), xhr: true
+  	assert_equal 'text/javascript', @response.content_type
   	assert_template 'admin/gor_clothing/edit'
+  	assert_select("form[action=? AND method=?]", admin_gor_clothing_path, patch) do
+  		assert_select "input[name *= gor_clothing[name]][value *= gor_clothing['name']]"
+  		assert_select "textarea[name *= gor_clothing[description]][value *= gor_clothing['description']]"
+  		assert_select "input[name *= gor_clothing[quantity]][value *= gor_clothing['quantity']]"
+  		assert_select "select[name *= gor_clothing[gender]][value *= male][value *= female][value *= androgynous]"
+  		assert_select "select[name *= gor_clothing[size]][value *= S][value *= M][value *= L]"
+  	end
+  	assert_select 
   end
 
-  # test "" do
+  test "should verify that there are destroy links on images after clicking on edit" do
 
-  # end
+  end
 
 end
