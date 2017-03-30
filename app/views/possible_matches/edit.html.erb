@@ -1,3 +1,6 @@
+<% content_for :head do %>
+     <%= javascript_include_tag 'admin.js' %>
+<%end%>
 <div class = "possible_matches">
 	<h2>Possible Matches</h2> | 
 	<span class="subtle">
@@ -7,7 +10,7 @@
 	<div class = "possible_match">
 		<span id="possible_match_<%=suggested_piece_id%>">
 			<a 'href=?', possible_match.suggested_piece_id>
-				<%=possible_match.suggested_piece.image.picture%>
+				<%= image_tag possible_match.suggested_piece.image.picture.url %>
 			</a>
 		</span>
 	</div>
