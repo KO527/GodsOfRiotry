@@ -1,20 +1,24 @@
 <% content_for :head do %>
-     <%= javascript_include_tag 'admin.js' %>
+     <%= javascript_include_tag 'admin' %>
+     <%= javascript_include_tag 'prototype' %>
+     <%= javascript_include_tag 'scriptaculous' %>
 <%end%>
 <div class = "images">
 	<span id="gor_clothing_<%=gor_clothing.id%>_show_picture">
 		<% image_tag @gor_clothing.images.picture.show_picture%>
 	</span>
-	<% for image in @gor_clothing.images.picture.show_picture  unless @gor_clothing.images.type_of_image == "show_picture" %>
+	<% for image in @gor_clothing.images unless @gor_clothing.images.type_of_image == "show_picture" %>
 	<div class = "collateral_images">
 		<span id = "gor_clothing_images_<%= gor_clothing.id %>">
-			<%= image_tag image.picure.ul if image.picture? %>
+			<%= image_tag image.picture.url if image.picture? %>
 		</span>
 	</div>
 	<%end%>
 	<span class = "image_update">
 		<%= link_to 'Edit', edit_some_admin_images_path(@gor_clothing), remote: true, id: 'edit_some_images' %> |
-		<%= link_to 'Delete', admin_gor_clothing_path(@gor_clothing), method: :delete, remote: true, id: 'destroy_gor_clothing' %> |
-		<%= link_to 'New Piece', new_admin_gor_clothing_path, remote: true, id: 'new_piece' %>
+		<%= link_to 'Add New', new_admin_image_path, remote: true, id: 'new_admin_piece' %>
 	</span>
 </div>
+<!-- 
+<%= link_to 'Delete', admin_gor_clothing_path(@gor_clothing), method: :delete, remote: true, id: 'destroy_gor_clothing' %> |
+		<%= link_to 'New Piece', new_admin_gor_clothing_path, remote: true, id: 'new_piece' %> -->
