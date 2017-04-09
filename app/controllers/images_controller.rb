@@ -13,17 +13,9 @@ class ImagesController < ApplicationController
 		
 	 #  	render Gor_clothing/show
 	 #  end
+
 	def show
 		@image = Gor_clothing.find(params[:gor_clothing_id][:image][:show_picture])
-	end
-		# show.html.erb <% link_to image_tag image.picture, detail_page %>
-	
-	def edit
-		@gor_clothing = Gor_clothing.find(params[:gor_clothing_id])
-		@gor_clothing.images.each do |image|
-			#append destroy_link to images through js
-			# image.
-		end
 	end
 
 	# Finished editing button updates Images
@@ -38,7 +30,25 @@ class ImagesController < ApplicationController
 		@images = @gor_clothing.Images.all
 	end
 
+	def edit_some
+		@gor_clothing = Gor_Clothing.find(params[:gor_clothing_id])
+	end
+
+
 	def destroy
+		@gor_clothing = Gor_Clothing.find(params[:gor_clothing_id])
+		
+		respond_to do |format|
+				format.js {} #collapse .setForDeletion and .icon-destroy-link classes
+		  		format.html {
+		  			if params[:setForDeletion].nil	
+						render detail_gor_clothing_path(@gor_clothing)
+					else
+		  				@images = Image.find(params[:setForDeletion]) #identify which images have setForDeletion
+		  				@images.destroy
+		  				render detail_gor_clothing_path(@gor_clothing)
+		  		}
+		end
 	end
 
 	def preview #show form through js
@@ -47,7 +57,8 @@ class ImagesController < ApplicationController
 		if @gor_clothing.new_record?
 			@image = Image.create({'type_of_image' => params[:type_of_image],
 			 	            'picture' => params[:picture]})
-		elsif @gor_clothing.persisted?
+		else 
+			@gor_clothing.persisted?
 			@image = Image.new({'type_of_image' => params[:type_of_image],
 						  'picture' => params[:picture]})
 			@image.save
