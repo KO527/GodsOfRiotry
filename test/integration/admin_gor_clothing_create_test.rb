@@ -112,11 +112,8 @@ class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
   	get possible_matches_admin_gor_clothing_path(@gor_clothing), xhr: true
   	assert_equal "text/javascript", @response.content_type
   	assert_select "div.possible_match" do
-<<<<<<< HEAD
   		assert_select "span#possible_match_ + %{suggested_piece_id}", @gor_clothing.possible_matches.count
-=======
   		assert_select "span#possible_match_suggested_piece_id", @gor_clothing.possible_matches.count
->>>>>>> b055bd417b045bbf852127ff7ae031bc6124fc45
   		assert_select "i.icon-destroy-link", @gor_clothing.possible_matches.count
   	end
   	assert_select "a[href=?]", admin_possible_matches, text: 'Finished Updating', count: 1
@@ -129,17 +126,13 @@ class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
   	get edit_admin_gor_clothing_path(@gor_clothing), xhr: true
   	assert_equal 'text/javascript', @response.content_type
   	assert_template 'admin/gor_clothing/edit'
-<<<<<<< HEAD
   	assert_equal 'text/javascript', @response.content_type
-=======
->>>>>>> b055bd417b045bbf852127ff7ae031bc6124fc45
   	assert_select("form[action=? AND method=?]", admin_gor_clothing_path, patch) do
   		assert_select "input[name *= gor_clothing[name]][value *= gor_clothing['name']]"
   		assert_select "textarea[name *= gor_clothing[description]][value *= gor_clothing['description']]"
   		assert_select "input[name *= gor_clothing[quantity]][value *= gor_clothing['quantity']]"
   		assert_select "select[name *= gor_clothing[gender]][value *= male][value *= female][value *= androgynous]"
   		assert_select "select[name *= gor_clothing[size]][value *= S][value *= M][value *= L]"
-<<<<<<< HEAD
   		assert_select "select[file_field *= gor_clothing[image][picture]]"
   	end
   end
@@ -147,17 +140,16 @@ class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
   test "should verify that there are destroy links on images after clicking on edit" do
    	log_in_as(@user)
    	assigns(:gor_clothing) = @gor_clothing
+   	get detail_admin_gor_clothing_path(@gor_clothing)
+   	assert_template 'admin/gor_clothing/detail'
    	get edit_some_admin_images_path(@gor_clothing), xhr: true
-   	assert_template 'admin/gor_clothing/%{@gor_clothing.id}/images/edit_some'
+   	assert_template 'admin/gor_clothing/%{gor_clothing.id}/images/edit_some'
    	assert_equal 'text/javascript', @response.content_type
-=======
-  	end
   	assert_select 
   end
 
   test "should verify that there are destroy links on images after clicking on edit" do
 
->>>>>>> b055bd417b045bbf852127ff7ae031bc6124fc45
   end
 
 end
