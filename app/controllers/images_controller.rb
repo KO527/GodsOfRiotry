@@ -1,11 +1,11 @@
 class ImagesController < ApplicationController
 	
-	before_action :admin, only: [:edit, :preview, :new, :create, :update]
+	before_action :admin, only: [:edit, :preview, :new, :create]
 
 	validate :picture_size
 
 	def new
-		@image = Image.new		
+		@image = Image.new
 	end
 
 	 # def create
@@ -15,14 +15,7 @@ class ImagesController < ApplicationController
 	 #  end
 
 	def show
-		@image = Gor_clothing.find(params[:gor_clothing_id][:image][:show_picture])
-	end
-
-	# Finished editing button updates Images
-	def update
-		@image = Images.find(params[:id])
-		@image.update_attributes(Image_params)
-		
+		@image = Gor_Clothing.find(params[:gor_clothing_id][:image][:show_picture])
 	end
 	
 	def index
@@ -32,39 +25,34 @@ class ImagesController < ApplicationController
 
 	def edit_some
 		@gor_clothing = Gor_Clothing.find(params[:gor_clothing_id])
+
+		respond_to do |format|
+			format.js{}
+			format.html{}
+		end
 	end
 
-
+	
 	def destroy
 		@gor_clothing = Gor_Clothing.find(params[:gor_clothing_id])
-		
+		if params[:collateral_images].nil	
+			render detail_gor_clothing_path(@gor_clothing)
+		else
+		  	@images = Image.find(params[:collateral_images]) #identify which images have setForDeletion
+		  	@images.destroy
+		  	render detail_gor_clothing_path(@gor_clothing)
+		end				
 		respond_to do |format|
-				format.js {} #collapse .setForDeletion and .icon-destroy-link classes
-		  		format.html {
-		  			if params[:setForDeletion].nil	
-						render detail_gor_clothing_path(@gor_clothing)
-					else
-		  				@images = Image.find(params[:setForDeletion]) #identify which images have setForDeletion
-		  				@images.destroy
-		  				render detail_gor_clothing_path(@gor_clothing)
-		  		}
+				format.js{} #collapse .setForDeletion and .icon-destroy-link classes
+		  		format.html{}
 		end
 	end
 
 	def preview #show form through js
-		@gor_clothing = Gor_clothing.find(params[:gor_clothing_id])
-
-		if @gor_clothing.new_record?
-			@image = Image.create({'type_of_image' => params[:type_of_image],
-			 	            'picture' => params[:picture]})
-		else 
-			@gor_clothing.persisted?
-			@image = Image.new({'type_of_image' => params[:type_of_image],
-						  'picture' => params[:picture]})
-			@image.save
+		respond_to do |format|
+			format.js{}
+			format.html{}
 		end
-
-		render 'gor_clothing/show'
 	end
 
 	private
