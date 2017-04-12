@@ -1,5 +1,7 @@
 <!-- Javascript action should be affiliated with image preview
- -->	<%= f.fields_for :image do |i| %
+ -->	
+ <%= form_for @gor_clothing, url: [action: "create"], html: {class: "preview_form"} do |f| %> 		#render create action as the form is submitted
+ 	<%= f.fields_for :image do |i| %
 		<% div class = "image_options"%>
 		   <%= i.radio_button :type_of_image, 'show_picture' %>
 		   <%= i.label :type_of_image, "Show Picture" :value => 'show_picture' %>
@@ -11,8 +13,9 @@
 		   <%= i.label :type_of_image, "Model Shot" :value => 'model_shot' %>
 		<%div%>
 		<span class = "content">
-		    <%= image_tag @Gor_clothing.image.picture.url if @Gor_Clothing.image.picture? %>
+		    <%= image_tag i.picture.url if i.picture? %>
 		</span>
 		<%= render 'shared/error_messages', object: i.object %>
 	<%end%>
-
+	<%= f.submit "Create" %>
+<%end%>
