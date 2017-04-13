@@ -11,21 +11,6 @@ class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
 	@phillip = users(:phillip)
   end
 
-  #uploading new images will lead to preview html
-
-  # test "Creating new merchandise will lead to preview html" do
-  # 	get new_admin_gor_clothing_path
-  # 	assert_template 'gor_clothing/new'
-  # 	picture = fixture_file_upload('test/fixtures/flannel.png', 'image/new')
-  # 	post admin_gor_clothing_index_path params: {gor_clothing:{name: 'new flannel shirt', 
-  # 									description: 'The type of shirt that would be excellent for a barbecue',
-  # 									quantity: 6, 
-  # 									gender: male, 
-  # 									size: medium, 
-  # 									image[:picture] => picture }}
-  # 	assert_template 'images/preview'
-  # end
-
 
   test "verifies uploading new piece for first time should lead to preview html and then to possible matches template and subsequently to gor_clothing/show where show_picture type_of_image is present" do
    	log_in_as(@user)
@@ -58,7 +43,7 @@ class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
   end
 
 
-  test "Submitting pre-existing type_of_image entry leads to display of errors" do
+  test "submitting pre-existing type_of_image entry leads to display of errors" do
   	log_in_as(@user)
   	get new_admin_gor_clothing_path
   	assert_template 'admin/gor_clothing/new'
@@ -105,6 +90,7 @@ class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
   test "should verify that there is a destroy link for possible_matches on edit and no destroy_link when finished with editing" do
   	log_in_as(@user)
   	get detail_admin_gor_clothing_path(@gor_clothing)
+    	assigns(:gor_clothing)
   	assert_template 'admin/gor_clothing/detail'
   	assert_response :success
   	assert_select 'a', text: 'delete', count: 1
@@ -122,8 +108,8 @@ class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
 
   test "should verify that there is an edit form for gor_clothing after following edit option" do
   	log_in_as(@user)
-  	assigns(:gor_clothing)	= @gor_clothing
   	get edit_admin_gor_clothing_path(@gor_clothing), xhr: true
+  	assigns(:gor_clothing)
   	assert_equal 'text/javascript', @response.content_type
   	assert_template 'admin/gor_clothing/edit'
   	assert_equal 'text/javascript', @response.content_type
@@ -139,17 +125,13 @@ class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
 
   test "should verify that there are destroy links on images after clicking on edit" do
    	log_in_as(@user)
-   	assigns(:gor_clothing) = @gor_clothing
    	get detail_admin_gor_clothing_path(@gor_clothing)
+   	assigns(:gor_clothing)
    	assert_template 'admin/gor_clothing/detail'
    	get edit_some_admin_images_path(@gor_clothing), xhr: true
-   	assert_template 'admin/gor_clothing/%{gor_clothing.id}/images/edit_some'
+   	assert_template 'images/destroy'
    	assert_equal 'text/javascript', @response.content_type
-  	assert_select 
   end
 
-  test "should verify that there are destroy links on images after clicking on edit" do
-
-  end
-
+  
 end
