@@ -15,27 +15,29 @@ class GorClothingController < ApplicationController
 	     @gor_clothing = Gor_Clothing.new
 	     if @gor_clothing.attribute_present?(:description, :size, :gender, :price, :quantity, :picture)
 	     	@gor_clothing.build(gor_clothing_params)
-	     	then render 'images/preview'
-	     end
+	     		image_preview
+     	     end
 	end
 
 	def create
 	 	@gor_clothing = Gor_Clothing.new(gor_clothing_params)
 	          if @gor_clothing.new_record?
-		 	@image = @gor_clothing.image.create({'type_of_image' => params[:type_of_image],
-		 				     'picture' => params[:picture]})
-		 	@gor_clothing.save
-		 	render detail_admin_gor_clothing_path(@gor_clothing)
+		 	if @gor_clothing.save
+		 		redirect_to detail_admin_gor_clothing_path(@gor_clothing) 
+		 	elsif @gor_clothing.images_attributes.invalid?
+		 		image_preview
+		 	else
+		 		render 'new'
+		 	end
+
 		elsif @gor_clothing.persisted?
-		 	@image = Image.new({'type_of_image' => params[:type_of_image],
-		 				  'picture' => params[:picture]})
-		 	@image.save
-		 	render detail_admin_gor_clothing_path(@gor_clothing)
-		else
-		      	if @gor_clothing.attribute_present?(:description, :size, :gender, :price, :quantity, :picture)
-		      	render 'images/preview'
-		      	#show errors
-		end
+	 		if @gor_clothing.update(:images_attributes => {'type_of_image' => params[:type_of_image],
+	 				  'picture' => params[:picture]})
+	 			redirect_to detail_admin_gor_clothing_path(@gor_clothing)
+	 		else
+	 			image_preview
+	 		end
+		end		
 	end
 	#      	render preview_new_gor_clothing_path
 
