@@ -1,16 +1,5 @@
 <%= form_for @GorClothing, html: {multipart: true} do |f| %>
-  <% if @GorClothing.errors.any? %>
-    <div id="error-explanation">
-    	<h2><%= pluralize(@GorClothing.errors.count, "error")%> prohibited this image from being saved: </h2>
-
-	    <ul>
-	    	<% @GorClothing.error.full_messages each do |message|%>
-	    	   <li><%= message %></li>
-	    	<% end %>
-	    </ul>
-    </div>
-    <%end%>
-
+    <%= render 'shared/error_messages', object: f.object %>
     <div class = "field" >
 	<%= f.label :name %>
 	<%= f.name_field :name %>
