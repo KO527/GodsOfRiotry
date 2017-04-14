@@ -30,7 +30,7 @@ class GorClothing < ActiveRecord::Base
 
 	has_many :images
 	validates_associated :image
-	validates_presence_of :image, accept_if: proc {|attributes| attributes[:type_of_image] == :show_picture}
+	validates_presence_of :image
 	validates_uniqueness_of :image, scope: [:type_of_image]
 	accepts_nested_parameters_for :image, allow_destroy: true, reject_if: proc {|attributes| attributes[:type_of_image] != :show_picture || :first_shot || :back_shot || :model_shot}
 
