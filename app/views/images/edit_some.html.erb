@@ -1,0 +1,10 @@
+<%= form_tag admin_images_path do %>
+	<% @gor_clothing.images.each do |image| %>
+	<span class = "collateral_images_path"%>
+		<span id = "gor_clothing_images_<%= image.type_of_image %>">
+			<%= image_tag image.picture.url if image.picture %>
+		</span>
+	</span>
+	<%end%>
+	<%= link_to 'Finish Editing', admin_images_path(@images), :remote => true, :data => {confirm => "Are you sure you want to delete these?"}, id: 'Finish_Edit' %>k
+<%end%>
