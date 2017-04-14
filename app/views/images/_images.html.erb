@@ -8,11 +8,11 @@
 		<% image_tag @gor_clothing.images.picture.show_picture%>
 	</span>
 	<% for image in @gor_clothing.images unless @gor_clothing.images.type_of_image == "show_picture" %>
-	<div class = "collateral_images">
+	<span class = "collateral_images">
 		<span id = "gor_clothing_images_<%= gor_clothing.id %>">
 			<%= image_tag image.picture.url if image.picture? %>
 		</span>
-	</div>
+	</span>
 	<%end%>
 	<span class = "image_update">
 		<%= link_to 'Edit', edit_some_admin_images_path(@gor_clothing), remote: true, id: 'edit_some_images' %> |

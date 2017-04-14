@@ -13,6 +13,10 @@
 	<%= f.quantity_field %>
     </div>
     <div class = "field">
+	<%= f.label :price %>
+	<%= f.quantity_field %>
+    </div>
+    <div class = "field">
 	<%= f.select(:gender, options_for_select([['M', male]['F', female]['A', androgynous]])) %>
 	<%= f.select(:size, options_for_select([['S', small]['M', medium]['L', large]])) %>
     </div>

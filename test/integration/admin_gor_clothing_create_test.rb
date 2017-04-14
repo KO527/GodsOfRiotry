@@ -90,26 +90,21 @@ class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
   test "should verify that there is a destroy link for possible_matches on edit and no destroy_link when finished with editing" do
   	log_in_as(@user)
   	get detail_admin_gor_clothing_path(@gor_clothing)
-    	assigns(:gor_clothing)
   	assert_template 'admin/gor_clothing/detail'
   	assert_response :success
   	assert_select 'a', text: 'delete', count: 1
   	assert_select 'a', text: 'edit', count: 3
-  	get possible_matches_admin_gor_clothing_path(@gor_clothing), xhr: true
+  	get possible_matches_edit_admin_gor_clothing_path(@gor_clothing), xhr: true
   	assert_equal "text/javascript", @response.content_type
-  	assert_select "div.possible_match" do
-  		assert_select "span#possible_match_ + %{suggested_piece_id}", @gor_clothing.possible_matches.count
-  		assert_select "span#possible_match_suggested_piece_id", @gor_clothing.possible_matches.count
-  		assert_select "i.icon-destroy-link", @gor_clothing.possible_matches.count
-  	end
-  	assert_select "a[href=?]", admin_possible_matches, text: 'Finished Updating', count: 1
+  	assert_select "span#possible_match_" + "%{@gor_clothing.suggested_piece_id}", @gor_clothing.suggested_pieces.count
+  	assert_select "i.icon-destroy-link", @gor_clothing.possible_matches.count
+  	assert_select "a[href=?]", admin_possible_match_path(@gor_clothing, @gor_clothing.suggested_piece_id), text: 'Finished Editing', count: 1
   	#Seed database with clothes and assert there is a difference with gor_clothing.count once we've followed through with updating
   end
 
   test "should verify that there is an edit form for gor_clothing after following edit option" do
   	log_in_as(@user)
   	get edit_admin_gor_clothing_path(@gor_clothing), xhr: true
-  	assigns(:gor_clothing)
   	assert_equal 'text/javascript', @response.content_type
   	assert_template 'admin/gor_clothing/edit'
   	assert_equal 'text/javascript', @response.content_type
@@ -126,12 +121,11 @@ class AdminGorClothingCreateTest < ActionDispatch::IntegrationTest
   test "should verify that there are destroy links on images after clicking on edit" do
    	log_in_as(@user)
    	get detail_admin_gor_clothing_path(@gor_clothing)
-   	assigns(:gor_clothing)
    	assert_template 'admin/gor_clothing/detail'
    	get edit_some_admin_images_path(@gor_clothing), xhr: true
    	assert_template 'images/destroy'
    	assert_equal 'text/javascript', @response.content_type
   end
 
-  
+
 end

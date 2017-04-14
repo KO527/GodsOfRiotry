@@ -1,6 +1,4 @@
-<!-- Javascript action should be affiliated with image preview
- -->	
- <%= form_for @gor_clothing, url: [action: "create"], html: {class: "preview_form"} do |f| %> 		#render create action as the form is submitted
+<%= form_for @gor_clothing, url: [action: "create"], html: {class: "preview_form"} do |f| %>
  	<%= f.fields_for :image do |i| %
 		<% div class = "image_options"%>
 		   <%= i.radio_button :type_of_image, 'show_picture' %>
