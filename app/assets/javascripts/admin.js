@@ -14,7 +14,6 @@ $('document').ready(function(){
 	});
 	$('#edit_some_images').on('click', function(e){
 		append_destroy_links('#edit_some_images', '#gor_clothing_images');
-		$("<%= escape_javascript(render('images/_images_finish_edit')) %>").insertAfter('#edit_some_images');
 	});
 	$('i.icon-destroy-link').on('click', function(e){
 		$(this).addClass('set-for-deletion');
@@ -29,10 +28,12 @@ $('document').ready(function(){
 var deleteSetForDeletion = function(){
 	$.ajax({
 		type: 'DELETE',
-		url: '/admin/gor_clothing/:id/images/:id',
+		url: '/admin/gor_clothing/:id/images',
 		data: {
-		          destroy_link_icons: document.getElementsByClassName('icon-destroy-link'),
-			collateral_images: $('collateral_images').has('i.set-for-deletion') //All Elements with ClassName collateral-images and set-for-deletion
+			destroy_link_icons: document.getElementsByClassName('icon-destroy-link'),
+			collateral_images: $('i.set-for-deletion').siblings('#gor_clothing_images_<%= gor_clothing.id %>'),
+			collateral_images_parent: $('.collateral_images').has('i.set-for-deletion') //All Elements with ClassName collateral-images and set-for-deletion
+
 		},
 		success: function(data){
 			$(data).each(function(){
@@ -41,8 +42,6 @@ var deleteSetForDeletion = function(){
 			});
 		}	//remove 
 		// error: function(data){
-			
-
 		// }
-		});
+	});
 };
