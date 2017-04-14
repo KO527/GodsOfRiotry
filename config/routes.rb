@@ -105,9 +105,12 @@
   		member do
   			get '/detail' => 'gor_clothing#detail'
   			get '/possible_matches/edit' => 'possible_matches#edit' #How does two different actions with the same URI differ so that the response knows one action should be the default action?
-  			resources :possible_matches, except: [:show, :edit]
+  			resources :possible_matches, except: [:show, :edit] do
+  				match :destroy, to: 'possible_matches#destroy', via: [:delete], on: :collection
+  			end
   			resources :images, except: [:edit, :update] do
   				match :edit_some, to: 'images#edit_some', via: [:get], on: :collection #Figure out relationship between update and destroy for edit_some
+  				match :destroy, to: 'images#destroy', via: [:delete], on: :collection
   				get :preview, on: :new
   			end
   		end
@@ -120,7 +123,7 @@
   	resources :users do
   		member do
 			resources :playlists, only: [:create, :destroy, :show, :index]
-			resources :gor_clothing # Designed to specifically check what user enjoys
+			resources :gor_clothing, except: [:destroy, :create, :edit, :new] # Designed to specifically check what user enjoys
   		end
 	end
 
