@@ -10,19 +10,23 @@
     </div>
     <div class = "field">
 	<%= f.label :quantity %>
-	<%= f.quantity_field %>
+	<%= f.quantity_field :quantity%>
     </div>
     <div class = "field">
 	<%= f.label :price %>
-	<%= f.quantity_field %>
+	<%= f.price_field :price%>
     </div>
     <div class = "field">
+	<%= f.label :gender %>
 	<%= f.select(:gender, options_for_select([['M', male]['F', female]['A', androgynous]])) %>
+    </div>
+    <div class = "field">
+	<%= f.label :size %>
 	<%= f.select(:size, options_for_select([['S', small]['M', medium]['L', large]])) %>
     </div>
-    <%= f.fields_for :image do |i| %
+    <%= f.fields_for :image do |i| %>
 	<span class = "picture">
-		   <%= i.file_field :picture, accept: 'image/jpeg, image/gif, image/png' %>
+		<%= i.file_field :picture, accept: 'image/jpeg, image/gif, image/png' %>
 	</span>
     <%end%>
 <%end%>
