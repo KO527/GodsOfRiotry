@@ -1,12 +1,7 @@
-<% content_for :head do %>
-     <%= javascript_include_tag 'admin' %>
-     <%= javascript_include_tag 'prototype' %>
-     <%= javascript_include_tag 'scriptaculous' %>
-<%end%>
 <div class = "possible_matches">
 	<h2>Possible Matches</h2> | 
 	<span class="subtle">
-		<%= link_to "Edit", possible_matches_edit_admin_gor_clothing_path(@gor_clothing, @possible_matches), remote: true, id: 'edit_possible_matches' %>
+		<%= link_to "Edit", possible_matches_edit_admin_gor_clothing_path(@gor_clothing, @possible_matches), remote: true, data: {type: :json}, id: 'edit_possible_matches' %>
 	</span>
 	<% for suggested_piece in @gor_clothing.suggested_pieces %>
 	<div class = "possible_match">

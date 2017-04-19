@@ -1,6 +1,10 @@
 <% form_tag admin_possible_matches_path(@gor_clothing) do %>
-	<% @possible_matches.each do |possible_match| %>
-		<%= image_tag possible_match.picture.url if possible_match.picture?, class: 'possible_match_display' %>
+	<% @possible_matches.each do |suggested_piece| %>
+		<div class = "possible_match">
+			<span id="possible_match_<%= suggested_piece.id %>">
+				<%= image_tag suggested_piece.picture.url if suggested_piece.picture?, class: 'possible_match_display' %>
+			</span>
+		</div>
 	<%end%>
 <%end%>
 
