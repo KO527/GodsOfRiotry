@@ -1,7 +1,7 @@
 class GorClothingController < ApplicationController
 	before_action :logged_in_user
 	before_action :admin, only: [:update, :edit, :new, :create, :destroy, :detail]
-
+	respond_to :html, :js
 
 	def index
 	     @gor_clothings = Gor_Clothing.all
@@ -31,7 +31,7 @@ class GorClothingController < ApplicationController
 		 	end
 
 		elsif @gor_clothing.persisted?
-	 		if @gor_clothing.update(:images_attributes => {'type_of_image' => params[:type_of_image],
+	 		if @gor_clothing.create(:images_attributes => {'type_of_image' => params[:type_of_image],
 	 				  'picture' => params[:picture]})
 	 			redirect_to detail_admin_gor_clothing_path(@gor_clothing)
 	 		else
@@ -44,6 +44,16 @@ class GorClothingController < ApplicationController
 
 	def edit
 	     @gor_clothing = Gor_Clothing.find(params[:id])	      #render edit page
+	     respond_with do |format|
+	     	format.html do
+	     		if request.xhr?
+	     			render :partial => 'gor_clothing/edit'
+	     		else
+	     			redirect_to @gor_clothing
+	     		end
+	     	end
+	     	format.js {}
+	     end
 	end
 
 	def update
@@ -65,18 +75,36 @@ class GorClothingController < ApplicationController
 	
 	def detail
 		@gor_clothing = Gor_Clothing.find(params[:id])
+		if current_user.gender == :female
+			@gor_clothing_next = @gor_clothing.next_female
+			@gor_clothing_previous = @gor_clothing.previous_female
+		elsif current_user.gender == :male
+			@gor_clothing_next = @gor_clothing.next_male
+			@gor_clothing_previous = @gor_clothing.previous_male
+		end
 	end
 
 	private
 
+		def next_male
+  			Gor_Clothing.where("gor_clothings.id > ? AND gor_clothings.gender = ?", self.id, male).order("gor_clothings.id ASC")
+		end
+
+		def previous_male
+ 			Gor_Clothing.where("gor_clothings.id < ? AND gor_clothings.gender = ?", self.id, male).order("gor_clothings.id DESC")
+		end
+
+		def next_female
+			Gor_Clothing.where("gor_clothings.id > ? AND gor_clothings.gender = ?", self.id, female).order("gor_clothings.id ASC")
+		end
+
+		def previous_female
+		 	Gor_Clothing.where("gor_clothings.id < ? AND gor_clothings.gender = ?", self.id, female).order("gor_clothings.id DESC")
+		end
+
 		def gor_clothing_params
 		    params.require(:Gor_Clothing).permit(:price, :description, :quantity, :gender, :size, images_attributes: [:picture, :type_of_image, :_destroy])
-		end
+		end	
 
 end
 
-
-
-
-
- 
