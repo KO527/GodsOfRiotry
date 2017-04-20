@@ -5,6 +5,14 @@ class GorClothingController < ApplicationController
 
 	def index
 	     @gor_clothings = Gor_Clothing.all
+	     @gor_clothing = Gor_Clothing.find(params[:id])
+		if current_user.gender == :female
+			@gor_clothing_next = @gor_clothing.next_female
+			@gor_clothing_previous = @gor_clothing.previous_female
+		elsif current_user.gender == :male
+			@gor_clothing_next = @gor_clothing.next_male
+			@gor_clothing_previous = @gor_clothing.previous_male
+		end
 	end
 
 	def show #js Show details Price and Description
@@ -60,7 +68,7 @@ class GorClothingController < ApplicationController
 		@gor_clothing = Gor_Clothing.find(params[:id])
 		if @gor_clothing.update(gor_clothing_params)
 			flash[:success] = "Successful upload"
-			render detail_admin_gor_clothing_path(@gor_clothing)
+			render admin_gor_clothing_index_path
 		else
 			render 'edit'
 		end
@@ -75,32 +83,10 @@ class GorClothingController < ApplicationController
 	
 	def detail
 		@gor_clothing = Gor_Clothing.find(params[:id])
-		if current_user.gender == :female
-			@gor_clothing_next = @gor_clothing.next_female
-			@gor_clothing_previous = @gor_clothing.previous_female
-		elsif current_user.gender == :male
-			@gor_clothing_next = @gor_clothing.next_male
-			@gor_clothing_previous = @gor_clothing.previous_male
-		end
 	end
 
 	private
 
-		def next_male
-  			Gor_Clothing.where("gor_clothings.id > ? AND gor_clothings.gender = ?", self.id, male).order("gor_clothings.id ASC")
-		end
-
-		def previous_male
- 			Gor_Clothing.where("gor_clothings.id < ? AND gor_clothings.gender = ?", self.id, male).order("gor_clothings.id DESC")
-		end
-
-		def next_female
-			Gor_Clothing.where("gor_clothings.id > ? AND gor_clothings.gender = ?", self.id, female).order("gor_clothings.id ASC")
-		end
-
-		def previous_female
-		 	Gor_Clothing.where("gor_clothings.id < ? AND gor_clothings.gender = ?", self.id, female).order("gor_clothings.id DESC")
-		end
 
 		def gor_clothing_params
 		    params.require(:Gor_Clothing).permit(:price, :description, :quantity, :gender, :size, images_attributes: [:picture, :type_of_image, :_destroy])
