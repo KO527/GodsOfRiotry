@@ -2,19 +2,19 @@
     <%= render 'shared/error_messages', object: f.object %>
     <div class = "field" >
 	<%= f.label :name %>
-	<%= f.name_field :name %>
+	<%= f.text_field :name %>
     <div>
     <div class = "field">
 	<%= f.label :description %>
-	<%= f.description_field :description %>
+	<%= f.text_area :description %>
     </div>
     <div class = "field">
 	<%= f.label :quantity %>
-	<%= f.quantity_field :quantity%>
+	<%= f.text_field :quantity%>
     </div>
     <div class = "field">
 	<%= f.label :price %>
-	<%= f.price_field :price%>
+	<%= f.text_field :price%>
     </div>
     <div class = "field">
 	<%= f.label :gender %>
