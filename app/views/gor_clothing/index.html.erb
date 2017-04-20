@@ -1,0 +1,16 @@
+<% content_for :head do %>
+     <%= javascript_include_tag 'admin' %>
+     <%= javascript_include_tag 'prototype' %>
+     <%= javascript_include_tag 'scriptaculous' %>
+<%end%>
+<div class = 'merchandise_nav'>
+	<% if current_user.gender == :male %>
+		<%= link_to 'Next', @gor_clothing_next, remote: true, id: 'next_piece' %>
+		<%= link_to 'Previous', @gor_clothing_previous, remote: true, id: 'previous_piece' %>
+	<%end%>
+	<% if current_user.gender == :female %>
+		<%= link_to 'Next', @gor_clothing_next, remote: true, id: 'next_piece' %>
+		<%= link_to 'Previous', @gor_clothing_previous, remote: true, id: 'previous_piece' %>
+	<%end%>
+</div>
+<section id = 'main-content'></section>
