@@ -1,0 +1,6 @@
+var possible_matches = $('.possible_matches');
+<% if @gor_clothing.contemplated_piece? && @gor_clothing.suggested_pieces.any? %>
+	possible_matches.html("<%= escape_javascript(render('possible_matches/index'))%>");
+<%else%>
+	possible_matches.html('');
+<%end%>

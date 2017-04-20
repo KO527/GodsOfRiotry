@@ -1,0 +1,19 @@
+var el = $('#merchandise_nav');
+
+<% if @gor_clothing_next.any? %>
+ $('#next_piece').on('click', function(){
+ 	el.html('');
+ 	el.html("<%= @gor_clothing_next.limit(1)%>");
+});
+ <%else%>
+el.find('#next_piece').html('');
+<%end%>
+
+<% if @gor_clothing_previous.any? %>
+ $('previous_piece').on('click', function(){
+ 	el.html('');
+ 	el.html("<%= @gor_clothing_previous.limit(1)%>");
+ });
+ <%else%>
+ el.find('#previous_piece').html('');
+ <%end%>
