@@ -9,7 +9,7 @@
 <div class = 'gor_clothing_update'>
 	<%= link_to 'Edit', edit_admin_gor_clothing_path(@gor_clothing), remote: true, id: 'edit_piece' %> |
 	<%= link_to 'New Piece', new_admin_gor_clothing_path, remote: true, id: 'new_piece' %> |
-	<%= link_to 'Delete', admin_gor_clothing_path(@gor_clothing), method: :delete, remote: true, id: 'destroy_gor_clothing' %> |
+	<%= link_to 'Delete', admin_gor_clothing_path(@gor_clothing), method: :delete, remote: true, id: 'destroy_gor_clothing' %>
 </div>
 <div class = 'possible_matches'>
 	<%= render 'possible_matches/index' %>
