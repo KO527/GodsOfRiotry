@@ -5,7 +5,7 @@
 <%end%>
 <div class = "images">
 	<span id="gor_clothing_<%=gor_clothing.id%>_show_picture">
-		<% image_tag @gor_clothing.images.picture.show_picture if image.picture.show_picture %>
+		<% image_tag @gor_clothing.images.picture.show_picture if image.picture.show_picture? %>
 	</span>
 	<% for image in @gor_clothing.images unless @gor_clothing.images.type_of_image == "show_picture" %>
 	<span class = "collateral_images">
@@ -15,10 +15,8 @@
 	</span>
 	<%end%>
 	<span class = "image_update">
+		<span class = 'finish_image_update'></span>
 		<%= link_to 'Edit', edit_some_admin_images_path(@gor_clothing), remote: true, data: {type: :json}, id: 'edit_some_images' %> |
 		<%= link_to 'Add New', new_admin_image_path, remote: true, data: {type: :json}, id: 'new_admin_piece' %>
 	</span>
 </div>
-<!-- 
-<%= link_to 'Delete', admin_gor_clothing_path(@gor_clothing), method: :delete, remote: true, id: 'destroy_gor_clothing' %> |
-		<%= link_to 'New Piece', new_admin_gor_clothing_path, remote: true, id: 'new_piece' %> -->
