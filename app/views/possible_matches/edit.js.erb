@@ -1,0 +1,9 @@
+var destroy_link = $('.icon_destroy_link');
+var poss = $('.possible_matches').find('span');
+var edit = $('#edit_possible_matches');
+
+("<%= escape_javascript(render('possible_matches/destroy'))%>").insertBefore(poss);
+
+destroy_link.on('click', function(){
+	$(this).addClass('set-for-deletion');
+});
