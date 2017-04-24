@@ -8,21 +8,38 @@ function append_destroy_links(id_clicked_on, targetElement){
 		});
 	});
 }
-$('document').ready(function(){
-	$('#edit_possible_matches').on('click', function(e){
-		append_destroy_links('#edit_possible_matches', '#possible_matches');
-	});
-	$('#edit_some_images').on('click', function(e){
-		append_destroy_links('#edit_some_images', '#gor_clothing_images');
-	});
-	$('i.icon-destroy-link').on('click', function(e){
-		$(this).addClass('set-for-deletion');
-	});
 
-	$('#Finish_Edit').on('click', deleteSetForDeletion, function(){
-		$("<%= escape_javascript(render('images/_images_finish_edit')) %>").detach();
-	});
-	// $('#new_piece').prompt some new file pop_up window
+$finish = $('#Finish');
+$finish_image_update = $('.image_update').find('.finish_image_update');
+$finish_image_edit = $('image_update').find('.finish_image_edit')
+
+$('document').ready(function(){
+
+$('#edit_possible_matches').on('click', function(e){
+		append_destroy_links('#edit_possible_matches', '#possible_matches');
+		if $finish.html(''){
+			$finish.html(" | " + "<%= escape_javascript(render('possible_matches/_finish_edit')) %>");
+		}
+		else {
+			$finish.remove();
+		}
+});
+
+$('#edit_some_images').on('click', function(e){
+	append_destroy_links('#edit_some_images', '#gor_clothing_images');
+	if $finish_image_update.html(''){
+		$finish_image_update.html("<%= escape_javascript(render('images/_images_finish_edit'))%>" + " | ");
+	}
+});
+
+$('i.icon-destroy-link').on('click', function(e){
+	$(this).addClass('set-for-deletion');
+});
+
+$finish_image_edit.on('click', deleteSetForDeletion(), function(){
+	finish_image_update.remove();
+});
+
 });
 
 var deleteSetForDeletion = function(){
@@ -33,7 +50,6 @@ var deleteSetForDeletion = function(){
 			destroy_link_icons: document.getElementsByClassName('icon-destroy-link'),
 			collateral_images: $('i.set-for-deletion').siblings('#gor_clothing_images_<%= gor_clothing.id %>'),
 			collateral_images_parent: $('.collateral_images').has('i.set-for-deletion') //All Elements with ClassName collateral-images and set-for-deletion
-
 		},
 		success: function(data){
 			$(data).each(function(){
