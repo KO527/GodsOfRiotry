@@ -1,5 +1,6 @@
 class ImagesController < ApplicationController
-	
+	respond_to :html, :json
+
 	before_action :admin, only: [:edit, :preview, :new, :create]
 
 	validate :picture_size
@@ -8,14 +9,9 @@ class ImagesController < ApplicationController
 		@image = Image.new
 	end
 
-	 # def create
-	 #  	@image = Image.new(Image_params)
-		
-	 #  	render Gor_clothing/show
-	 #  end
-
 	def show
-		@image = Gor_Clothing.find(params[:gor_clothing_id][:image][:show_picture])
+		@gor_clothing = Gor_Clothing.find(params[:gor_clothing_id])
+		@image = @gor_clothing.Images.where(type_of_image: :show_picture)
 	end
 	
 	def index
@@ -25,34 +21,22 @@ class ImagesController < ApplicationController
 
 	def edit_some
 		@gor_clothing = Gor_Clothing.find(params[:gor_clothing_id])
-
-		respond_to do |format|
-			format.js{}
-			format.html{}
-		end
 	end
 
-	
 	def destroy
+		#respond_with js, html
 		@gor_clothing = Gor_Clothing.find(params[:gor_clothing_id])
 		if params[:collateral_images].nil	
 			render detail_gor_clothing_path(@gor_clothing)
 		else
-		  	@images = Image.find(params[:collateral_images]) #identify which images have setForDeletion
+		  	@images = Image.where(:type_of_image => params[:collateral_images]) #identify which images have setForDeletion
 		  	@images.destroy
 		  	render detail_gor_clothing_path(@gor_clothing)
-		end				
-		respond_to do |format|
-				format.js{} #collapse .setForDeletion and .icon-destroy-link classes
-		  		format.html{}
 		end
 	end
 
 	def preview #show form through js
-		respond_to do |format|
-			format.js{}
-			format.html{}
-		end
+		@gor_clothing = Gor_Clothing.find(params[:gor_clothing_id])
 	end
 
 	private
