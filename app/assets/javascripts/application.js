@@ -17,5 +17,7 @@
  *= require jquery 
  *= require jquery_ujs
  *= require_self
- *= requre admin
+ *= requre ./admin/admin
+ *= require ./admin/possible_matches
+ *= require ./admin/gor_clothing_images
  */

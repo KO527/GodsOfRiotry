@@ -1,0 +1,45 @@
+function append_destroy_links(id_clicked_on, targetElement){
+	$(id_clicked_on).bind("ajax.success", function(event, data){
+		$(data).each(function(){
+			if (targetElement == '#possible_matches')
+				$("<%= escape_javascript(render('possible_matches/destroy')) %>").insertBefore(targetElement + '_' + this.id);
+			else if (targetElement == '#gor_clothing_images')
+				$("<%= escape_javascript(render('images/destroy'))%>").insertBefore(targetElement + '_' + this.type_of_image);
+		})
+		.bind("ajax.error", function(event, xhr, status, data){
+			if (targetElement == "#possible_matches"){
+				(function(){
+					$partial = $('possible_matches');
+				}());
+			}
+			else if (targetElement == "#gor_clothing_images"){
+				(function(){
+					$partial = $('images');
+				}());
+			}
+							
+
+			var $el = $(this), errors, errorText;
+
+			try{
+				errors = $.parseJSON(xhr.responseText);
+			} catch(err) {
+				errors = {message: "Please reload the page and try again"};
+			}
+
+			errorText = "There were errors with the submission: \n<ul>";
+
+			for (var error in errors){
+				errorText += "<li>" + error + ': ' + errors[error] + "</li> ";
+			}
+
+			errorText += "</ul>";
+
+			$partial.find('div.validation-error').html(errorText);
+		});
+	});
+}
+
+
+
+ 
