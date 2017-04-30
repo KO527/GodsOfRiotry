@@ -7,7 +7,7 @@ $(document).ready(function(){
 					$finish.html(" | " + "<%= escape_javascript(render('possible_matches/_finish_edit')) %>");
 				}
 				else {
-					$finish. remove();
+					$finish.remove();
 				}
 	});
 
@@ -17,7 +17,12 @@ $(document).ready(function(){
 });
 
 var deleteGORPossMatchesSetForDeletion = function(){
-	$.ajax({
+	$.ajax(beforeSend: function(xhr, settings) {
+    		if ( settings.dataType == undefined ) {
+        			xhr.setRequestHeader("*/*;q=0.5, text/javascript", "application/javascript");
+    		}
+    			return fire(element, 'ajax:beforeSend', xhr);
+		},{
 		type: 'DELETE',
 		url: '/admin/gor_clothing/:id/possible_matches',
 		data: {
@@ -28,13 +33,12 @@ var deleteGORPossMatchesSetForDeletion = function(){
 		context: collateral_images_parent,
 		success: function(evt, data, status, xhr){
 				 new Effect.Parallel([
-    					new Effect.Move($(this), { sync: true, x: 400, y: 0, mode: 'relative' }), 
+    					new Effect.Move($(this), { sync: true, x: 400, y: 0, mode: 'relative' }),
     					new Effect.Opacity($(this), { sync: true, from: 1, to: 0 })
-  				], { 
-    					 duration: 1.5
-  				});
-					$(this).remove();
+  				],{ 
+    					duration: 1.5
 				});
-		};
-	})
-}
+					$(this).remove();
+		}
+	});
+};

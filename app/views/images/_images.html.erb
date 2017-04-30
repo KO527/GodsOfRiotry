@@ -4,12 +4,13 @@
      <%= javascript_include_tag 'scriptaculous' %>
 <%end%>
 <div class = "images">
+	<div class = "validation-error"></div>
 	<span id="gor_clothing_<%=gor_clothing.id%>_show_picture">
 		<% image_tag @gor_clothing.images.picture.show_picture if image.picture.show_picture? %>
 	</span>
 	<% for image in @gor_clothing.images unless @gor_clothing.images.type_of_image == "show_picture" %>
 	<span class = "collateral_images">
-		<span id = "gor_clothing_images_<%= gor_clothing.id %>">
+		<span id = "images_<%= image.type_of_image %>">
 			<%= image_tag image.picture.url if image.picture? %>
 		</span>
 	</span>

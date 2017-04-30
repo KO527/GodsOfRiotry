@@ -1,7 +1,7 @@
 <%= form_tag admin_images_path do %>
 	<% @gor_clothing.images.each do |image| %>
 	<span class = "collateral_images_path"%>
-		<span id = "gor_clothing_images_<%= image.type_of_image %>">
+		<span id = "images_<%= image.type_of_image %>">
 			<%= image_tag image.picture.url if image.picture? %>
 		</span>
 	</span>
