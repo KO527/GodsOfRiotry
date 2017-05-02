@@ -1,8 +1,8 @@
 class ImagesController < ApplicationController
-	respond_to :html, :json
+	respond_to :js
 
 	before_action :admin, only: [:edit, :preview, :new, :create]
-
+	before_action :find_clothing, only: [:index, :show, :edit_some, :destroy, :preview]
 	validate :picture_size
 
 	def new
@@ -26,12 +26,12 @@ class ImagesController < ApplicationController
 	def destroy
 		#respond_with js, html
 		@gor_clothing = Gor_Clothing.find(params[:gor_clothing_id])
+	 	@images = Image.where(:type_of_image => params[:collateral_images]) #identify which images have setForDeletion
 		if params[:collateral_images].nil	
-			render detail_gor_clothing_path(@gor_clothing)
+			respond_with(@gor_clothing)
 		else
-		  	@images = Image.where(:type_of_image => params[:collateral_images]) #identify which images have setForDeletion
 		  	@images.destroy
-		  	render detail_gor_clothing_path(@gor_clothing)
+		  	redirect_to detail_gor_clothing_path(@gor_clothing)
 		end
 	end
 
@@ -41,7 +41,10 @@ class ImagesController < ApplicationController
 
 	private
 
-		
+		def find_clothing
+			@gor_clothing = Gor_Clothing.find(params[:gor_clothing_id])
+		end
+
 		def Image_params
 			params.require(:Image).permit(:type_of_image, :picture)
 		end
