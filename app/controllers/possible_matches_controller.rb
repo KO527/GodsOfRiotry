@@ -1,17 +1,27 @@
 class PossibleMatchesController < ApplicationController
-	before_action :contemplated_piece
-	before_action :contemplated_pieces
+	before_action :contemplated_piece, only: [:destroy]
+	before_action :admin, only: [:new, :edit, :destroy]
+	# before_action :contemplated_pieces
 	respond_to :js, :html
 
 	def new
-		@possible_matches = Gor_clothing.all
+		# @gor_clothings = Gor_Clothing.all
+		# if @gor_clothing.
+		# 	@possible_matches = Gor_clothing.all
+		# else
 	end
-	
-	def index 
+
+	def create
+		
+	end
+
+	def index
+
 	end
 	
 	def edit
-		respond_with(@possible_matches)
+		@possible_matches = @gor_clothing.suggested_pieces(:all)
+		respond_with(@gor_clothing, @possible_matches, location: detail_gor_clothing_path(@gor_clothing))
 	end
 
 	def update
@@ -22,8 +32,8 @@ class PossibleMatchesController < ApplicationController
 		@possible_matches_selected = PossibleMatch.where(:suggested_pieces => params[:collateral_images]) #identify which images have setForDeletion
 		if @possible_matches_selected.destroy
 			flash[:notice] = "Selected possible matches destroyed"
-			respond_with(@gor_clothing, @possible_matches, :action => possible_matches_edit_admin_gor_clothing(@gor_clothing, @possible_matches_selected))
 		end
+ 		respond_with(@gor_clothing, location: detail_gor_clothing_path(@gor_clothing))
 	end
 
 	private
