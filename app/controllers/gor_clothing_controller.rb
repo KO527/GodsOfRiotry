@@ -1,11 +1,11 @@
 class GorClothingController < ApplicationController
 	before_action :logged_in_user
 	before_action :admin, only: [:update, :edit, :new, :create, :destroy, :detail]
+	before_action :find_clothing, only: [:index, :show, :edit, :update, :destroy, :detail]
 	respond_to :html, :js
 
 	def index
 	     @gor_clothings = Gor_Clothing.all
-	     @gor_clothing = Gor_Clothing.find(params[:id])
 		if current_user.gender == :female
 			@gor_clothing_next = @gor_clothing.next_female
 			@gor_clothing_previous = @gor_clothing.previous_female
@@ -13,10 +13,10 @@ class GorClothingController < ApplicationController
 			@gor_clothing_next = @gor_clothing.next_male
 			@gor_clothing_previous = @gor_clothing.previous_male
 		end
+		respond_with(@gor_clothings) #error => no gor_clothings
 	end
 
 	def show #js Show details Price and Description
-	     @gor_clothing = Gor_Clothing.find(params[:id])
 	end
 
 	def new
@@ -51,7 +51,6 @@ class GorClothingController < ApplicationController
 
 
 	def edit
-	     @gor_clothing = Gor_Clothing.find(params[:id])	      #render edit page
 	     respond_with do |format|
 	     	format.html do
 	     		if request.xhr?
@@ -65,7 +64,6 @@ class GorClothingController < ApplicationController
 	end
 
 	def update
-		@gor_clothing = Gor_Clothing.find(params[:id])
 		if @gor_clothing.update(gor_clothing_params)
 			flash[:success] = "Successful upload"
 			render admin_gor_clothing_index_path
@@ -75,18 +73,19 @@ class GorClothingController < ApplicationController
 	end
 
 	def destroy
-		@gor_clothing = Gor_Clothing.find(params[:id])
 		@gor_clothing.destroy
 
 		redirect_to admin_gor_clothing_index_path
 	end
 	
 	def detail
-		@gor_clothing = Gor_Clothing.find(params[:id])
 	end
 
 	private
 
+		def find_clothing
+			@gor_clothing = Gor_Clothing.find(params[:id])
+		end
 
 		def gor_clothing_params
 		    params.require(:Gor_Clothing).permit(:price, :description, :quantity, :gender, :size, images_attributes: [:picture, :type_of_image, :_destroy])
