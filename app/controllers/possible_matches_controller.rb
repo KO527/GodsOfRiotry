@@ -1,5 +1,5 @@
 class PossibleMatchesController < ApplicationController
-	before_action :contemplated_piece, only: [:destroy]
+	before_action :contemplated_piece, only: [:edit, :destroy]
 	before_action :admin, only: [:new, :edit, :destroy]
 	# before_action :contemplated_pieces
 	respond_to :js, :html
@@ -21,7 +21,7 @@ class PossibleMatchesController < ApplicationController
 	
 	def edit
 		@possible_matches = @gor_clothing.suggested_pieces(:all)
-		respond_with(@gor_clothing, @possible_matches, location: detail_gor_clothing_path(@gor_clothing))
+		respond_with(@gor_clothing, @possible_matches, location: admin_gor_clothing_index_path)
 	end
 
 	def update
@@ -33,7 +33,7 @@ class PossibleMatchesController < ApplicationController
 		if @possible_matches_selected.destroy
 			flash[:notice] = "Selected possible matches destroyed"
 		end
- 		respond_with(@gor_clothing, location: detail_gor_clothing_path(@gor_clothing))
+ 		respond_with(@gor_clothing, location: admin_gor_clothing_index_path)
 	end
 
 	private

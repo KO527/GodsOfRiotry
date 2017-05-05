@@ -23,8 +23,9 @@ class ImagesController < ApplicationController
 	def destroy
 		#respond_with js, html
 	 	@images = Image.where(:type_of_image => params[:collateral_images]) #identify which images have setForDeletion
-		if params[:collateral_images].nil	
-			render detail_gor_clothing_path(@gor_clothing)
+		if params[:collateral_images].nil
+			@images = @gor_clothing.Images.all	
+			render admin_gor_clothing_index_path
 		else
 		  	@images.destroy
 		  	respond(@gor_clothing, action: :edit_some)

@@ -13,7 +13,7 @@ class GorClothingController < ApplicationController
 			@gor_clothing_next = @gor_clothing.next_male
 			@gor_clothing_previous = @gor_clothing.previous_male
 		end
-		respond_with(@gor_clothings) #error => no gor_clothings
+		respond_with(@gor_clothing, location: admin_gor_clothing_index_path)
 	end
 
 	def show #js Show details Price and Description
@@ -51,22 +51,13 @@ class GorClothingController < ApplicationController
 
 
 	def edit
-	     respond_with do |format|
-	     	format.html do
-	     		if request.xhr?
-	     			render :partial => 'gor_clothing/edit'
-	     		else
-	     			redirect_to @gor_clothing
-	     		end
-	     	end
-	     	format.js {}
-	     end
+	     respond_with(@gor_clothing, edit_admin_gor_clothing_path(@gor_clothing))
 	end
 
 	def update
 		if @gor_clothing.update(gor_clothing_params)
 			flash[:success] = "Successful upload"
-			render admin_gor_clothing_index_path
+			redirect_to admin_gor_clothing_index_path
 		else
 			render 'edit'
 		end
@@ -79,6 +70,7 @@ class GorClothingController < ApplicationController
 	end
 	
 	def detail
+		respond_with(@gor_clothing, location: admin_gor_clothing_index_path) # gor_clothing index should include detail
 	end
 
 	private
