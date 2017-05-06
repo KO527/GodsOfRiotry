@@ -1,20 +1,24 @@
 $finish = $('#Finish');
+$finish_edit = $('#finish_edit_matches');
 
 $(document).ready(function(){
-	$('#edit_possible_matches').on('click', function(e){
-				append_destroy_links('#edit_possible_matches', '#possible_matches');
-				if ($finish.html('')){
-					$finish.html(" | " + "<%= escape_javascript(render('possible_matches/_finish_edit')) %>");
-				}
-				else {
-					$finish.remove();
-				}
-	});
-
+	append_destroy_links('#edit_possible_matches', '#possible_matches');
+	if ($finish.html('')){
+		$finish.html(" | " + "<%= escape_javascript(render('possible_matches/_finish_edit')) %>");
+	}
+	else {
+		$finish.remove();
+	}
 	$('i.icon-destroy-link').on('click', function(e){
 		$(this).addClass('set-for-deletion');
 	});
+
+	$finish_edit.on('click', deleteGORPossMatchesSetForDeletion, function(){
+		$finish.html('');
+	});
 });
+
+	
 
 var deleteGORPossMatchesSetForDeletion = function(){
 	$.ajax(beforeSend: function(xhr, settings) {
@@ -24,7 +28,7 @@ var deleteGORPossMatchesSetForDeletion = function(){
     			return fire(element, 'ajax:beforeSend', xhr);
 		},{
 		type: 'DELETE',
-		url: '/admin/gor_clothing/:id/possible_matches',
+		url: 'admin/gor_clothing/:id/possible_matches',
 		data: {
 			destroy_link_icons: document.getElementsByClassName('icon-destroy-link'),
 			collateral_images: $('i.set-for-deletion').siblings('#possible_match_<%= suggested_piece.id %>'),
