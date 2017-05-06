@@ -1,13 +1,15 @@
 <% content_for :head do %>
-     <%= javascript_include_tag 'admin' %>
+     <%= javascript_include_tag 'admin/admin' %>
      <%= javascript_include_tag 'prototype' %>
      <%= javascript_include_tag 'scriptaculous' %>
 <%end%>
 <div class = "possible_matches">
+	<div class = "validation-error"></div>
 	<h2>Possible Matches</h2> | 
 	<span class="subtle">
-		<%= link_to "Edit", possible_matches_edit_admin_gor_clothing_path(@gor_clothing, @possible_matches), remote: true, id: 'edit_possible_matches' %>
+		<%= link_to "Edit", possible_matches_edit_admin_gor_clothing_path(@gor_clothing), remote: true, id: 'edit_possible_matches' %>
 	</span>
+	<span id= 'Finish'></span>
 	<% for suggested_piece in @gor_clothing.suggested_pieces %>
 	<div class = "possible_match">
 		<span id="possible_match_<%= suggested_piece.id %>">
@@ -17,5 +19,4 @@
 		</span>
 	</div>
 	<%end%>
-	<span id= 'Finish'></span>
 </div>
