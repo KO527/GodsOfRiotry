@@ -13,7 +13,7 @@ class GorClothingController < ApplicationController
 			@gor_clothing_next = @gor_clothing.next_male
 			@gor_clothing_previous = @gor_clothing.previous_male
 		end
-		respond_with(@gor_clothing, location: admin_gor_clothing_index_path)
+		respond_with(@gor_clothings, location: admin_gor_clothing_index_path)
 	end
 
 	def show #js Show details Price and Description
@@ -22,8 +22,8 @@ class GorClothingController < ApplicationController
 	def new
 	     @gor_clothing = Gor_Clothing.new
 	     if @gor_clothing.attribute_present?(:description, :size, :gender, :price, :quantity, :picture)
-	     	@gor_clothing.build(gor_clothing_params)
-	     		image_preview
+		@gor_clothing.build(gor_clothing_params)
+	     	image_preview
      	     end
 	end
 
@@ -47,11 +47,10 @@ class GorClothingController < ApplicationController
 	 		end
 		end		
 	end
-	#      	render preview_new_gor_clothing_path
 
 
 	def edit
-	     respond_with(@gor_clothing, edit_admin_gor_clothing_path(@gor_clothing))
+	     respond_with(@gor_clothing, location: edit_admin_gor_clothing_path(@gor_clothing))
 	end
 
 	def update
@@ -70,14 +69,10 @@ class GorClothingController < ApplicationController
 	end
 	
 	def detail
-		respond_with(@gor_clothing, location: admin_gor_clothing_index_path) # gor_clothing index should include detail
+		respond_with(@gor_clothing, location: admin_gor_clothing_index_path)
 	end
 
 	private
-
-		def find_clothing
-			@gor_clothing = Gor_Clothing.find(params[:id])
-		end
 
 		def gor_clothing_params
 		    params.require(:Gor_Clothing).permit(:price, :description, :quantity, :gender, :size, images_attributes: [:picture, :type_of_image, :_destroy])
