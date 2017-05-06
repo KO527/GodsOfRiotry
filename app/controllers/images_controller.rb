@@ -18,17 +18,18 @@ class ImagesController < ApplicationController
 	end
 
 	def edit_some
+		@images = @gor_clothing.Images.all
+		respond_with(@gor_clothing, @images, location: admin_gor_clothing_index_path)
 	end
 
 	def destroy
-		#respond_with js, html
 	 	@images = Image.where(:type_of_image => params[:collateral_images]) #identify which images have setForDeletion
 		if params[:collateral_images].nil
 			@images = @gor_clothing.Images.all	
 			render admin_gor_clothing_index_path
 		else
 		  	@images.destroy
-		  	respond(@gor_clothing, action: :edit_some)
+		  	respond_with(@gor_clothing, action: :edit_some) #gor_clothing should refer to gor_clothing/detail
 		end
 	end
 
@@ -36,10 +37,6 @@ class ImagesController < ApplicationController
 	end
 
 	private
-
-		def find_clothing
-			@gor_clothing = Gor_Clothing.find(params[:gor_clothing_id])
-		end
 
 		def Image_params
 			params.require(:Image).permit(:type_of_image, :picture)

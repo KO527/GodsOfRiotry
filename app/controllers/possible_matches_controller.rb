@@ -1,5 +1,5 @@
 class PossibleMatchesController < ApplicationController
-	before_action :contemplated_piece, only: [:edit, :destroy]
+	before_action :contemplated_piece, only: [:index, :edit, :destroy]
 	before_action :admin, only: [:new, :edit, :destroy]
 	# before_action :contemplated_pieces
 	respond_to :js, :html
@@ -15,13 +15,11 @@ class PossibleMatchesController < ApplicationController
 		
 	end
 
-	def index
-
+	def index		
 	end
 	
 	def edit
 		@possible_matches = @gor_clothing.suggested_pieces(:all)
-		respond_with(@gor_clothing, @possible_matches, location: admin_gor_clothing_index_path)
 	end
 
 	def update
@@ -36,13 +34,4 @@ class PossibleMatchesController < ApplicationController
  		respond_with(@gor_clothing, location: admin_gor_clothing_index_path)
 	end
 
-	private
-
-		def contemplated_piece
-			@gor_clothing = Gor_Clothing.find(params[:contemplated_piece_id])
-		end
-
-		def contemplated_pieces
-			@contemplated_pieces = PossibleMatch.find(params[:contemplated_piece_id]).all
-		end
 end
