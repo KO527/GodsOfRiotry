@@ -1,9 +1,9 @@
 var nav = $('.merchandise_nav');
-var el = $('#main_content');
+var el = $('#main-content');
 
 <% if @gor_clothing_next.any? %>
 	el.html("<%= @gor_clothing_next.limit(1) %>");
 <%else%>
 	nav.find('#next_piece').val('');
-	el.html("<%= @gor_clothing_previous.limit(1)%>");
+	el.html("<%= @gor_clothing_previous.limit(1) %>");
 <%end%>

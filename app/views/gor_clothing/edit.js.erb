@@ -1,6 +1,4 @@
-var el = $('#main_content');
+var el = $('#main-content');
 
-$('#edit_piece').on('click', function(){
-	el.html('');
-	el.html("<%= escape_javascript(render('gor_clothing/edit'))%>");
-});
+el.html('');
+el.html("<%= escape_javascript(render('gor_clothing/edit'))%>");

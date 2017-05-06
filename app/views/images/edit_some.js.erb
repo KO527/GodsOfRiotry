@@ -17,6 +17,7 @@ $(document).ready(function(){
 	$finish_image_edit.on('click', deleteGORImagesSetForDeletion(), function(){
 		finish_image_update.remove();
 	});
+		
 });
 
 var deleteGORImagesSetForDeletion = function(){
@@ -34,7 +35,6 @@ var deleteGORImagesSetForDeletion = function(){
 			collateral_images_parent: $('.collateral_images').has('i').hasClass('set-for-deletion') //All Elements with ClassName collateral-images and set-for-deletion
 		},
 		context: collateral_images_parent,
-		// binding.pry,
 		success: function(evt, data, status, xhr){
 				new Effect.Parallel([
     					new Effect.Move($(this), { sync: true, x: 400, y: 0, mode: 'relative' }),
