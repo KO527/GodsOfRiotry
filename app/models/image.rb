@@ -1,11 +1,11 @@
- class Image < ActiveRecord::Base
+class Image < ActiveRecord::Base
 	enum type_of_image: [:show_picture, :front_shot, :back_shot, :model_shot]
 
 	mount_uploader :picture, PictureUploader
 	
 	belongs_to :gor_clothing, foreign_key: "gor_clothing_id"
 	
-	validates :type_of_image
+	validates :type_of_image, presence: true
 	validates :gor_clothing_id, presence: true
 	validates_presence_of :picture #a show_picture 
 	# errors -> show_picture, "There must be a show_picture"
@@ -17,7 +17,7 @@
 	private
 
 		def show_picture_present
-			errors.add(:gor_clothing_name, "needs a show picture") 
+			errors.add(:gor_clothing_name, "needs a show picture") if self.type_of_image == :show_picture
 		end
 
 		def picture_size

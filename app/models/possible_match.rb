@@ -4,3 +4,7 @@ class PossibleMatch < ActiveRecord::Base
 	validates :suggested_piece_id, presence: true
 	validates :contemplated_piece_id, presence: true
 end
+
+
+
+
