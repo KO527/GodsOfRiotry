@@ -1,10 +1,10 @@
 <div class = 'detail_images'><%= render 'images/_index' %></div>
 <div class = 'description'>
 	<h6 class = 'cloth_name'><%= @gor_clothing.name %></h6>
-	<span><%= @gor_clothing.description %></span>
-	<span><%= @gor_clothing.price %></span>
-	<span><%= @gor_clothing.size %></span>
-	<span><%= @gor_clothing.colors_available %></span>
+	<span class = 'description'><%= @gor_clothing.description %></span>
+	<span class = 'price'><%= @gor_clothing.price %></span>
+	<span class = 'size'><%= @gor_clothing.size %></span>
+	<span class = 'colors_available'><%= @gor_clothing.colors_available %></span>
 </div>
 <div class = 'gor_clothing_update'>
 	<%= link_to 'Edit', edit_admin_gor_clothing_path(@gor_clothing), remote: true, id: 'edit_piece' %> |
