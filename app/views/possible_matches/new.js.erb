@@ -1,0 +1,12 @@
+var el = $('.potential_piece_pic');
+var FormEl = $('.potential_piece_form');
+
+<% @gor_clothings.each do |potential_piece| %>
+
+FormEl.html("<%= escape_javascript(render('possible_matches/new'))%>");
+el.html("<%= escape_javascript('<%= image_tag(potential_piece.image.picture.url) if potential_piece.image.picture.show_picture %>') %>");
+<% if potential_piece.attribute_present(:suggested_piece) %>
+// toggle in next @gor_clothing piece from the right 
+<% next %>
+<%end%>
+<%end%>
