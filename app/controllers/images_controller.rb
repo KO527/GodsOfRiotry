@@ -34,6 +34,7 @@ class ImagesController < ApplicationController
 	end
 
 	def preview #show form through js
+		respond_with(@gor_clothing, @image, location: preview_new_admin_gor_clothing_path)
 	end
 
 	private
