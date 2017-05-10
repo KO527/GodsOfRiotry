@@ -1,0 +1,6 @@
+$('admin').html("<%= 'escape_javascript(render('gor_clothing/_new_piece'))' %>");
+
+<% if @gor_clothing.attribute_present?(:description, :size, :gender, :price, :quantity, :picture) %>
+	<%= @gor_clothing.build(gor_clothing_params) %>
+	<%= image_preview %>
+<%end%>
