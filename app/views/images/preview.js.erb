@@ -2,8 +2,8 @@ var el = $('.potential_piece_pic');
 var FormEl = $('.potential_piece_form');
 
 function previewFile() {
-  var preview = document.querySelector('img');
-  var file    = document.querySelector('input[type=file]').files[0];
+  var preview = document.querySelector('.preview_form img');
+  var file = document.querySelector('input[type=file]').files[0];
   var reader  = new FileReader();
 
   reader.addEventListener("load", function () {
@@ -13,4 +13,4 @@ function previewFile() {
   if (file) {
     reader.readAsDataURL(file);
   }
-}
+}()
