@@ -11,7 +11,7 @@
 		   <%= i.label :type_of_image, "Model Shot" :value => 'model_shot' %>
 		<%div%>
 		<span class = "content">
-		    <%= image_tag i.picture.url if i.picture? %>
+		    <%= image_tag %> <!-- i.picture.url if i.picture? -->
 		</span>
 		<%= render 'shared/error_messages', object: i.object %>
 	<%end%>
