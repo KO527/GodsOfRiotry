@@ -1,9 +1,0 @@
-<%= form_for([:admin, @gor_clothing, @possible_matches], remote: true, url: {action: 'create'}, html: {id: 'potential_piece_<%= potential_piece_id %>'} do |potential_piece| %>
-<% div class = 'buttons' %>
-	<%= potential_piece.radio_button 'possible_matches', 'suggested_piece', 'potential_piece' %>
-	<%= potential_piece.label :possible_matches, :suggested_piece, 'Potential Piece', :value => 'potential_piece' %>
-	<%= potential_piece.radio_button 'possible_matches', 'suggested_piece', 'false' %>
-	<%= potential_piece.label :possible_matches, :suggested_piece, 'Next', :value => 'false' %>
-<%div%>
-<%= potential_piece.submit 'Finished' %>
-<%end%>
