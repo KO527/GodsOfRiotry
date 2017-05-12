@@ -1,8 +1,11 @@
 class PossibleMatchesController < ApplicationController
 	before_action :contemplated_piece, only: [:new, :index, :create, :edit, :destroy]
 	before_action :admin, only: [:new, :edit, :destroy]
-	# before_action :contemplated_pieces
 	respond_to :js, :html
+
+	layout 'final_preparation', only: [:new]
+	
+
 
 	def new
 		@gor_clothings = Gor_Clothing.all
