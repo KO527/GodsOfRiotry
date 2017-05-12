@@ -1,5 +1,7 @@
-var el = $('.potential_piece_pic');
-var FormEl = $('.potential_piece_form');
+var FormEl = $('.potential_piece_box');
+
+FormEl.html('');
+FormEl.html("<%= escape_javascript(render('images/new_preview'))%>");
 
 function previewFile() {
   var preview = document.querySelector('.preview_form img');
@@ -10,7 +12,7 @@ function previewFile() {
     preview.src = reader.result;
   }, false);
 
-  if (file) {
+  if ($file) {
     reader.readAsDataURL(file);
   }
-}()
+}();
