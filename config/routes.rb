@@ -104,8 +104,8 @@
   		post :preview, on: :new
   		member do
   			get 'detail' => 'gor_clothing#detail'
-  			get 'possible_matches/edit' => 'possible_matches#edit' #How does two different actions with the same URI differ so that the response knows one action should be the default action?
-  			resources :possible_matches, except: [:show, :edit] do
+  			resources :possible_matches do
+  				match :create, to: 'possible_matches#create', via: [:post], on: :collection
   				match :destroy, to: 'possible_matches#destroy', via: [:delete], on: :collection
   			end
   			resources :images, except: [:edit, :update] do
@@ -136,11 +136,4 @@
 
 
 end
-
-#   get '/signup', to: 'users#new'
-
-
-
-# # except gor_clothings#show
-  
 
