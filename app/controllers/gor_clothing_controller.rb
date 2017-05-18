@@ -3,7 +3,7 @@ class GorClothingController < ApplicationController
 	before_action :admin, only: [:update, :edit, :new, :create, :destroy, :detail]
 	before_action :find_clothing, only: [:index, :show, :edit, :update, :destroy, :detail]
 	respond_to :html, :js
-
+	
 	def index
 	     @gor_clothings = Gor_Clothing.all
 		if current_user.gender == :female
@@ -21,17 +21,15 @@ class GorClothingController < ApplicationController
 
 	def new
 	     @gor_clothing = Gor_Clothing.new
-	     if @gor_clothing.attribute_present?(:description, :size, :gender, :price, :quantity, :picture)
-		@gor_clothing.build(gor_clothing_params)
-	     	image_preview
-     	     end
+	     respond_with(@gor_clothing)
 	end
 
 	def create
 	 	@gor_clothing = Gor_Clothing.new(gor_clothing_params)
 	          if @gor_clothing.new_record?
 		 	if @gor_clothing.save
-		 		redirect_to detail_admin_gor_clothing_path(@gor_clothing) 
+		 		redirect_to 
+		 		# redirect_to detail_admin_gor_clothing_path(@gor_clothing) 
 		 	elsif @gor_clothing.images_attributes.invalid?
 		 		image_preview
 		 	else
@@ -75,7 +73,7 @@ class GorClothingController < ApplicationController
 	private
 
 		def gor_clothing_params
-		    params.require(:Gor_Clothing).permit(:price, :description, :quantity, :gender, :size, images_attributes: [:picture, :type_of_image, :_destroy])
+		    params.require(:Gor_Clothing).permit(:price, :description, :quantity, :gender, :size, images_attributes: [:picture, :type_of_image])
 		end	
 
 end
