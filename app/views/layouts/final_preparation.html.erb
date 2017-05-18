@@ -2,11 +2,15 @@
 <%= csrf_meta_tags %>
 <%= stylesheet_link_tag 'final_preparation' %>
 </head>
-<% content_for :final_preparation %>
+<% content_for :final_preparation do %>
 <div id = 'final_preparation'>
 	<div class = 'potential_piece_box'>
 		<% yield %>
 	</div>
 </div>
 <% end %>
-<% render :file => 'layouts/detail' %>
+<% if current_user?(admin) %>
+	<% render :file => 'layouts/admin_detail' %>
+<% elsif current_user?(user) %>
+	<% render :file => 'layouts/detail' %>
+<% end %>
