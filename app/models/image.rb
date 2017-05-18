@@ -1,5 +1,5 @@
 class Image < ActiveRecord::Base
-	enum type_of_image: [:show_picture, :front_shot, :back_shot, :model_shot]
+	enum type_of_image: [:front_shot, :show_picture, :back_shot, :model_shot]
 
 	mount_uploader :picture, PictureUploader
 	
@@ -27,7 +27,7 @@ class Image < ActiveRecord::Base
 		end
 
 		def check_for_existing_image_type
-			errors.add(:type_of_image, "A #{params[:type_of_image]} image is present already. Would you like to override?") if self.gor_clothing_id.include?(images.where(type_of_image: params[:type_of_image]))
+			errors.add(:type_of_image, "A %{type_of_image} image is present already. Would you like to override?") if self.gor_clothing_id.include?(images.where(type_of_image: params[:type_of_image]))
 		end
 
 
