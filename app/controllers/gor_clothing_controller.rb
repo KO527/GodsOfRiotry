@@ -13,7 +13,7 @@ class GorClothingController < ApplicationController
 			@gor_clothing_next = @gor_clothing.next_male
 			@gor_clothing_previous = @gor_clothing.previous_male
 		end
-		respond_with(@gor_clothings, location: admin_gor_clothing_index_path)
+		respond_with(@gor_clothings, :location => admin_gor_clothing_index_path)
 	end
 
 	def show #js Show details Price and Description
@@ -21,15 +21,13 @@ class GorClothingController < ApplicationController
 
 	def new
 	     @gor_clothing = Gor_Clothing.new
-	     respond_with(@gor_clothing)
 	end
 
 	def create
 	 	@gor_clothing = Gor_Clothing.new(gor_clothing_params)
 	          if @gor_clothing.new_record?
 		 	if @gor_clothing.save
-		 		redirect_to 
-		 		# redirect_to detail_admin_gor_clothing_path(@gor_clothing) 
+		 		redirect_to new_admin_possible_match_path
 		 	elsif @gor_clothing.images_attributes.invalid?
 		 		image_preview
 		 	else
@@ -48,7 +46,6 @@ class GorClothingController < ApplicationController
 
 
 	def edit
-	     respond_with(@gor_clothing, location: edit_admin_gor_clothing_path(@gor_clothing))
 	end
 
 	def update
@@ -61,13 +58,13 @@ class GorClothingController < ApplicationController
 	end
 
 	def destroy
-		@gor_clothing.destroy
+		@gor_clothing.destroy!
 
 		redirect_to admin_gor_clothing_index_path
 	end
 	
 	def detail
-		respond_with(@gor_clothing, location: admin_gor_clothing_index_path)
+		respond_with(@gor_clothing, :location => admin_gor_clothing_index_path)
 	end
 
 	private
