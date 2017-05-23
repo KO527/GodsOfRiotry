@@ -1,6 +1,6 @@
 class ImagesController < ApplicationController
 	respond_to :js
-	before_action :admin, only: [:edit_some, :preview, :new, :create]
+	before_action :admin, only: [:edit_some, :preview, :new, :create, :destroy]
 	before_action :find_clothing, only: [:index, :show, :edit_some, :destroy, :preview]
 
 	layout 'final_preparation', only: [:preview]
