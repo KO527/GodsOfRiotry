@@ -1,7 +1,7 @@
 module GorClothingHelper
 
 	def image_preview
-		render 'images/preview' unless @gor_clothing.errors.count > 0
+		render 'images/new_preview' unless @gor_clothing.errors.count > 0 #render layout
 	end
 
 	def find_clothing
