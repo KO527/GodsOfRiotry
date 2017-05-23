@@ -44,11 +44,12 @@ function previewFile(ControllerAction) {
 	  if (ControllerAction == 'ImagePreview'){
 	  	$preview = document.querySelector('.preview_form img');
 	  else if (ControllerAction == 'PossibleMatchNew')
-	  	$preview = document.querySelector('#potential_piece_<%= potential_piece_id %> img');
+	  	$preview = document.querySelector('#potential_piece_<%= potential_piece_id %> > .content > img');
+	  end
 	  var file = document.querySelector('input[type=file]').files[0];
 	  var reader  = new FileReader();
 
-	  reader.addEventListener("load", function () {
+	  reader.addEventListener("load", function() {
 	    $preview.src = reader.result;
 	  }, false);
 
