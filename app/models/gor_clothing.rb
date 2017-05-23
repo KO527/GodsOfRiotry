@@ -18,11 +18,11 @@ class GorClothing < ActiveRecord::Base
 	validates :colors_available, presence: true
 	# validates :possible_matches, inclusion: {} allow_blank: true
 	
-	has_many :static_pieces, class_name: 'possible_matches',
+	has_many :static_pieces, class_name: 'PossibleMatch',
 				    foreign_key: :suggested_piece_id,
 				    dependent: :destroy
 
-	has_many :toggled_pieces, class_name: 'possible_matches',
+	has_many :toggled_pieces, class_name: 'PossibleMatch',
 			  	       foreign_key: :contemplated_piece_id,
 			  	       dependent: :destroy
 
@@ -33,8 +33,8 @@ class GorClothing < ActiveRecord::Base
 	validates_associated :image
 	validates_presence_of :image
 	validates_uniqueness_of :image, scope: [:type_of_image]
-	accepts_nested_parameters_for :image, allow_destroy: true, reject_if: proc {|attributes| attributes[:type_of_image] != :show_picture || :first_shot || :back_shot || :model_shot}
-
+	accepts_nested_parameters_for :image, allow_destroy: true, reject_if: proc {|attributes| attributes[:type_of_image] != :first_shot || :back_shot || :model_shot}
+	# :show_picture ||
 	private
 
 		def next_male
