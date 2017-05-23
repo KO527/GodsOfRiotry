@@ -2,7 +2,7 @@ var el = $('#main-content');
 var possible_matches = $('.possible_matches');
 
 el.html('');
-el.html("<%= escape_javascript(<%= render('gor_clothing/gor_detail'))%>");
+el.html("<%= escape_javascript(render('gor_clothing/gor_detail'))%>");
 
 <% if @gor_clothing.contemplated_piece? && @gor_clothing.suggested_pieces.any? %>
 	possible_matches.html("<%= escape_javascript(render('possible_matches/index'))%>");
