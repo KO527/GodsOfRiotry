@@ -1,0 +1,18 @@
+<%= form_for([:admin, @possible_match], remote: true, url: {action: 'create'}, html: {id: 'potential_piece_<%= potential_piece_id %>'} do |f| %>
+	<% div class = 'buttons' %>
+		<%= f.radio_button 'possible_match', 'suggested_piece', 'potential_piece' %>
+		<%= f.label :possible_match, :suggested_piece, 'Potential Piece', :value => 'potential_piece' %>
+		<%= f.radio_button 'possible_match', 'suggested_piece', 'false' %>
+		<%= f.label :possible_match, :suggested_piece, 'Next', :value => 'false' %>
+	<%div%>
+	<span class = "content">
+	    <%= image_tag @possible_match.image.picture.url if @possible_match.image? %>
+	</span>
+	<span class = 'potential_piece_pic'>
+		<%= image_tag potential_piece.image.picture.url if potential_piece.image? %>
+	</span>
+	<%= f.submit 'Finished' %>
+	<% if format.html %>
+<!-- 		evaluate next potential piece
+ -->	<% end %>
+<%end%>
