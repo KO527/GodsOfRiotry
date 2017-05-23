@@ -1,12 +1,19 @@
+// var FormEl = $('potential_piece_<%= potential_piece_id %>');
 var el = $('.potential_piece_pic');
 var FormEl = $('.potential_piece_box');
 
+previewFile('PossibleMatchNew');
+
+<%= render(:partial => 'potential_piece', :collection => @gor_clothings) || 'There are no potential pieces that can evaluated.' %>
+
 <% @gor_clothings.each do |potential_piece| %>
 
-FormEl.html("<%= escape_javascript(render('possible_matches/eval'))%>");
-el.html("<%= escape_javascript('<%= image_tag(potential_piece.image.picture.url) if potential_piece.image.picture.show_picture %>') %>");
+FormEl.html('');
+
+FormEl.html("<%= escape_javascript(render('possible_matches/potential_piece'))%>");
+
 <% if potential_piece.attribute_present(:suggested_piece) %>
-// toggle in next @gor_clothing piece from the right 
-<% next %>
+	<% next %>
 <%end%>
+
 <%end%>
