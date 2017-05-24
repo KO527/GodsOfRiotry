@@ -20,7 +20,7 @@ class ImagesController < ApplicationController
 
 	def edit_some
 		@images = @gor_clothing.Images.all
-		respond_with(@gor_clothing, @images, location: admin_gor_clothing_index_path)
+		respond_with(@gor_clothing, @images, :location => admin_gor_clothing_index_path)
 	end
 
 	def destroy
@@ -35,7 +35,6 @@ class ImagesController < ApplicationController
 	end
 
 	def preview #show form through js
-		respond_with(@gor_clothing, @image, location: preview_new_admin_gor_clothing_path)
 	end
 
 	private
