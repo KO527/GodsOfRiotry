@@ -10,7 +10,7 @@ previewFile('PossibleMatchNew');
 
 FormEl.html('');
 
-FormEl.html("<%= escape_javascript(render('possible_matches/potential_piece'))%>");
+FormEl.html("<%= escape_javascript(render('potential_piece'))%>");
 
 <% if potential_piece.attribute_present(:suggested_piece) %>
 	<% next %>
