@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418052510) do
+ActiveRecord::Schema.define(version: 20170524130442) do
 
   create_table "acts", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(version: 20170418052510) do
     t.integer  "suggested_piece_id"
   end
 
+  add_index "possible_matches", ["contemplated_piece_id", "suggested_piece_id"], name: "indexed_possible_match_pair", unique: true
   add_index "possible_matches", ["contemplated_piece_id"], name: "index_possible_matches_on_contemplated_piece_id"
   add_index "possible_matches", ["suggested_piece_id"], name: "index_possible_matches_on_suggested_piece_id"
 
