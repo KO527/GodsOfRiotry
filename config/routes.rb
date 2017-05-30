@@ -20,14 +20,9 @@
   # get '/soundcloud/oauth-callback', to: 'sessions#omniauth_create'
 
 
-   resources :users do
-   	resources :event_tickets
-   	resources :gor_clothing, only: [:index, :show]
+   resources :users, except: [:index] do
    	resources :wardrobes
    	resources :playlist, except: [:index, :show]
-   	member do
-   		resources :preferences, only: [:index, :update, :create, :destroy]
-   	end
    end
 
    resource :playlist do
@@ -35,40 +30,25 @@
 	   	patch 'change_up' #Randomize what gets played while keeping kept_songs in the playlist
 	end
 
-	# def change_up
-	# @playlist = playlist.find_by(params[:id])
-	# @songs = @playlist.songs.all
-	# @songs.each do |song|
-   	#  	if song.kept_song!
-   	# 		songs_to_be_deleted << song
-   	# 	else
-   	# 	 	nextl
-   	# 	end
-   	# end
-          #     songs_to_be_deleted.destroy  => collapse songs in playlist through javascript
-   	# end
-   	#
-
-   	resources :songs do
+   	resources :songs, except: [:edit, :update] do
    		member do
-   			post 'keep_song' #mark as kept_song
-   			# def keep_song
-   				#update preferences
+   			post 'keep_song'
    		end
    	end
-   	# [:destroy]
    end
 
 
-  resources :preferences, only: [:index, :update, :create, :destroy] do
-  		resources :gor_clothing, except: [:show, :new, :edit] do #create, destroy, index, update
-  			collection do
-  				patch 'update_wardrobe'
-  				get 'saved_wardrobes'
-  			end
-  		end
-  		resources :songs, except: [:show, :new, :edit]
-  		resources :event_tickets, except: [:edit]
+  resources :preferences, only: [:index, :create, :destroy] do
+  		resources :gor_clothing, except: [:show, :new, :edit]
+  		resources :songs, except: [:show, :new, :edit, :update]
+  		resources :event_tickets, only: [:index, :create, :show, :destroy]
+  end
+
+  resources :wardrobes do
+	member do
+		resources :gor_clothing, only: [:destroy, :show, :update, :detail]	
+	  	patch 'update_wardrobe'
+  	end
   end
 
   resources :gor_clothing, except: [:new] do
@@ -77,30 +57,15 @@
   	end
   end
 
-  resources :event_tickets do
-  	# collection do
-  	# 	get 'search' => 'event_tickets#search'
-  	# end
-  	# resources :performers, except: [:new, :edit, update] -> will create, destroy, show under preferences
-  	# resources :artists, except: [:new, :edit, update]
+  resources :event_tickets, only: [:index, :show] do
+  	 collection do
+  	 	get 'search' => 'event_tickets#search'
+  	 end
   end
 
-  # resources :artists do
-  # 	resources :songs
-  # end
+  namespace :admin do
 
-
- namespace :admin do
-  	# resources :preferences do
-  	# 	member do
-  	# 		resources :event_tickets, :songs, :gor_clothing
-  	# 	end 
-  	# end
-  	
-  	#Set admin restrictions
-  	# Linked app/views/gor_clothing/image_setup.html
-
-  	resources :gor_clothing do
+  	resources :gor_clothing, except: [:show] do
   		post :preview, on: :new
   		member do
   			get 'detail' => 'gor_clothing#detail'
@@ -109,7 +74,7 @@
   				match :destroy, to: 'possible_matches#destroy', via: [:delete], on: :collection
   			end
   			resources :images, except: [:edit, :update] do
-  				match :edit_some, to: 'images#edit_some', via: [:get], on: :collection #Figure out relationship between update and destroy for edit_some
+  				match :edit_some, to: 'images#edit_some', via: [:get], on: :collection
   				match :destroy, to: 'images#destroy', via: [:delete], on: :collection
   				get :preview, on: :new
   			end
@@ -121,18 +86,13 @@
   	
 
   	resources :users do
+  		get 'saved_wardrobes'
   		member do
 			resources :playlists, only: [:create, :destroy, :show, :index]
-			resources :gor_clothing, except: [:destroy, :create, :edit, :new] # Designed to specifically check what user enjoys
   		end
 	end
 
-  
-	# resources :event_tickets do
-	# 	resources :performers, :artists
-	# end
-
- end
+  end
 
 
 end
