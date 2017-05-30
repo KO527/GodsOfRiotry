@@ -38,11 +38,7 @@
    end
 
 
-  resources :preferences, only: [:index, :create, :destroy] do
-  		resources :gor_clothing, except: [:show, :new, :edit]
-  		resources :songs, except: [:show, :new, :edit, :update]
-  		resources :event_tickets, only: [:index, :create, :show, :destroy]
-  end
+  resources :preferences, only: [:index, :create, :destroy]
 
   resources :wardrobes do
 	member do
