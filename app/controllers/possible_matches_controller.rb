@@ -1,20 +1,17 @@
 class PossibleMatchesController < ApplicationController
-	before_action :contemplated_piece, only: [:new, :index, :edit, :destroy]
 	before_action :admin, only: [:new, :create, :edit, :destroy]
-	before_action :possible_matches, only: [:create, :edit]
 	respond_to :js, :html
 
 	layout 'final_preparation', only: [:new, :edit]
 
 
 	def new
-		@gor_clothings = Gor_Clothing.where.not(:gor_clothing => :contemplated_piece) #except contemplated_piece
-		@possible_match.build
-		<%= render :partial => 'eval', :collection => @gor_clothings %>
+		@gor_clothings = Gor_Clothing.all
+		@possible_match = PossibleMatch.new(contemplated_piece_id: params[:gor_clothing_id])
 	end
 
 	def create
-		@possible_match.update_attributes(possible_matches_params)
+		@possible_match = PossibleMatch.create(possible_matches_params)
 		flash[:notice] = "Possible matches for this gor_clothing piece created" if @possible_matches.save
 	end
 
@@ -26,6 +23,8 @@ class PossibleMatchesController < ApplicationController
 	end
 	
 	def edit
+		@gor_clothing = Gor_Clothing.find(params[:contemplated_piece_id])
+		@possible_matches = @gor_clothing.suggested_pieces(:all)
 	end
 
 	def update
