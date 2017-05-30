@@ -5,6 +5,8 @@ class EventTicket < ActiveRecord::Base
  	has_and_belongs_to_many :teams
  	belongs_to :subscriber_id, class_name: "User"
 
+ 	validates_uniqueness_of :artist, scope: :artist_name
+
  	validates :fav_count, presence: true, numericality: {only_integer: true}, allow_nil: true
  	validates :venue, presence: true, length: {maximum: 255}
  	validates :name, presence: true, length: {maximum: 50}
