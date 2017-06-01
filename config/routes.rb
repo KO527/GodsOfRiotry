@@ -54,6 +54,7 @@
   end
 
   resources :event_tickets, only: [:index, :show] do
+  	 get ':performer_name', to: 'event_tickets#artist_events', as: :artist_events
   	 collection do
   	 	get 'search' => 'event_tickets#search'
   	 end
@@ -64,7 +65,7 @@
   	resources :gor_clothing, except: [:show] do
   		post :preview, on: :new
   		member do
-  			get 'detail' => 'gor_clothing#detail'
+  			get '/:id', to: :detail
   			resources :possible_matches do
   				match :create, to: 'possible_matches#create', via: [:post], on: :collection
   				match :destroy, to: 'possible_matches#destroy', via: [:delete], on: :collection
