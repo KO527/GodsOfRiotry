@@ -1,20 +1,18 @@
-<section class = "FunTimes">
-<span class = "EventsImm">
-	<div class = "label"><h3>Nearby</h3></div>
-	<ul>
-	<li></li>
-	</ul>
-</span>
-<span class = "FavEvents">
-	<div class = "label"><h3>Most Popular</h3></div>
-	<ul>
-	<li></li>
-	</ul>
-</span>
-<span class = "EventsSugg">
-	<div class = "label"><h3>Think Outside The Box</h3></div>
-	<ul>
-	<li></li>
-	</ul>
-</span>
-</section>
+<span class = 'event_container'>
+	<h1 class = 'container_header'>Immediate Events</h1>
+	<span id = 'ImmEvent_Artist_Container'>
+	<% @ImmEvents['events'].each do |event| %>
+		<span class = 'event_title'><%= event['title'] %></span>
+		<li class = 'specific_event_<%= event.id %>'>
+			<% event['performers'].each do |performer| %>
+				<span class = 'performer_name'><%= link_to performer["name"], artist_events_path(performer["name"])%>
+				</span>
+			<%end%>
+			<span class = 'event_happening'>Date: <%= event["datetime_local"].strftime("%m-%d-%Y at %H:%M%p")%></span>
+			<span class = 'event_venue'>Venue: <% event["venue"]["address"] + ', ' + event["venue"]["extended_address"]%><%= event["venue"]["name"] %></span>
+		</li>
+	<%end%>
+	<span>
+</span> 
+
+
