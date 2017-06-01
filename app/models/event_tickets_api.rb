@@ -21,12 +21,16 @@ class Event_tickets
 	 	self.class.eight_months_from_now = eight_months_from_now
 	end
  
- 	def self.GiveMeImmEvents(genre, datetime_order, score_order, type_of_event, score_gte, datetime_local_gte, datetime_local_lte, bool, range)
- 		get('/2/events', :query => {"genres.slug" => genre, "sort" => {"datetime_order" => datetime_order, "score_order" => score_order}, "taxonomies.name" => type_of_event, "score.gte" => score_gte, "datetime_local.gte" => datetime_local_gte, "datetime_local.lte" => datetime_local_lte, "geoip" => bool})
+ 	def self.EventsByArtist artist
+ 		get('2/events', :query => {'q' => artist, "datetime_local.gte" => Event_tickets.event_forecast, "datetime_local.lte" => Event_tickets.til_eight_months})
  	end
 
- 	def self.ParseSportingEvents(type_of_event,  datetime_order, score_order, score_gte, datetime_local_gte, datetime_local_lte)
- 		get('/2/events', :query => {"taxonomies.name" => type_of_event, "sort" => {"datetime_order" => datetime_order, "score_order" => score_order}, "score.gte" => score_gte, "datetime_local.gte" => datetime_local_gte, "datetime_local.lte" => datetime_local_lte})
+ 	def self.GiveMeImmEvents
+ 		get('/2/events', :query => {"genres.slug" => 'pop', "sort" => {"datetime_order" => 'datetime_local.asc', "score_order" => 'score.desc'}, "taxonomies.name" => 'concert', "score.gte" => '0.7', "datetime_local.gte" => Event_tickets.event_forecast, "datetime_local.lte" => Event_tickets.til_eight_months, "geoip" => '100mi'})
+ 	end
+
+ 	def self.ParseSportingEvents
+ 		get('/2/events', :query => {"taxonomies.name" => 'sports', "sort" => {"datetime_order" => 'datetime_local.asc', "score_order" => 'score.desc'}, "score.gte" => '0.7', "datetime_local.gte" => Event_tickets.event_forecast, "datetime_local.lte" => Event_tickets.til_eight_months})
  	end
 
  	def self.for term
