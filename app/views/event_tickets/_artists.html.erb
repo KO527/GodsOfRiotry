@@ -1,0 +1,7 @@
+<% @Event_tickets["events"].each do |ticket| %>
+	<span class = 'performer_name'>Performer: <%= @Event_tickets[:performer_name]%></span>
+	<span class = 'event_title'>Title: <%= ticket["title"] %></span>
+	<span class = 'event_happening'>Date: <%= ticket["datetime_local"].strftime('%m-%d-%Y at %H:%M%p')%></span>
+	<span class = 'event_venue'>Venue: <%= ticket["venue"]["address"] + ', ' + ticket["venue"]["extended_address"] %></br><%= ticket["venue"]["name"] %></span>
+<%end%>
+
