@@ -4,6 +4,7 @@ class EventTicketsController < ApplicationController
 	
 	before_filter :format_time, :only => [:create]
 	respond_to :html, :js
+	attr_accessor :performer_name
 
 	def index #SuggEvents
 		Event_tickets.joins(:artists, :performers, :teams).where(status: 'favorited')
