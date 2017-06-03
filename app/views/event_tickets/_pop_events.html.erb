@@ -1,0 +1,16 @@
+<span class = 'event_container'>
+	<h1 class = 'container_header'>Popular Fests</h1>
+	<span id = 'Popular_Fests_Container'>
+	<% @PopularFests['events'].each do |event| %>
+		<span class = 'event_title'><%= event['title'] %></span>
+		<li class = 'specific_event'>
+			<% event['performers'].each do |performer| %>
+				<span class = 'performer_name'><%= link_to performer["name"], artist_events_path(performer["name"])%>
+				</span>
+			<%end%>
+			<span class = 'event_happening'>Date: <%= event["datetime_local"].strftime("%m-%d-%Y at %H:%M%p")%></span>
+			<span class = 'event_venue'>Venue: <% event["venue"]["address"] + ', ' + event["venue"]["extended_address"]%></br><%= event["venue"]["name"] %></span>
+		</li>
+	<%end%>
+	<span>
+</span> 
