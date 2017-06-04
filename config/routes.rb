@@ -56,7 +56,7 @@
   resources :event_tickets, only: [:index, :show] do
   	 get ':performer_name', to: 'event_tickets#artist_events', as: :artist_events
   	 collection do
-  	 	get 'search' => 'event_tickets#search'
+  	 	get ':input' => 'event_tickets#search', as: :search
   	 end
   end
 
