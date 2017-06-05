@@ -2,13 +2,12 @@ class EventTicketsController < ApplicationController
 	require 'Time'
 	require '../models/event_tickets_api'
 	
-	before_filter :format_time, :only => [:create]
 	respond_to :html, :js
-	attr_accessor :performer_name
+	layout 'event_tickets'
 
-	def index #SuggEvents
-		Event_tickets.joins(:artists, :performers, :teams).where(status: 'favorited')
-	end
+	attr_accessor :performer_name, :search
+
+	layout 'event_tickets'
 
 	def index
 		@ImmEvents = Event_tickets.GiveMeImmEvents
@@ -16,14 +15,11 @@ class EventTicketsController < ApplicationController
 	end
 
 	def artist_events
-		@Event_tickets = Event_tickets.EventsByArtist.find(params[:performer_name])
+		@Event_tickets = Event_tickets.EventsByArtist(params[:performer_name])
 	end
 
-	private
-
-		def format_time
-			happening = params[:happening]
-			params[:happening] = Time.strftime(happening, "%Y-%m-%d")
-		end
+	def search
+		@Event_tickets = Event_tickets.for(params[:input])
+	end
 
 end
