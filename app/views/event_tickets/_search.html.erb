@@ -1,0 +1,5 @@
+<%= link_to 'Give Me Some Options!', event_tickets_path, id: 'give_options' %>
+<%= form_tag(search_path, :method => "get", id: 'search-form') do %>
+<%= text_field_tag :input, params[:input], placeholder: "Search Events" %>
+<%= submit_tag "Search" %>
+<% end %>
