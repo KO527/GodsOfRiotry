@@ -1,3 +1,4 @@
+<%= content_for(:event_tickets) do %>
 <span class = 'event_container'>
 	<% @ImmEvents.each do |event| %>
 		<li class = 'specific_event_<%= event.id %>'>
@@ -9,5 +10,4 @@
 		</li>
 	<%end%>
 </span>
-
-
+<%end%>
