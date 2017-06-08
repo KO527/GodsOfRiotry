@@ -1,0 +1,50 @@
+(function(){
+	var app = angular.module('GodsOfRiotry', ['ngRoute', 'ngAnimate']);
+
+	app.controller('PossibleMatches', ['$scope', '$timeout', '$interval', '$sce', 
+					   function($scope, $timeout, $interval, $sce){
+
+					   	$scope.contemplated_piece = function(){
+					   		this = new Array;
+
+					   		this += {
+						   			id: <%= @contemplated_piece.id %>, 
+						   			image: <%= @contempalted_piece.image.picture %>,
+						   			price: <%= @contemplated_piece.price %>,
+						   			description: <%= @contemplated_piece.description %>
+					   			}
+					   	}();
+
+					   	$scope.suggested_pieces = function(){
+					   		this = new Array;
+
+					   		for(i = 0; i < @suggested_pieces.length; i++){
+					   			this += {
+					   				id: <%= @suggested_pieces[i].id %>,
+					   				image: <%= @suggested_pieces[].image.picture %>,
+					   				price: <%= @suggested_pieces[i].price %>,
+					   				description: <%= @suggested_pieces[i].description %>
+					   			}
+
+					   		}
+					   	}();
+
+
+					   	var array = $scope.suggested_pieces;
+
+					   	$timeout(function(){
+					   		$scope.suggested_piece = array[array.length - 1];
+					   	}, 100);
+
+					   	var index = 0;
+
+					   	$interval(function(){
+					   		if(index > array.length - 1){
+					   			index = 0;
+					   		}
+					   		$scope.suggested_piece = array[index];
+					   		index++;
+					   	}, 8000);
+
+					   }]);
+})
