@@ -3,20 +3,20 @@ class PossibleMatchesController < ApplicationController
 	respond_to :js, :html
 
 	layout 'final_preparation', only: [:new, :edit]
-
+	layout 'main_display', only: [:show]
 
 	def new
 		@gor_clothings = Gor_Clothing.all
 		@possible_match = PossibleMatch.new(contemplated_piece_id: params[:gor_clothing_id])
 	end
 
-	def create
+	def create 
 		@possible_match = PossibleMatch.create(possible_matches_params)
 		flash[:notice] = "Possible matches for this gor_clothing piece created" if @possible_matches.save
 	end
 
 	def show
-		PossibleMatch.find(:all)
+		@possible_matches = PossibleMatch.find(:all)
 	end
 
 	def index

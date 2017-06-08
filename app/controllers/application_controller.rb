@@ -9,4 +9,8 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include GorClothingHelper
   include PossibleMatchesHelper
+
+  def root
+  	render 'layouts/main_display'
+  end
 end

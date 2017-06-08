@@ -3,11 +3,10 @@ class EventTicketsController < ApplicationController
 	require '../models/event_tickets_api'
 	
 	respond_to :html, :js
-	layout 'event_tickets'
 
 	attr_accessor :performer_name, :search
 
-	layout 'event_tickets'
+	layout 'main_display'
 
 	def index
 		@ImmEvents = Event_tickets.GiveMeImmEvents
