@@ -6,7 +6,8 @@
 
   # get 'event_tickets_api/update'
 
-  root               'sessions#new'
+  root 		'application#root'
+  # 'sessions#new'
   
   get '/help', to: 'gor_main#help'
   get '/contact', to: 'gor_main#contact'
@@ -37,12 +38,11 @@
    	end
    end
 
-
   resources :preferences, only: [:index, :create, :destroy]
 
-  resources :wardrobes do
+  resources :wardrobes, only: [:update] do
 	member do
-		resources :gor_clothing, only: [:destroy, :show, :update, :detail]	
+		resources :gor_clothing, only: [:index, :destroy, :detail]	
 	  	patch 'update_wardrobe'
   	end
   end
