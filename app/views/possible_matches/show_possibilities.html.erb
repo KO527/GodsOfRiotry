@@ -1,0 +1,13 @@
+<% content_for :head do %>
+	<%= javascript_include_tag '' %>
+<%end%>
+<% for suggested_piece in @possible_matches.suggested_piece %>
+	<span id = "possible_match_suggested_piece_<%= suggested_piece.id %>" ng-switch = 'suggested_piece.id' ng-controller = 'PossibleMatches'>
+		<span class = 'possible_matches_suggested_pieces'>
+			<a 'href = ?', suggested_piece_id>
+				<img ng-src = "{{ suggested_piece.image}}"/>
+			</a>
+			<span ng-bind-html = 'renderHtml(suggested_piece.price)' class = 'suggested_piece_price'></span>
+			<span ng-bind-html = 'renderHtml(suggested_piece.description)' class = 'suggested_piece_description'></span>
+		</span>
+<%end%>
