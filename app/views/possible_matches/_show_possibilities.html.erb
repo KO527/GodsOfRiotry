@@ -1,0 +1,10 @@
+<% for suggested_piece in @suggested_pieces %>
+	<span id = "possible_match_suggested_piece_<%= suggested_piece.id %>" ng-switch = 'suggested_piece.id' ng-controller = 'PossibleMatches'>
+		<span class = 'possible_pieces' ng-if = "suggested_piece.merch_type == bottom">
+			<span class = 'possible_pieces_bottom'>		
+				<%= link_to image_tag(ng-src = "{{ suggested_piece.image}}"), detail_path(suggested_piece.id)%>
+				<details ng-bind-html = 'renderHtml(suggested_piece.price)' class = 'suggested_piece_price'></details>
+				<details ng-bind-html = 'renderHtml(suggested_piece.description)' class = 'suggested_piece_description'></details>
+			</span>
+		</span>
+<%end%>
