@@ -66,7 +66,7 @@
   	resources :gor_clothing, except: [:show] do
   		post :preview, on: :new
   		member do
-  			get '/:id', to: :detail
+  			get '/', to: :detail
   			resources :possible_matches do
   				match :create, to: 'possible_matches#create', via: [:post], on: :collection
   				match :destroy, to: 'possible_matches#destroy', via: [:delete], on: :collection
