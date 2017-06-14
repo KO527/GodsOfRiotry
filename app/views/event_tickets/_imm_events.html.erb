@@ -3,7 +3,7 @@
 	<% @ImmEvents.each do |event| %>
 		<li class = 'specific_event_<%= event.id %>'>
 			<% event.performers.each do |performer| %>
-				<span class = 'performer_name'><%= link_to '<%= performer.name %>', remote: true, artist_events_path(<%= performer.name %>)%></span>
+				<%= link_to 'performer.name', artist_events_path(performer.name), remote: true, class = 'performer_name' %>
 			<%end%>
 			<span class = 'event_happening'><%= event.happening %></span>
 			<span class = 'event_venue'><%= event.venue %></span>
