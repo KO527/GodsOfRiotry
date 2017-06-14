@@ -16,6 +16,7 @@ class GorClothing < ActiveRecord::Base
 	validates :price, format: {with: VALID_PRICE_REGEX}
 	validates :description, presence: true
 	validates :colors_available, presence: true
+	validates :merch_type, presence: true, inclusion: {in: %w(top bottom)}
 	# validates :possible_matches, inclusion: {} allow_blank: true
 	
 	has_many :static_pieces, class_name: 'PossibleMatch',
@@ -27,7 +28,7 @@ class GorClothing < ActiveRecord::Base
 			  	       dependent: :destroy
 
 	has_many :suggested_pieces, through: :static_pieces
-	has_many :contemplated_pieces, through: :toggled_pieces
+	has_one :contemplated_piece, through: :toggled_pieces
 
 	has_many :images
 	validates_associated :image
