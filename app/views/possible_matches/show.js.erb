@@ -4,27 +4,102 @@
 
 	app.controller('PossibleMatches', ['$scope', '$timeout', '$interval', '$sce', 
 					   function($scope, $timeout, $interval, $sce){
+					   	
+					   	$scope.suggested_tops = function(){
+					   		this = new Array;
+
+					   		var temp = #{raw @possible_matches_suggested_tops}
+
+					   		for(i = 0; i < temp.length; i++)
+						   		this += {
+						   			id: temp[i].id,
+						   			image: temp[i].image.picture,
+						   			price: temp[i].price,
+			  						description: temp[i].description
+						   		}
+						   	}
+					   	}();
+
+					   	$scope.suggested_bottoms = function(){
+					   			this = new Array;
+
+					   			var temp = #{raw @possible_matches_suggested_bottoms};
+
+					   			for(i = 0; i < temp.length; i++){
+					   				this += {
+					   					id: temp[i].id,
+					   					image: temp[i].image.picture,
+					   					price: temp[i].price,
+					   					description: temp[i].description
+					   				}
+					   			}	
+					   	}();
+
+					   	$scope.tops = function(){
+					   			this = new Array;
+
+					   			var temp = #{raw @possible_matches_suggested_tops}
+					   			
+					   			var list = #{raw @possible_matches_extra_tops} 
+					   			for(i = 0; i < list.length; i++){
+					   				temp.push(list[i]);
+					   			}
+					   				
+					   			for(i = 0; i < temp.length; i++){
+					   				this += {
+					   					id: temp[i].id,
+					   					image: temp[i].image.picture,
+					   					price: temp[i].price,
+					   					description: temp[i].description
+					   				}
+					   			}	
+					   	}();
+
+					   	$scope.bottoms = function(){
+					   			this = new Array;
+
+					   			var temp = #{raw @possible_match_suggested_bottoms}
+
+					   			var list = #{raw @possible_match_extra_bottoms}
+					   			for(i = 0; i < list.length; i++){
+					   				temp.push(list[i]);
+					   			}
+
+					   			for(i = 0; i < temp.length; i++){
+					   				this += {
+					   					id: temp[i].id,
+					   					image: temp[i].image.picture,
+					   					price: temp[i].price,
+					   					descriptioin: temp[i].description
+					   				}
+					   			}
+					   	}();
+
 
 					   	$scope.contemplated_piece = function(){
 					   		this = new Array;
 
-					   		this += {
-						   			id: <%= @contemplated_piece.id %>, 
-						   			image: <%= @contempalted_piece.image.picture %>,
-						   			price: <%= @contemplated_piece.price %>,
-						   			description: <%= @contemplated_piece.description %>
-					   			}
+				   			var temp = #{raw @contemplated_piece} 
+				   			
+				   			this += {
+					   			id: temp.id, 
+					   			image: temp.image.picture,
+					   			price: temp.price,
+					   			description: temp.description
+				   			}
 					   	}();
 
 					   	$scope.suggested_pieces = function(){
 					   		this = new Array;
 
-					   		for(i = 0; i < @suggested_pieces.length; i++){
+					   		var temp = #{raw @suggested_pieces}
+
+					   		for(i = 0; i < temp.length; i++){
 					   			this += {
-					   				id: <%= @suggested_pieces[i].id %>,
-					   				image: <%= @suggested_pieces[i].image.picture %>,
-					   				price: <%= @suggested_pieces[i].price %>,
-					   				description: <%= @suggested_pieces[i].description %>
+					   				id: temp[i].id,
+					   				image: temp[i].image.picture,
+					   				price: temp[i].price,
+					   				description: temp[i].description
 					   			}
 
 					   		}
@@ -49,7 +124,7 @@
 
 					   }]);
 
-	app.animation('.possible_matches_suggested_pieces', ['$timeout', function($timeout){
+	app.animation('.possible_pieces', ['$timeout', function($timeout){
 
 		return {
 			enter: function(element, done){
