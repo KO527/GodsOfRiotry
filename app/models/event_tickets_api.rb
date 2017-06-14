@@ -28,7 +28,7 @@ class Event_tickets
  	def self.GiveMeImmEvents
  		get('/2/events', :query => {"genres.slug" => 'pop', "sort" => {"datetime_order" => 'datetime_local.asc', "score_order" => 'score.desc'}, "taxonomies.name" => 'concert', "score.gte" => '0.7', "datetime_local.gte" => Event_tickets.event_forecast, "datetime_local.lte" => Event_tickets.til_eight_months, "geoip" => '100mi'})
  	end
-
+ 	
  	def self.ParseSportingEvents
  		get('/2/events', :query => {"taxonomies.name" => 'sports', "sort" => {"datetime_order" => 'datetime_local.asc', "score_order" => 'score.desc'}, "score.gte" => '0.7', "datetime_local.gte" => Event_tickets.event_forecast, "datetime_local.lte" => Event_tickets.til_eight_months})
  	end

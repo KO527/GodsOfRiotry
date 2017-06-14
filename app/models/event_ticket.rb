@@ -9,7 +9,7 @@ class EventTicket < ActiveRecord::Base
  	validates :venue, presence: true, length: {maximum: 255}
  	validates :name, presence: true, length: {maximum: 50}
  	validates :happening, presence: true
- 	
+	
 end
 
  
