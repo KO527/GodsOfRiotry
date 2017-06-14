@@ -4,9 +4,9 @@ class EventTicketsController < ApplicationController
 	
 	respond_to :html, :js
 
-	attr_accessor :performer_name, :search
-
 	layout 'main_display'
+
+	attr_accessor :performer_name, :search
 
 	def index
 		@ImmEvents = Event_tickets.GiveMeImmEvents
@@ -14,11 +14,21 @@ class EventTicketsController < ApplicationController
 	end
 
 	def artist_events
-		@Event_tickets = Event_tickets.EventsByArtist(params[:performer_name])
+		@Event_tickets = Event_tickets.EventsByArtist.find(params[:performer_name])
 	end
 
 	def search
-		@Event_tickets = Event_tickets.for(params[:input])
+		@Event_tickets = Event_tickets.for(params[:search])
 	end
 
+	private 
+
+
+		def performer_name
+			@performer_name
+		end
+
+		def search
+			@search
+		end
 end
