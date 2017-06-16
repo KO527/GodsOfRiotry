@@ -1,6 +1,6 @@
 class GorClothingController < ApplicationController
 	before_action :logged_in_user
-	before_action :admin, only: [:update, :edit, :new, :create, :destroy, :detail]
+	before_action :admin, only: [:update, :edit, :new, :create, :destroy]
 	before_action :find_clothing, only: [:index, :show, :edit, :update, :destroy, :detail]
 	respond_to :html, :js
 	
