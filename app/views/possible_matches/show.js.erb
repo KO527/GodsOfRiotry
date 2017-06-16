@@ -1,4 +1,5 @@
 <% content_for :show do %>
+$('#possible_matches').html(escape_javascript(render partial: 'show_possibilities', locals: {possible_matches: @contemplated_piece , @suggested_pieces})
 (function(){
 	var app = angular.module('GodsOfRiotry', ['ngRoute', 'ngAnimate']);
 
@@ -70,7 +71,7 @@
 					   					id: temp[i].id,
 					   					image: temp[i].image.picture,
 					   					price: temp[i].price,
-					   					descriptioin: temp[i].description
+					   					description: temp[i].description
 					   				}
 					   			}
 					   	}();
