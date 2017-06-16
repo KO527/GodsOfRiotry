@@ -1,10 +1,19 @@
-<% for suggested_piece in @suggested_pieces %>
-	<span id = "possible_match_suggested_piece_<%= suggested_piece.id %>" ng-switch = 'suggested_piece.id' ng-controller = 'PossibleMatches'>
-		<span class = 'possible_pieces' ng-if = "suggested_piece.merch_type == bottom">
-			<span class = 'possible_pieces_bottom'>		
-				<%= link_to image_tag(ng-src = "{{ suggested_piece.image}}"), detail_path(suggested_piece.id)%>
-				<details ng-bind-html = 'renderHtml(suggested_piece.price)' class = 'suggested_piece_price'></details>
-				<details ng-bind-html = 'renderHtml(suggested_piece.description)' class = 'suggested_piece_description'></details>
-			</span>
+<span id = "possible_matches" ng-controller = 'PossibleMatches'>
+	<%= render partial: 'wardrobes/_update_wardrobe', locals: {possible_matches}%>
+	<span class = 'possible_pieces_for_suggested_bottom' ng-if = "suggested_piece.merch_type == bottom">
+		<span class = 'possible_pieces_top'>
+			<%= render partial: '_possible_pieces_contemplated_piece', locals: {possible_matches}%>
 		</span>
-<%end%>
+		<span class = "possible_pieces_bottom" ng-switch = 'suggested_piece.id'>		
+			<%= render partial: '_possible_pieces_suggested_piece', locals: {possible_matches}%>
+		</span>
+	</span>
+	<span class = 'possible_pieces_for_suggested_top' ng-if = "suggested_piece.merch_top == top">
+		<span class = "possible_pieces_top">
+			<%= render partial: '_possible_pieces_suggested_piece', locals: {possible_matches}%>
+		</span>
+		<span class = "possible_pieces_bottom">
+			<%= render partial: '_possible_pieces_contemplated_piece', locals: {possible_matches} %>
+		</span>
+	</span>
+</span>
