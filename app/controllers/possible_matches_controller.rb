@@ -19,9 +19,9 @@ class PossibleMatchesController < ApplicationController
 
 	def show
 		if current_user.gender == :male #We need to specify merch_type: :top for Gor_Clothing and merch_type? for PossibleMatches
-			@contemplated_piece = self.fetch((params[:visible_gor_clothing][:id]), Gor_Clothing.order(merch_type: :top, gender: :male, created_at: :desc).first)
+			@contemplated_piece = self.fetch((params[:visible_gor_clothing][:contemplated_piece_id]), Gor_Clothing.order(gender: :male, created_at: :desc).first)
 		elsif current_user.gender == :female
-			@contemplated_piece = self.fetch((params[:visible_gor_clothing][:id]), Gor_Clothing.order(merch_type: :top, gender: :female, created_at: :desc).first)
+			@contemplated_piece = self.fetch((params[:visible_gor_clothing][:suggested_piece_id]), Gor_Clothing.order(gender: :female, created_at: :desc).first)
 		end
 		@possible_matches = PossibleMatch.where('contemplated_piece_id = ?', @contemplated_piece.id)
 		@suggested_pieces = @possible_matches.suggested_pieces.order(created_at: :desc)
@@ -29,6 +29,10 @@ class PossibleMatchesController < ApplicationController
 		@possible_match_suggested_bottoms = Gor_Clothing.where('merch_type = ?', bottom).where('toggled_pieces.contemplated_piece_id = ?', @contemplated_piece.id).order(created_at: :desc)
 		@possible_match_extra_tops = Gor_Clothing.where('merch_type = ?', top).where.not('toggled_pieces.contemplated_piece_id = ?', @contemplated_piece.id).order(created_at: :desc)
 		@possible_match_extra_bottoms = Gor_Clothing.where('merch_type = ?', bottom).where.not('toggled_pieces.contemplated_piece_id = ?', @contemplated_piece.id).order(created_at: :desc)
+
+		respond_to do |format|
+			format.js
+		end	
 	end
 
 	def index
@@ -50,18 +54,23 @@ class PossibleMatchesController < ApplicationController
 	end
 
 	#needs to somehow be retrieved through javascript at the end of toggling after elapsed time
-	def visible_gor_clothing
-		@visible_gor_clothing = PossibleMatch.find(params[:contemplated_piece_id]).top? : params[:id][:merch_type][:bottom])
-	end
 	
 	#Available to Wardrobes controller as well.
 	def possible_match_outfit
 	end
 	
+	protected
+
+		def visible_gor_clothing
+			@visible_gor_clothing = Struct.new(:contemplated_piece_id, :suggested_piece_id)
+		end
+	end
+
 	private
 
 		def possible_matches_params	
-			params.require(PossibleMatch).permit(:contemplated_piece, :suggested_piece)
+			params.require(PossibleMatch).permit(:contemplated_piece_id, :suggested_piece_id)
 		end
+	end
 
 end
