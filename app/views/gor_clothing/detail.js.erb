@@ -1,5 +1,5 @@
 var el = $('#main-content');
-var possible_matches = $('.possible_matches');
+var possible_matches = $('.detail_possible_matches');
 
 el.html('');
 el.html("<%= escape_javascript(render('gor_clothing/gor_detail'))%>");
@@ -9,4 +9,3 @@ el.html("<%= escape_javascript(render('gor_clothing/gor_detail'))%>");
 <%else%>
 	possible_matches.html('');
 <%end%>
-
