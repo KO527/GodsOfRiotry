@@ -1,0 +1,8 @@
+json.contemplated_piece @contemplated_piece, :id, :price, :description, :merch_type, :standalone, [:image][:picture]
+json.suggested_pieces @suggested_pieces, :id, :price, :descripton, :merch_type, :standalone, [:image][:picture]
+json.possible_match_suggested_tops @possible_match_suggested_tops, :id, :price, :description, :merch_type, :standalone, [:image][:picture]
+json.possible_match_suggested_bottoms @possible_match_suggested_bottoms, :id, :price, :description, :merch_type, :standalone, [:image][:picture]
+json.possible_match_extra_tops @possible_match_extra_tops, :id, :price, :description, :merch_type, :standalone, [:image][:picture]
+json.possible_match_extra_bottoms @possible_match_extra_bottoms, :id, :price, :description, :merch_type, :standalone, [:image][:picture]
+json.gor_clothing_standalone_bottoms @gor_clothing_standalone_bottoms, :id, :price, :description, :merch_type, :standalone, [:image][:picture]
+json.gor_clothing_standalone_tops @gor_clothing_standalone_tops,:id, :price, :description, :merch_type, :standalone,  [:image][:picture] 
