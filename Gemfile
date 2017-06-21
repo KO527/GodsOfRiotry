@@ -61,6 +61,8 @@ gem 'rails_admin'
 
 gem 'paloma', '~> 5.0.0'
 
+gem 'gon'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
