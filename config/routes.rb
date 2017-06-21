@@ -40,18 +40,15 @@
 
   resources :preferences, only: [:index, :create, :destroy]
 
-  resources :wardrobes, only: [:update] do
-	member do
-		resources :gor_clothing, only: [:index, :destroy, :detail]	
-	  	patch 'update_wardrobe'
-  	end
-  end
+  resources :wardrobes, only: [:update, :index, :destroy, :detail]
 
   resources :gor_clothing, except: [:new] do
   	member do
   		resources :images, only: [:index, :show, :preview]
   	end
   end
+
+  resources :possible_matches, only: [:show, :detail]
 
   get ':performer_name', to: 'event_tickets#artist_events', as: :artist_events
 
