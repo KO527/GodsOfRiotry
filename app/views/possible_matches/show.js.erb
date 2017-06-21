@@ -1,5 +1,5 @@
 <% content_for :show do %>
-$('#possible_matches').html(escape_javascript(render partial: 'show_possibilities', locals: {possible_matches: @contemplated_piece , @suggested_pieces})
+$('#possible_matches').html("<%= escape_javascript(render('show_possibilities'), locals: {possible_matches: @contemplated_piece , @suggested_pieces}%>")
 (function(){
 	var app = angular.module('GodsOfRiotry', ['ngRoute', 'ngAnimate']);
 
@@ -9,14 +9,16 @@ $('#possible_matches').html(escape_javascript(render partial: 'show_possibilitie
 					   	$scope.suggested_tops = function(){
 					   		this = new Array;
 
-					   		var temp = #{raw @possible_matches_suggested_tops}
+					   		var temp = gon.possible_matches_suggested_tops
 
 					   		for(i = 0; i < temp.length; i++)
 						   		this += {
 						   			id: temp[i].id,
 						   			image: temp[i].image.picture,
 						   			price: temp[i].price,
-			  						description: temp[i].description
+			  						description: temp[i].description,
+			  						merch_type: temp[i].merch_type,
+			  						standalone: temp[i].standalone
 						   		}
 						   	}
 					   	}();
@@ -24,34 +26,46 @@ $('#possible_matches').html(escape_javascript(render partial: 'show_possibilitie
 					   	$scope.suggested_bottoms = function(){
 					   			this = new Array;
 
-					   			var temp = #{raw @possible_matches_suggested_bottoms};
+					   			var temp = gon.possible_matches_suggested_bottoms
 
 					   			for(i = 0; i < temp.length; i++){
 					   				this += {
 					   					id: temp[i].id,
 					   					image: temp[i].image.picture,
 					   					price: temp[i].price,
-					   					description: temp[i].description
+					   					description: temp[i].description,
+					   					merch_type: temp[i].merch_type,
+					   					standalone: temp[i].standalone
 					   				}
 					   			}	
 					   	}();
 
+
 					   	$scope.tops = function(){
 					   			this = new Array;
 
-					   			var temp = #{raw @possible_matches_suggested_tops}
+					   			var temp = gon.possible_matches_suggested_tops
 					   			
-					   			var list = #{raw @possible_matches_extra_tops} 
+					   			var list = gon.possible_matches_extra_tops
+
+					   			var standalonetops = gon.gor_clothing_standalone_tops
+
 					   			for(i = 0; i < list.length; i++){
 					   				temp.push(list[i]);
 					   			}
-					   				
+						   		
+						   		for(i = 0; i < standalonetops.length; i++){
+					   				temp.push(standalonetops[i]);
+					   			}
+
 					   			for(i = 0; i < temp.length; i++){
 					   				this += {
 					   					id: temp[i].id,
 					   					image: temp[i].image.picture,
 					   					price: temp[i].price,
-					   					description: temp[i].description
+					   					description: temp[i].description,
+					   					merch_type: temp[i].merch_type,
+					   					standalone: temp[i].standalone
 					   				}
 					   			}	
 					   	}();
@@ -59,48 +73,61 @@ $('#possible_matches').html(escape_javascript(render partial: 'show_possibilitie
 					   	$scope.bottoms = function(){
 					   			this = new Array;
 
-					   			var temp = #{raw @possible_match_suggested_bottoms}
+					   			var temp = gon.possible_match_suggested_bottoms
 
-					   			var list = #{raw @possible_match_extra_bottoms}
+					   			var list = gon.possible_match_extra_bottoms
+					   			
+					   			var standalonebottoms = gon.gor_clothing_standalone_bottoms
+
 					   			for(i = 0; i < list.length; i++){
 					   				temp.push(list[i]);
 					   			}
 
+					   			for(i = 0; i < standalonebottoms.length; i++){
+					   				temp.push(standalonebottoms[i])
+					   			}
+					   			
 					   			for(i = 0; i < temp.length; i++){
 					   				this += {
 					   					id: temp[i].id,
 					   					image: temp[i].image.picture,
 					   					price: temp[i].price,
-					   					description: temp[i].description
+					   					description: temp[i].description,
+					   					merch_type: temp[i].merch_type,
+					   					standalone: temp[i].standalone
 					   				}
 					   			}
 					   	}();
-
+					   
 
 					   	$scope.contemplated_piece = function(){
 					   		this = new Array;
 
-				   			var temp = #{raw @contemplated_piece} 
+				   			var temp = gon.contemplated_piece
 				   			
 				   			this += {
 					   			id: temp.id, 
 					   			image: temp.image.picture,
 					   			price: temp.price,
-					   			description: temp.description
+					   			description: temp.description,
+					   			merch_type: temp.merch_type,
+					   			standalone: temp.standalone
 				   			}
 					   	}();
 
 					   	$scope.suggested_pieces = function(){
 					   		this = new Array;
 
-					   		var temp = #{raw @suggested_pieces}
+					   		var temp = gon.suggested_pieces
 
 					   		for(i = 0; i < temp.length; i++){
 					   			this += {
 					   				id: temp[i].id,
 					   				image: temp[i].image.picture,
 					   				price: temp[i].price,
-					   				description: temp[i].description
+					   				description: temp[i].description,
+					   				merch_type: temp[i].merch_type,
+					   				standalone: temp[i].standalone
 					   			}
 
 					   		}
