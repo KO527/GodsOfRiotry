@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170524130442) do
+ActiveRecord::Schema.define(version: 20170618063347) do
 
   create_table "acts", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -66,17 +66,18 @@ ActiveRecord::Schema.define(version: 20170524130442) do
   add_index "event_tickets", ["user_id"], name: "index_event_tickets_on_user_id"
 
   create_table "gor_clothings", force: :cascade do |t|
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.float    "price"
     t.text     "description"
     t.float    "sizes"
     t.integer  "quantity"
-    t.integer  "gender",           default: 0, null: false
-    t.integer  "purchase_status",  default: 0, null: false
-    t.integer  "status",           default: 0, null: false
+    t.integer  "gender",           default: 0,     null: false
+    t.integer  "purchase_status",  default: 0,     null: false
+    t.integer  "status",           default: 0,     null: false
     t.string   "colors_available"
     t.integer  "wardrobe_id"
+    t.boolean  "standalone",       default: false
   end
 
   add_index "gor_clothings", ["wardrobe_id"], name: "index_gor_clothings_on_wardrobe_id"
@@ -105,6 +106,7 @@ ActiveRecord::Schema.define(version: 20170524130442) do
     t.datetime "updated_at",            null: false
     t.integer  "contemplated_piece_id"
     t.integer  "suggested_piece_id"
+    t.integer  "image_id"
   end
 
   add_index "possible_matches", ["contemplated_piece_id", "suggested_piece_id"], name: "indexed_possible_match_pair", unique: true
