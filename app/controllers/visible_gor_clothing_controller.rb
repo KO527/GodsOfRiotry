@@ -9,7 +9,7 @@ class VisibleGorClothingController < ApplicationController
 		end
 
 		def visible_gor_clothing	
-			@visible_gor_clothing = Struct.new(:contemplated_piece_id, :suggested_piece_id)
+			@visible_gor_clothing = Struct.new(args[:contemplated_piece_id] || nil, args[:suggested_piece_id] || nil) #or nil for both params
 		end
 	end
 
