@@ -17,6 +17,7 @@ class GorClothing < ActiveRecord::Base
 	validates :description, presence: true
 	validates :colors_available, presence: true
 	validates :merch_type, presence: true, inclusion: {in: %w(top bottom)}
+	validates :standalone, presence: true
 	# validates :possible_matches, inclusion: {} allow_blank: true
 	
 	has_many :static_pieces, class_name: 'PossibleMatch',
