@@ -1,5 +1,6 @@
-class WardrobesController < ApplicationController
-	
+class WardrobesController < VisibleGorClothingController
+	respond_to :html, :js
+
 	layout 'main_display'
 
 	# def index 
@@ -20,15 +21,37 @@ class WardrobesController < ApplicationController
 	# 	end
 	# end
 
+	def new
+	end
+
+	def show
+
+	end
+
+	def create
+	end
 
 	def update
-		PossibleMatch.find(params[][])
+		# Setup cookies for Wardrobe model
+		respond_to do |format|
+			if current_user.wardrobes.find(:all).include?(@visible_gor_clothing)			
+				flash.now[:notice] = "You already have this match in the wardrobe."
+				format.html {render :show}
+			elsif PossibleMatch.exists?(:contemplated_piece_id => @visible_gor_clothing.contemplated_piece_id, :suggested_piece_id => @visible_gor_clothing.suggested_piece_id)
+				@new_patch = PossibleMatch.find(params(@visible_gor_clothing))
+				# format.html{ render :}
+				# format.js
+			else
+			 	PossibleMatch.fetch((:contemplated_piece_id => @visible_gor_clothing.contemplated_piece_id, :suggested_piece_id => @visible_gor_clothing.suggested_piece_id), :contemplated_piece_id => @visible_gor_clothing.contemplated_piece_id)
+			end
+		end
+			
 	end
 
 	private
 
 		def wardrobe_params
-			params.require(:wardrobe).permit(gor_clothing_attributes: [:image, :_destroy])
+			params.require(:wardrobe).permit(possible_match_attributes: [:contemplated_piece_id, :suggested_piece_id, images_attributes: [:picture, :_destroy]])
 		end
 
 end
