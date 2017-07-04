@@ -134,27 +134,39 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 					   	}();
 
 
-					   	function placeholder(){
-					   		var temp = 
-					   		switch(temp){
-					   			case 
-					   	});
-
 						function placeholder(){
 							var element = this,
 						
-							temp = {suggested_pieces: {$('#non_suggested_bottom_<%=gor_clothing.id %>') ||
-										         $('#non_suggested_top_<%= gor_clothing.id %>') ||
-										         $('#suggested_piece_<%=suggested_piece.id %>')},
-								  contemplated_piece: $('#contemplated_piece_<%=@contemplated_piece%>'),
-								  standalone_tops: $('#gor_clothing_<%= gor_clothing %>'),
-								  standalone_bottoms: $('#gor_clothing_<%= gor_clothing.id %>')}				    
+							temp = {suggested_pieces: {if ($('#non_suggested_bottom_<%= gor_clothing.id %>').length){
+												element.find('#non_suggested_bottom_<%= gor_clothing.id %>');
+											} ||
+										         if ($('#non_suggested_top_<%= gor_clothing.id %>').length){
+										         		element.find('#non_suggested_top_<%= gor_clothing.id %>');
+											} ||
+											if ($('#suggested_piece_<%= suggested_piece.id %>').length){
+										         		element.find('#suggested_piece_<%= suggested_piece.id %>');
+											}},
+								  contemplated_piece: {if $('#contemplated_piece_<%=@contemplated_piece.id%>').length){
+												element.find('#contemplated_piece_<%= @contemplated_piece.id%>');
+											}},
+								  standalone_tops: {if ($('#standalone_tops_<%= gor_clothing.id%>').length){
+								  				element.find('#standalone_tops_<%= gor_clothing.id %>');
+								  		      }},
+								  standalone_bottoms: {if ($('#standalone_bottoms_<%= gor_clothing.id %>').length){
+								  				element.find($('#standalone_bottoms_<%= gor_clothing.id %>');
+								  			}}
+							};				    
 							
 							switch(temp){
 								case temp.suggested_pieces:
 								break;
 
 								case temp.contemplated_piece:
+									timeout(function(){
+										$scope.temporary_match = 
+										if 
+										  
+									}, 6000);
 								break;
 
 								case temp.standalone_tops:
@@ -162,14 +174,18 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 
 								case temp.standalone_bottoms:
 								break;
+
+								default:
 							}
 						}
 
 
-						$(document).keydown(function(e) {
+						$('#possible_matches').keydown(function(e) {
+							
+							clearInterval(TogglePieces());
+						    
 						    switch(e.which) {
 						        case 37: // left
-						   
 						        break;
 
 						        case 38: // up
@@ -196,7 +212,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 
 					   	var index = 0;
 
-					   	$interval(function(){
+					   	var TogglePieces = $interval(function(){
 					   		if(index > array.length - 1){
 					   			index = 0;
 					   		}
