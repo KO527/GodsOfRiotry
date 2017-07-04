@@ -20,4 +20,5 @@
  *= require ./admin/admin
  *= require angular-animate
  *= require angular-route
+ *= require js-routes
  */
