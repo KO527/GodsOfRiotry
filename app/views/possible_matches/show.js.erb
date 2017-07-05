@@ -1,4 +1,4 @@
-<% content_for :show do %>
+
 $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'), locals: {possible_matches: @contemplated_piece , @suggested_pieces}%>")
 (function(){
 	var app = angular.module('GodsOfRiotry', ['ngRoute', 'ngAnimate']);
@@ -115,7 +115,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 				   			}
 					   	}();
 
-					   	$scope.suggested_pieces = function(){
+					   	// $scope.sugge
 					   		this = new Array;
 
 					   		var temp = gon.suggested_pieces
@@ -133,6 +133,29 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 					   		}
 					   	}();
 
+					   	$scope.stopAutomaticToggle = function(){
+								if (angular.isDefined(ToggleSuggPieces)){
+									$interval.cancel(ToggleSuggPieces);
+									ToggleSuggPieces = undefined;
+								}
+						}
+
+						$scope.temporary_matches = function(){
+							if (angular.isDefined(initiateAutomaticToggle))
+								return;
+							this = New Array;
+
+							this += {id: $scope.suggested_piece.id,
+								   image: $scope.suggested_piece.image.picture,
+								   price: $scope.suggested_piece.price,
+								   description: $scope.suggested_piece.description,
+								   merch_type: $scope.suggested_piece.merch_type
+							}
+						}
+
+						$scope.$on('$destroy', function(){
+							$scope.stopAutomaticToggle();
+						});
 
 						function placeholder(){
 							var element = this,
@@ -146,14 +169,14 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 											if ($('#suggested_piece_<%= suggested_piece.id %>').length){
 										         		element.find('#suggested_piece_<%= suggested_piece.id %>');
 											}},
-								  contemplated_piece: {if $('#contemplated_piece_<%=@contemplated_piece.id%>').length){
+								  contemplated_piece: {if ($('#contemplated_piece_<%=@contemplated_piece.id%>').length){
 												element.find('#contemplated_piece_<%= @contemplated_piece.id%>');
 											}},
 								  standalone_tops: {if ($('#standalone_tops_<%= gor_clothing.id%>').length){
 								  				element.find('#standalone_tops_<%= gor_clothing.id %>');
 								  		      }},
 								  standalone_bottoms: {if ($('#standalone_bottoms_<%= gor_clothing.id %>').length){
-								  				element.find($('#standalone_bottoms_<%= gor_clothing.id %>');
+								  				element.find('#standalone_bottoms_<%= gor_clothing.id %>');
 								  			}}
 							};				    
 							
@@ -163,7 +186,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 
 								case temp.contemplated_piece:
 									timeout(function(){
-										$scope.temporary_match = 
+										$scope.temporary_matches 
 										if 
 										  
 									}, 6000);
@@ -182,8 +205,8 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 
 						$('#possible_matches').keydown(function(e) {
 							
-							clearInterval(TogglePieces());
-						    
+						    $scope.stopAutomaticToggle();
+
 						    switch(e.which) {
 						        case 37: // left
 						        break;
@@ -212,7 +235,8 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 
 					   	var index = 0;
 
-					   	var TogglePieces = $interval(function(){
+					   	var ToggleSuggPieces;
+					   	ToggleSuggPieces = $interval(function(){
 					   		if(index > array.length - 1){
 					   			index = 0;
 					   		}
@@ -230,6 +254,8 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 				var img = angular.element(element.children()[0]);
 				var price = angular.element(element.children()[1]);
 				var description = angular.element(element.children()[2]);
+
+				angular.element(element.toggleClass('#contemplated_piece_<%=@contemplated_piece%>'));
 
 				img.css({
 					opacity: 0
