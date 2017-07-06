@@ -3,8 +3,8 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 (function(){
 	var app = angular.module('GodsOfRiotry', ['ngRoute', 'ngAnimate']);
 
-	app.controller('PossibleMatches', ['$scope', '$timeout', '$interval', '$sce', 
-					   function($scope, $timeout, $interval, $sce){
+	app.controller('PossibleMatches', ['$scope', '$rootScope', '$timeout', '$interval', '$sce', 
+					   function($scope, $rootScope, $timeout, $interval, $sce){
 					   	
 					   	$scope.suggested_tops = function(){
 					   		this = new Array;
@@ -115,41 +115,43 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 				   			}
 					   	}();
 
-					   	// $scope.sugge
-					   		this = new Array;
-
-					   		var temp = gon.suggested_pieces
-
-					   		for(i = 0; i < temp.length; i++){
-					   			this += {
-					   				id: temp[i].id,
-					   				image: temp[i].image.picture,
-					   				price: temp[i].price,
-					   				description: temp[i].description,
-					   				merch_type: temp[i].merch_type,
-					   				standalone: temp[i].standalone
-					   			}
-
-					   		}
-					   	}();
-
 					   	$scope.stopAutomaticToggle = function(){
-								if (angular.isDefined(ToggleSuggPieces)){
-									$interval.cancel(ToggleSuggPieces);
-									ToggleSuggPieces = undefined;
+								if (angular.isDefined(initiateAutomaticToggle)){
+									$interval.cancel(initiateAutomaticToggle);
+									initiateAutomaticToggle = undefined;
 								}
 						}
 
-						$scope.temporary_matches = function(){
+						$rootScope.temporary_matches = function(){
 							if (angular.isDefined(initiateAutomaticToggle))
 								return;
-							this = New Array;
+							
+							var contemplated = angular.element(document).find('#contemplated_piece_<%= @contemplated_piece.id %>');
+							
+							//JsRoutes --> make element a contemplated_piece
 
-							this += {id: $scope.suggested_piece.id,
-								   image: $scope.suggested_piece.image.picture,
-								   price: $scope.suggested_piece.price,
-								   description: $scope.suggested_piece.description,
-								   merch_type: $scope.suggested_piece.merch_type
+							initiateAutomaticToggle = function(){
+								this = new Array;
+
+								this += {id: $scope.suggested_piece.id,
+									   image: $scope.suggested_piece.image.picture,
+									   price: $scope.suggested_piece.price,
+									   description: $scope.suggested_piece.description,
+									   merch_type: $scope.suggested_piece.merch_type
+								}
+
+								var array = $scope.suggested_pieces;
+
+								for(i = 0; i < array.length - 1; i++){
+									this += {
+										id: array[i].id,
+										image: array[i].image.picture,
+										price: array[i].price,
+										description: array[i].description,
+										merch_type: array[i].merch_type
+									}
+								}
+							}	
 							}
 						}
 
@@ -246,7 +248,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 
 					   }]);
 
-	app.animation('.possible_pieces', ['$timeout', function($timeout){
+	app.animation('.possible_pieces', ['$timeout', '$rootScope' function($timeout){
 
 		return {
 			enter: function(element, done){
@@ -254,8 +256,8 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 				var img = angular.element(element.children()[0]);
 				var price = angular.element(element.children()[1]);
 				var description = angular.element(element.children()[2]);
-
 				angular.element(element.toggleClass('#contemplated_piece_<%=@contemplated_piece%>'));
+				$rootScope.temporary_matches();
 
 				img.css({
 					opacity: 0
@@ -269,13 +271,17 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 				img.animate({
 					opacity: 1
 				}, 500, function(){
+					var eventfire = false;
 					img.on('mouseover', function(){
+						eventfire = true;
 						price.css({opacity: 1});
 						description.css({opacity: 1});
 					}).off('mouseover', function(){
 						price.css({opacity: 0});
 						description.css({opacity: 0});
 					});
+						//Show reminder to user
+						
 				}());
 			},
 
@@ -292,6 +298,11 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 				img.animate({
 					opacity: 0
 				}, 500);
+
+				if angular.element(element.hasClass('#contemplated_piece_<%=@contemplated_piece.id%>')){
+					angular.element(element.removeClass('#contemplated_piece_<%=@contemplated_piece.id%>'));
+				}	
+
 			}
 		};
 	}]);
