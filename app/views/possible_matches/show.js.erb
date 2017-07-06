@@ -6,121 +6,146 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 	app.controller('PossibleMatches', ['$scope', '$rootScope', '$timeout', '$interval', '$sce', 
 					   function($scope, $rootScope, $timeout, $interval, $sce){
 					   	
-					   	$scope.suggested_tops = function(){
-					   		this = new Array;
+					   	$scope.suggested_tops = {
+					   		
+					   		suggested_tops = new Array;
 
-					   		var temp = gon.possible_matches_suggested_tops
-
-					   		for(i = 0; i < temp.length; i++)
-						   		this += {
-						   			id: temp[i].id,
-						   			image: temp[i].image.picture,
-						   			price: temp[i].price,
-			  						description: temp[i].description,
-			  						merch_type: temp[i].merch_type,
-			  						standalone: temp[i].standalone
-						   		}
-						   	}
-					   	}();
-
-					   	$scope.suggested_bottoms = function(){
-					   			this = new Array;
-
-					   			var temp = gon.possible_matches_suggested_bottoms
-
-					   			for(i = 0; i < temp.length; i++){
-					   				this += {
-					   					id: temp[i].id,
-					   					image: temp[i].image.picture,
-					   					price: temp[i].price,
-					   					description: temp[i].description,
-					   					merch_type: temp[i].merch_type,
-					   					standalone: temp[i].standalone
-					   				}
-					   			}	
-					   	}();
-
-
-					   	$scope.tops = function(){
-					   			this = new Array;
-
-					   			var temp = gon.possible_matches_suggested_tops
-					   			
-					   			var list = gon.possible_matches_extra_tops
-
-					   			var standalonetops = gon.gor_clothing_standalone_tops
-
-					   			for(i = 0; i < list.length; i++){
-					   				temp.push(list[i]);
-					   			}
+					   		upload: function(){
 						   		
-						   		for(i = 0; i < standalonetops.length; i++){
-					   				temp.push(standalonetops[i]);
-					   			}
+						   		for(i = 0; i < (gon.possible_matches_suggested_tops).length; i++)
+							   		this += {
+							   			id: temp[i].id,
+							   			image: temp[i].image.picture,
+							   			price: temp[i].price,
+				  						description: temp[i].description,
+				  						merch_type: temp[i].merch_type,
+				  						standalone: temp[i].standalone
+							   		}
+							   	}
+							}   	
 
-					   			for(i = 0; i < temp.length; i++){
-					   				this += {
-					   					id: temp[i].id,
-					   					image: temp[i].image.picture,
-					   					price: temp[i].price,
-					   					description: temp[i].description,
-					   					merch_type: temp[i].merch_type,
-					   					standalone: temp[i].standalone
-					   				}
-					   			}	
 					   	}();
 
-					   	$scope.bottoms = function(){
-					   			this = new Array;
-
-					   			var temp = gon.possible_match_suggested_bottoms
-
-					   			var list = gon.possible_match_extra_bottoms
+					   	$scope.suggested_bottoms = {
 					   			
-					   			var standalonebottoms = gon.gor_clothing_standalone_bottoms
+					   			suggested_bottoms = new Array;
 
-					   			for(i = 0; i < list.length; i++){
-					   				temp.push(list[i]);
-					   			}
+					   			upload: function(){
 
-					   			for(i = 0; i < standalonebottoms.length; i++){
-					   				temp.push(standalonebottoms[i])
-					   			}
-					   			
-					   			for(i = 0; i < temp.length; i++){
-					   				this += {
-					   					id: temp[i].id,
-					   					image: temp[i].image.picture,
-					   					price: temp[i].price,
-					   					description: temp[i].description,
-					   					merch_type: temp[i].merch_type,
-					   					standalone: temp[i].standalone
+					   				for (i = 0; i < (gon.possible_matches_suggested_bottoms).length; i++){
+					   					this.suggested_bottoms += {
+					   						gon.possible_matches_suggested_bottoms[i].id,
+					   						gon.possible_matches_suggested_bottoms[i].image.picture,
+					   						gon.possible_matches_suggested_bottoms[i].price,
+					   						gon.possible_matches_suggested_bottoms[i].description,
+					   						gon.possible_matches_suggested_bottoms[i].merch_type,
+					   						gon.possible_matches_suggested_bottoms[i].standalone
+					   					}
 					   				}
 					   			}
-					   	}();
+					   	};
+
+
+					   	$scope.tops = {
+					   			
+					   			tops = new Array;					   			
+
+					   			upload: function(){
+
+					   				for(i=0; i < gon.possible_matches_suggested_tops; i++){
+					   					this.tops += {
+					   						gon.possible_matches_suggested_tops[i].id,
+					   						gon.possible_matches_suggested_tops[i].image.picture,
+					   						gon.possible_matches_suggested_tops[i].price,
+					   						gon.possible_matches_suggested_tops[i].description,
+					   						gon.possible_matches_suggested_tops[i].merch_type,
+					   						gon.possible_matches_suggested_tops[i].standalone
+					   					}
+					   				}
+
+					   				for(i = 0; i < gon.possible_matches_extra_tops; i++){
+					   					this.tops += {
+					   					 	gon.possible_matches_extra_tops[i].id,
+					   					 	gon.possible_matches_extra_tops[i].image.picture,
+					   					 	gon.possible_matches_extra_tops[i].price,
+					   					 	gon.possible_matches_extra_tops[i].description,
+					   					 	gon.possible_matches_extra_tops[i].merch_type,
+					   					 	gon.possible_matches_extra_tops[i].standalone
+					   					}
+					   				}
+
+					   				for(i = 0; i < gon.gor_clothing_standalone_tops; i++){
+					   					this.tops += {
+					   						gon.gor_clothing_standalone_tops[i].id,
+					   						gon.gor_clothing_standalone_tops[i].image.picture,
+					   						gon.gor_clothing_standalone_tops[i].price,
+					   						gon.gor_clothing_standalone_tops[i].description,
+					   						gon.gor_clothing_standalone_tops[i].merch_type,
+					   						gon.gor_clothing_standalone_tops[i].standalone
+					   					}
+					   				}
+					   	};
+
+					   	$scope.bottoms = {
+					   			
+					   			bottoms = new Array;
+
+					   			upload: function(){
+
+					   				for (i = 0; i < gon.possible_match_suggested_bottoms.length; i++){
+						   				this.bottoms += {
+						   					gon.possible_match_suggested_bottoms[i].id,
+						   					gon.possible_match_suggested_bottoms[i].image.picture,
+						   					gon.possible_match_suggested_bottoms[i].price,
+						   					gon.possible_match_suggested_bottoms[i].description,
+						   					gon.possible_match_suggested_bottoms[i].merch_type,
+						   					gon.possible_match_suggested_bottoms[i].standalone
+						   				}
+						   			}	
+
+						   			for (i = 0; i < gon.possible_matches_extra_bottoms.length; i++){
+						   				this.bottoms += {
+						   					gon.possible_matches_extra_bottoms[i].id,
+						   					gon.possible_matches_extra_bottoms[i].image.picture,
+						   					gon.possible_matches_extra_bottoms[i].price,
+						   					gon.possible_matches_extra_bottoms[i].description,
+						   					gon.possible_matches_extra_bottoms[i].merch_type,
+						   					gon.possible_matches_extra_bottoms[i].standalone
+						   				}
+						   			}
+
+						   			for(i = 0; i < gon.gor_clothing_standalone_bottoms.length; i++){
+						   				this.bottoms += {
+						   					gon.gor_clothing_standalone_bottoms[i].id,
+						   					gon.gor_clothing_standalone_bottoms[i].image.picture,
+						   					gon.gor_clothing_standalone_bottoms[i].price,
+						   					gon.gor_clothing_standalone_bottoms[i].description,
+						   					gon.gor_clothing_standalone_bottoms[i].merch_type,
+						   					gon.gor_clothing_standalone_bottoms[i].standalone
+						   				}
+						   			}
+
+						   		}
+						};
 					   
 
-					   	$scope.contemplated_piece = function(){
-					   		this = new Array;
+					   	$scope.contemplated_piece = {
 
-				   			var temp = gon.contemplated_piece
-				   			
-				   			this += {
-					   			id: temp.id, 
-					   			image: temp.image.picture,
-					   			price: temp.price,
-					   			description: temp.description,
-					   			merch_type: temp.merch_type,
-					   			standalone: temp.standalone
-				   			}
-					   	}();
+					   		contemplated_piece = new Array;
 
-					   	$scope.stopAutomaticToggle = function(){
-								if (angular.isDefined(initiateAutomaticToggle)){
-									$interval.cancel(initiateAutomaticToggle);
-									initiateAutomaticToggle = undefined;
-								}
-						}
+						   	upload: function(){
+					   			
+					   			this.contemplated_piece += {
+						   			id: gon.contemplated_piece.id, 
+						   			image: gon.contemplated_piece.image.picture,
+						   			price: gon.contemplated_piece.price,
+						   			description: gon.contemplated_piece.description,
+						   			merch_type: gon.contemplated_piece.merch_type,
+						   			standalone: gon.contemplated_piece.standalone
+					   			}
+						   	}
+					   	};
+					   	
 
 						$rootScope.temporary_matches = function(){
 							if (angular.isDefined(initiateAutomaticToggle))
@@ -129,9 +154,9 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 							var contemplated = angular.element(document).find('#contemplated_piece_<%= @contemplated_piece.id %>');
 							
 							//JsRoutes --> make element a contemplated_piece
+							this = new Array;
 
 							initiateAutomaticToggle = function(){
-								this = new Array;
 
 								this += {id: $scope.suggested_piece.id,
 									   image: $scope.suggested_piece.image.picture,
@@ -151,8 +176,33 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 										merch_type: array[i].merch_type
 									}
 								}
-							}	
-							}
+							};
+
+
+						   	$timeout(function(){
+						   		$scope.suggested_piece = array[array.length - 1];
+						   	}, 100);
+
+						   	var index = 0;
+
+						   	var ToggleSuggPieces;
+						   	ToggleSuggPieces = $interval(function(){
+						   		if(index > array.length - 1){
+						   			index = 0;
+						   		}
+						   		$scope.suggested_piece = array[index];
+						   		index++;
+						   	}, 8000);
+
+						   	var array = $scope.suggested_pieces;
+
+						}
+
+						$scope.stopAutomaticToggle = function(){
+								if (angular.isDefined(initiateAutomaticToggle)){
+									$interval.cancel(initiateAutomaticToggle);
+									initiateAutomaticToggle = undefined;
+								}
 						}
 
 						$scope.$on('$destroy', function(){
@@ -226,25 +276,6 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 						    }
 						    e.preventDefault(); // prevent the default action (scroll / move caret)
 						});
-
-
-
-					   	var array = $scope.suggested_pieces;
-
-					   	$timeout(function(){
-					   		$scope.suggested_piece = array[array.length - 1];
-					   	}, 100);
-
-					   	var index = 0;
-
-					   	var ToggleSuggPieces;
-					   	ToggleSuggPieces = $interval(function(){
-					   		if(index > array.length - 1){
-					   			index = 0;
-					   		}
-					   		$scope.suggested_piece = array[index];
-					   		index++;
-					   	}, 8000);
 
 					   }]);
 
