@@ -16,8 +16,6 @@ class PossibleMatchesController < VisbleGorClothingController
 	end
 
 	def show
-		gon.jbuilder
-
 		if current_user.gender == :male #We need to specify merch_type: :top for Gor_Clothing and merch_type? for PossibleMatches
 			@contemplated_piece = self.fetch((params[:visible_gor_clothing][:contemplated_piece_id]), Gor_Clothing.order(gender: :male, created_at: :desc).first)
 			@gor_clothing_standalone_bottoms = Gor_Clothing.where('standalone = ?', true).where('merch_type = ?', bottom).order(gender: :male, created_at: :desc)
@@ -27,13 +25,13 @@ class PossibleMatchesController < VisbleGorClothingController
 			@gor_clothing_standalone_tops = Gor_Clothing.where('standalone = ?', true).where('merch_type = ?', top).order(gender: :female, created_at: :desc)
 			@gor_clothing_standalone_bottoms = Gor_Clothing.where('standalone = ?', true).where('merch_type = ?', bottom).order(gender: :female, created_at: :desc)			
 		end
-		@possible_matches = PossibleMatch.where('contemplated_piece_id = ?', @contemplated_piece.id)
-		@suggested_pieces = @possible_matches.suggested_pieces.order(created_at: :desc)
 		@possible_match_suggested_tops = Gor_Clothing.where('merch_type = ?', top).where('toggled_pieces.contemplated_piece_id = ?', @contemplated_piece.id).order(created_at: :desc)
 		@possible_match_suggested_bottoms = Gor_Clothing.where('merch_type = ?', bottom).where('toggled_pieces.contemplated_piece_id = ?', @contemplated_piece.id).order(created_at: :desc)
 		@possible_match_extra_tops = Gor_Clothing.where('merch_type = ?', top).where.not('toggled_pieces.contemplated_piece_id = ?', @contemplated_piece.id).where('standalone = ?', false).order(created_at: :desc)
 		@possible_match_extra_bottoms = Gor_Clothing.where('merch_type = ?', bottom).where.not('toggled_pieces.contemplated_piece_id = ?', @contemplated_piece.id).where('standalone = ?', false).order(created_at: :desc)
 		
+		gon.jbuilder
+
 
 		respond_to do |format|
 			format.html {}
@@ -58,8 +56,6 @@ class PossibleMatchesController < VisbleGorClothingController
 			flash[:notice] = "Selected possible matches destroyed"
 		end
 	end
-
-	#needs to somehow be retrieved through javascript at the end of toggling after elapsed time
 	
 	private
 
