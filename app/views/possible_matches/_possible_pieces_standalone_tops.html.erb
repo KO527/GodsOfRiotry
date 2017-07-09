@@ -1,3 +1,4 @@
+<span ng-switch = 'top.id'>
 <% for gor_clothing in @gor_clothing_standalone_tops %>
 <span ng-switch-when = '{{top.id}}'>
 <li id='standalone_tops_<%= gor_clothing.id%>' class = 'possible_pieces'>
@@ -7,3 +8,4 @@
 </li>
 </span>
 <%end%>
+</span>
