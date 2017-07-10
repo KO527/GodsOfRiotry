@@ -17,11 +17,11 @@ class PossibleMatchesController < VisbleGorClothingController
 
 	def show
 		if current_user.gender == :male #We need to specify merch_type: :top for Gor_Clothing and merch_type? for PossibleMatches
-			@contemplated_piece = self.fetch((params[:visible_gor_clothing][:contemplated_piece_id]), Gor_Clothing.order(gender: :male, created_at: :desc).first)
+			@contemplated_piece = self.fetch(params[:visible_gor_clothing][:contemplated_piece_id], Gor_Clothing.order(gender: :male, created_at: :desc).first)
 			@gor_clothing_standalone_bottoms = Gor_Clothing.where('standalone = ?', true).where('merch_type = ?', bottom).order(gender: :male, created_at: :desc)
 			@gor_clothing_standalone_tops = Gor_Clothing.where('standalone = ?', true).where('merch_type = ?', top).order(gender: :male, created_at: :desc)
 		elsif current_user.gender == :female
-			@contemplated_piece = self.fetch((params[:visible_gor_clothing][:suggested_piece_id]), Gor_Clothing.order(gender: :female, created_at: :desc).first)
+			@contemplated_piece = self.fetch(params[:visible_gor_clothing][:contemplated_piece_id], Gor_Clothing.order(gender: :female, created_at: :desc).first)
 			@gor_clothing_standalone_tops = Gor_Clothing.where('standalone = ?', true).where('merch_type = ?', top).order(gender: :female, created_at: :desc)
 			@gor_clothing_standalone_bottoms = Gor_Clothing.where('standalone = ?', true).where('merch_type = ?', bottom).order(gender: :female, created_at: :desc)			
 		end
