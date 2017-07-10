@@ -22,8 +22,8 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 				  						standalone: gon.possible_matches_suggested_tops[i].standalone
 							   		}
 							   	}
-							}   	
-							return upload();
+							}();   	
+							return this.suggested_tops;
 					   	};
 
 					   	$scope.suggested_bottoms = function(){
@@ -42,9 +42,8 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 					   						standalone: gon.possible_matches_suggested_bottoms[i].standalone
 					   					}
 					   				}
-					   			}
-
-					   			return upload();
+					   			}();
+					   			return this.suggested_bottoms;
 					   	};
 
 
@@ -54,40 +53,40 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 
 					   			function upload(){
 
-					   				for(i=0; i < gon.possible_matches_suggested_tops; i++){
-					   					this.tops += {
-					   						id: gon.possible_matches_suggested_tops[i].id,
-					   						image: gon.possible_matches_suggested_tops[i].image.picture,
-					   						price: gon.possible_matches_suggested_tops[i].price,
-					   						description: gon.possible_matches_suggested_tops[i].description,
-					   						merch_type: gon.possible_matches_suggested_tops[i].merch_type,
-					   						standalone: gon.possible_matches_suggested_tops[i].standalone
-					   					}
-					   				}
+						   				for(i=0; i < gon.possible_matches_suggested_tops; i++){
+						   					this.tops += {
+						   						id: gon.possible_matches_suggested_tops[i].id,
+						   						image: gon.possible_matches_suggested_tops[i].image.picture,
+						   						price: gon.possible_matches_suggested_tops[i].price,
+						   						description: gon.possible_matches_suggested_tops[i].description,
+						   						merch_type: gon.possible_matches_suggested_tops[i].merch_type,
+						   						standalone: gon.possible_matches_suggested_tops[i].standalone
+						   					}
+						   				}
 
-					   				for(i = 0; i < gon.possible_matches_extra_tops; i++){
-					   					this.tops += {
-					   					 	id: gon.possible_matches_extra_tops[i].id,
-					   					 	image: gon.possible_matches_extra_tops[i].image.picture,
-					   					 	price: gon.possible_matches_extra_tops[i].price,
-					   					 	description: gon.possible_matches_extra_tops[i].description,
-					   					 	merch_type: gon.possible_matches_extra_tops[i].merch_type,
-					   					 	standalone: gon.possible_matches_extra_tops[i].standalone
-					   					}
-					   				}
+						   				for(i = 0; i < gon.possible_matches_extra_tops; i++){
+						   					this.tops += {
+						   					 	id: gon.possible_matches_extra_tops[i].id,
+						   					 	image: gon.possible_matches_extra_tops[i].image.picture,
+						   					 	price: gon.possible_matches_extra_tops[i].price,
+						   					 	description: gon.possible_matches_extra_tops[i].description,
+						   					 	merch_type: gon.possible_matches_extra_tops[i].merch_type,
+						   					 	standalone: gon.possible_matches_extra_tops[i].standalone
+						   					}
+						   				}
 
-					   				for(i = 0; i < gon.gor_clothing_standalone_tops; i++){
-					   					this.tops += {
-					   						id: gon.gor_clothing_standalone_tops[i].id,
-					   						image: gon.gor_clothing_standalone_tops[i].image.picture,
-					   						price: gon.gor_clothing_standalone_tops[i].price,
-					   						description: gon.gor_clothing_standalone_tops[i].description,
-					   						merch_type: gon.gor_clothing_standalone_tops[i].merch_type,
-					   						standalone: gon.gor_clothing_standalone_tops[i].standalone
-					   					}
-					   				}
-
-					   				return upload();
+						   				for(i = 0; i < gon.gor_clothing_standalone_tops; i++){
+						   					this.tops += {
+						   						id: gon.gor_clothing_standalone_tops[i].id,
+						   						image: gon.gor_clothing_standalone_tops[i].image.picture,
+						   						price: gon.gor_clothing_standalone_tops[i].price,
+						   						description: gon.gor_clothing_standalone_tops[i].description,
+						   						merch_type: gon.gor_clothing_standalone_tops[i].merch_type,
+						   						standalone: gon.gor_clothing_standalone_tops[i].standalone
+						   					}
+						   				}
+					   			}();
+					   			return this.tops;
 					   	};
 
 					   	$scope.bottoms = function(){
@@ -129,9 +128,9 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 						   				}
 						   			}
 
-						   		}
+						   		}();
 
-						   		return upload();
+						   		return this.bottoms;
 						};
 					   
 
@@ -149,46 +148,46 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 						   			merch_type: gon.contemplated_piece.merch_type,
 						   			standalone: gon.contemplated_piece.standalone
 					   			}
-						   	}
-						   	return upload();
+						   	}();
+						   	return this.contemplated_piece;
 					   	};
 					   	
 
-						$rootScope.temporary_matches = function(){
+						$rootScope.temporary_fill_in = function(){
 							if (angular.isDefined(initiateAutomaticToggle))
 								return;
 							
-							var id = angular.element(document).find('#contemplated_piece_<%=@contemplated_piece.id%>').attr('id');
+							var id = angular.element(document).find('#contemplated_piece_<%=@contemplated_piece.id%> > a').attr('id');
 							var path = Routes.possible_match_path(id);
 							angular.element.post(path);
 
 							//JsRoutes --> make element a contemplated_piece
 							temporary_matches = new Array;
 
+							$scope.tops.forEach(function(element){
+								if ('id' in element))
+									$scope.suggested_pieces = $scope.suggested_bottoms;
+							};
+							$scope.bottoms.forEach(function(element){
+								if ('id' in element)
+									$scope.suggested_pieces = $scope.suggested_tops;
+							};
+							
+
 							initiateAutomaticToggle = function(){
+								for (i = 0; i < $scope.suggested_pieces.length; i++){
 
-								this.temporary_matches += {id: $scope.suggested_piece.id,
-									   image: $scope.suggested_piece.image.picture,
-									   price: $scope.suggested_piece.price,
-									   description: $scope.suggested_piece.description,
-									   merch_type: $scope.suggested_piece.merch_type
-								}
-
-								var array = $scope.suggested_pieces;
-
-								for(i = 0; i < array.length - 1; i++){
-									this.temporary_matches += {
-										id: array[i].id,
-										image: array[i].image.picture,
-										price: array[i].price,
-										description: array[i].description,
-										merch_type: array[i].merch_type
+									this.temporary_matches += {id: $scope.suggested_pieces[i].id,
+										   image: $scope.suggested_pieces[i].image,
+										   price: $scope.suggested_pieces[i].price,
+										   description: $scope.suggested_pieces[i].description,
+										   merch_type: $scope.suggested_pieces[i].merch_type
 									}
 								}
-							};
+							}();
 
-							return initiateAutomaticToggle();
 
+							var array = this.temporary_matches
 
 						   	$timeout(function(){
 						   		$scope.suggested_piece = array[array.length - 1];
@@ -196,18 +195,16 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 
 						   	var index = 0;
 
-						   	var ToggleSuggPieces;
-						   	ToggleSuggPieces = $interval(function(){
-						   		if(index > array.length - 1){
+						   	$interval(function(){
+						   		if (index > array.length - 1){
 						   			index = 0;
 						   		}
+
 						   		$scope.suggested_piece = array[index];
-						   		index++;
-						   	}, 8000);
-
-						   	var array = $scope.suggested_pieces;
-
+						   		index++;			
+						   	}, 6000);
 						}
+
 
 						$scope.stopAutomaticToggle = function(){
 								if (angular.isDefined(initiateAutomaticToggle)){
@@ -224,89 +221,6 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 					   }]);
 
 
-						function placeholder(){
-							var element = this,
-						
-							temp = {suggested_pieces: function(){
-											if (angular.element('#non_suggested_bottom_<%= gor_clothing.id %>').length){
-												return element.find('#non_suggested_bottom_<%= gor_clothing.id %>');
-											}
-										          else if (angular.element('#non_suggested_top_<%= gor_clothing.id %>').length){
-										         		return element.find('#non_suggested_top_<%= gor_clothing.id %>');
-											}
-											else if (angular.element('#suggested_piece_<%= suggested_piece.id %>').length){
-										         		return element.find('#suggested_piece_<%= suggested_piece.id %>');
-											}
-											else 
-												return false;
-										          }(),
-								  contemplated_piece: function(){
-								  			if (angular.element('#contemplated_piece_<%=@contemplated_piece.id%>').length){
-												return true;
-											}
-											else 
-												return false;
-										          }(),
-								  standalone_tops: function(){
-								  			if (angular.element('#standalone_tops_<%= gor_clothing.id%>').length){
-								  				return true;
-								  			}
-								  			else
-								  				return false;
-								  		          }(),
-								  standalone_bottoms: function(){
-								  			if (angular.element('#standalone_bottoms_<%= gor_clothing.id %>').length){
-								  				return true;
-								  			}
-								  			else
-								  				return false;
-								  		          }()
-							};				    
-							
-							switch(temp){
-								case temp.suggested_pieces:
-								break;
-
-								case temp.contemplated_piece:
-									timeout(function(){
-										$scope.temporary_matches();
-										if 
-										  
-									}, 6000);
-								break;
-
-								case temp.standalone_tops:
-								break;
-
-								case temp.standalone_bottoms:
-								break;
-
-								default:
-							}
-						}
-
-						$('#possible_matches').keydown(function(e) {
-							
-						    $scope.stopAutomaticToggle();
-
-						    switch(e.which) {
-						        case 37: // left
-						        break;
-
-						        case 38: // up
-						        break;
-
-						        case 39: // right
-						        break;
-
-						        case 40: // down
-						        break;
-
-						        default: return; // exit this handler for other keys
-						    }
-						    e.preventDefault(); // prevent the default action (scroll / move caret)
-						});
-
 	app.animation('.possible_pieces', ['$timeout', '$rootScope' function($timeout){
 
 		return {
@@ -318,7 +232,6 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 				var price = angular.element(element.children()[1]);
 				var description = angular.element(element.children()[2]);
 				angular.element(element.toggleClass('#contemplated_piece_<%=@contemplated_piece%>'));
-				$rootScope.temporary_matches();
 
 				img.css({
 					opacity: 0
@@ -369,4 +282,70 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 	}]);
 })();
 <%end%>
+
+//manual toggling
+function placeholder(){
+			
+	var element = this,
+
+	temp = {suggested_pieces: function(){
+					if (angular.element('#non_suggested_bottom_<%= gor_clothing.id %>').length){
+						return element.find('#non_suggested_bottom_<%= gor_clothing.id %>');
+					}
+				          else if (angular.element('#non_suggested_top_<%= gor_clothing.id %>').length){
+				         		return element.find('#non_suggested_top_<%= gor_clothing.id %>');
+					}
+					else if (angular.element('#suggested_piece_<%= suggested_piece.id %>').length){
+				         		return element.find('#suggested_piece_<%= suggested_piece.id %>');
+					}
+					else 
+						return false;
+				          }(),
+		  contemplated_piece: function(){
+		  			if (angular.element('#contemplated_piece_<%=@contemplated_piece.id%>').length){
+						return true;
+					}
+					else 
+						return false;
+				          }(),
+		  standalone_tops: function(){
+		  			if (angular.element('#standalone_tops_<%= gor_clothing.id%>').length){
+		  				return true;
+		  			}
+		  			else
+		  				return false;
+		  		          }(),
+		  standalone_bottoms: function(){
+		  			if (angular.element('#standalone_bottoms_<%= gor_clothing.id %>').length){
+		  				return true;
+		  			}
+		  			else
+		  				return false;
+		  		          }()
+	};				    
+	
+	switch(temp){
+		case temp.suggested_pieces:
+		break;
+
+		case temp.contemplated_piece:
+			timeout(function(){
+				$scope.temporary_matches();
+				if 
+				  
+			}, 6000);
+		break;
+
+		case temp.standalone_tops:
+		break;
+
+		case temp.standalone_bottoms:
+		break;
+
+		default:
+	}
+}
+
+				
+
 
