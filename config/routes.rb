@@ -48,7 +48,11 @@
   	end
   end
 
-  resources :possible_matches, only: [:show, :detail]
+  resources :possible_matches, only: [:show, :detail] do
+  	member do
+  		get :visible_gor_clothing, to: :show
+  	end
+  end
 
   get ':performer_name', to: 'event_tickets#artist_events', as: :artist_events
 
