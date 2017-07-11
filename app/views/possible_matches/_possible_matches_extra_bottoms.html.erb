@@ -1,0 +1,13 @@
+<span ng-switch = 'bottom.id'>
+	<span ng-switch-when = "{{bottom.id}}">
+		<% for gor_clothing in @possible_match_extra_bottoms %>
+			<span ng-if = 'bottoms.filter(function(bottom){return bottom !== suggested_bottoms})' ng-switch-when = '{{bottom.id}}'>
+			<li data-ng-keydown = 'manualToggle(e)' id='non_suggested_bottom_<%= gor_clothing.id %>' class = 'possible_pieces'>
+				<%= link_to image_tag(ng-src = "{{bottom.image}}"), controller: Gor_Clothing, action: "detail", id: gor_clothing.id%>
+				<details ng-bind-html = 'renderHtml(bottom.price)' class = 'piece_price'></details>
+				<details ng-bind-html = 'renderHtml(bottom.description)' class = 'piece_description'></details>
+			</li>
+			</span>
+		<%end%>
+	</span>
+</span>

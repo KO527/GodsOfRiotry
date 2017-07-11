@@ -1,19 +1,13 @@
 <span id = "possible_matches" ng-controller = 'PossibleMatches'>
 	<%= render partial: 'wardrobes/_update_wardrobe', locals: {possible_matches: @visible_gor_clothing}%>
 	<span class = 'possible_pieces_for_suggested_bottom' ng-if = 'suggested_piece.merch_type == bottom && suggested_piece.standalone !== true'>
-		<span class = 'possible_pieces_contemplated'>
-			<%= render partial: '_possible_pieces_contemplated_piece', locals: {possible_matches: @contemplated_piece}%>
-		</span>
 		<span class = "possible_pieces_suggested" ng-switch = 'suggested_piece.id'>		
-			<%= render partial: '_possible_pieces_suggested_piece', locals: {possible_matches: @suggested_pieces, @possible_match_extra_bottoms}%>
+			<%= render partial: '_possible_pieces_suggested_bottom', locals: {possible_matches: @possible_match_extra_bottoms}%>
 		</span>
 	</span>
 	<span class = 'possible_pieces_for_suggested_top' ng-if = "suggested_piece.merch_type == top && suggested_piece.standalone !== true">
 		<span class = "possible_pieces_suggested">
-			<%= render partial: '_possible_pieces_suggested_piece', locals: {possible_matches: @suggested_pieces, @possible_match_extra_tops, @contemplated_piece}%>
-		</span>
-		<span class = "possible_pieces_contemplated">
-			<%= render partial: '_possible_pieces_contemplated_piece', locals: {possible_matches: @contemplated_piece}%>
+			<%= render partial: '_possible_pieces_suggested_top', locals: {possible_matches: @possible_match_extra_tops}%>
 		</span>
 	</span>
 	<span class = 'possible_pieces_for_standalone_top' ng-if = "tops.standalone == true">
