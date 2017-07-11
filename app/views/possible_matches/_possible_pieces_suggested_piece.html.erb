@@ -1,22 +1,22 @@
-<span ng-switch = 'suggested_top.id'>
-	<span ng-switch-when = '{{suggested_top.id}}'>
+<span ng-switch = 'suggested_piece.id'>
+	<span ng-switch-when = '{{suggested_piece.id}}'>
 		<% for suggested_piece in @possible_match_suggested_tops %>
-			<li id = 'suggested_piece_<%= suggested_piece.id%>' class = 'possible_pieces'>
+			<li data-ng-keydown = 'manualToggle(e)' id = 'suggested_top_<%= suggested_piece.id%>' class = 'possible_pieces'>
 				<%= link_to(content_tag(:a, '', remote: true, controller: PossibleMatches, action: "show", id: @visible_gor_clothing.suggested_piece, onclick = "return false;"),
-					image_tag(ng-src = "{{suggested_top.image}}"), controller: Gor_Clothing, action: "detail", id: suggested_piece.id %>
-					<details ng-bind-html = 'renderHtml(suggested_top.price)' class = 'piece_price'></details>
-					<details ng-bind-html = 'renderHtml(suggested_top.price)' class = 'piece_description'></details>
+					image_tag(ng-src = "{{suggested_piece.image}}"), controller: Gor_Clothing, action: "detail", id: suggested_piece.id %>
+					<details ng-bind-html = 'renderHtml(suggested_piece.price)' class = 'piece_price'></details>
+					<details ng-bind-html = 'renderHtml(suggested_piece.price)' class = 'piece_description'></details>
 			</li>
 		<%end%>
 	</span>
 </span>
-<span ng-switch = 'suggested_bottom.id'>
-	<span ng-switch-when = '{{suggested_bottom.id}}'>
+<span ng-switch = 'suggested_piece.id'>
+	<span ng-switch-when = '{{suggested_piece.id}}'>
 		<% for suggested_piece in @possible_match_suggested_bottoms %>
-			<li id = 'suggested_piece_<%= suggested_piece.id%>' class = 'possible_pieces'>
-			<%= link_to(content_tag(:a, '', remote: true, controller: PossibleMatches, action: "show", id: @visible_gor_clothing.suggested_piece_id, onclick = "return false;"), image_tag(ng-src = "{{suggested_bottom.image}}"), controller: Gor_Clothing, action: "detail", id: suggested_piece.id %>
-				<details ng-bind-html = 'renderHtml(suggested_bottom.price)' class = 'piece_price'></details>
-				<details ng-bind-html = 'renderHtml(suggested_bottom.description)' class = 'piece_description'></details>
+			<li data-ng-keydown = 'manualToggle(e)' id = 'suggested_bottom_<%= suggested_piece.id%>' class = 'possible_pieces'>
+			<%= link_to(content_tag(:a, '', remote: true, controller: PossibleMatches, action: "show", id: @visible_gor_clothing.suggested_piece_id, onclick = "return false;"), image_tag(ng-src = "{{suggested_piece.image}}"), controller: Gor_Clothing, action: "detail", id: suggested_piece.id %>
+				<details ng-bind-html = 'renderHtml(suggested_piece.price)' class = 'piece_price'></details>
+				<details ng-bind-html = 'renderHtml(suggested_piece.description)' class = 'piece_description'></details>
 			</li>
 		<%end%>
 	</span>
@@ -25,7 +25,7 @@
 	<span ng-switch-when = '{{top.id}}'>
 		<% for gor_clothing in @possible_match_extra_tops %>
 			<span ng-if = 'tops.filter(function(top){return top !== suggested_tops})'>
-			<li id='non_suggested_top_<%= gor_clothing.id%>' class = 'possible_pieces'>
+			<li data-ng-keydown = 'manualToggle(e)' id='non_suggested_top_<%= gor_clothing.id%>' class = 'possible_pieces'>
 				<%= link_to image_tag(ng-src = "{{top.image}}"), controller: Gor_Clothing, action: "detail", id: gor_clothing.id%>
 				<details ng-bind-html = 'renderHtml(top.price)' class = 'piece_price'></details>
 				<details ng-bind-html = 'renderHtml(top.description)' class = 'piece_description'></details>
@@ -38,7 +38,7 @@
 	<span ng-switch-when = "{{bottom.id}}">
 		<% for gor_clothing in @possible_match_extra_bottoms %>
 			<span ng-if = 'bottoms.filter(function(bottom){return bottom !== suggested_bottoms})' ng-switch-when = '{{bottom.id}}'>
-			<li id='non_suggested_bottom_<%= gor_clothing.id %>' class = 'possible_pieces'>
+			<li data-ng-keydown = 'manualToggle(e)' id='non_suggested_bottom_<%= gor_clothing.id %>' class = 'possible_pieces'>
 				<%= link_to image_tag(ng-src = "{{bottom.image}}"), controller: Gor_Clothing, action: "detail", id: gor_clothing.id%>
 				<details ng-bind-html = 'renderHtml(bottom.price)' class = 'piece_price'></details>
 				<details ng-bind-html = 'renderHtml(bottom.description)' class = 'piece_description'></details>

@@ -1,4 +1,4 @@
-
+<% content_for :show do %>
 $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'), locals: {possible_matches: @contemplated_piece , @suggested_pieces}%>")
 (function(){
 	var app = angular.module('GodsOfRiotry', ['ngRoute', 'ngAnimate']);
@@ -157,7 +157,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 							if (angular.isDefined(initiateAutomaticToggle))
 								return;
 							
-							var id = angular.element(document).find('#contemplated_piece_<%=@contemplated_piece.id%> > a').attr('id');
+							var id = angular.element(document).find('.contemplated_piece_<%=@contemplated_piece.id%> > a > a').attr('id');
 							var path = Routes.possible_match_path(id);
 							angular.element.post(path);
 
@@ -165,11 +165,11 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 							temporary_matches = new Array;
 
 							$scope.tops.forEach(function(element){
-								if ('id' in element))
+								if (id in element))
 									$scope.suggested_pieces = $scope.suggested_bottoms;
 							};
 							$scope.bottoms.forEach(function(element){
-								if ('id' in element)
+								if (id in element)
 									$scope.suggested_pieces = $scope.suggested_tops;
 							};
 							
@@ -213,6 +213,28 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 								}
 						}
 
+						$scope.manualToggle = function(e) {
+                                                   
+					               $scope.stopAutomaticToggle();
+
+					               switch(e.which) {
+					                   case 37: // left
+					               	  
+					                   break;
+
+					                   case 38: // up
+					                   break;
+
+					                   case 39: // right
+					                   break;
+
+					                   case 40: // down
+					                   break;
+
+					                   default: return; // exit this handler for other keys
+					               }
+						}
+
 						$scope.$on('$destroy', function(){
 							$scope.stopAutomaticToggle();
 						});
@@ -231,7 +253,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 				var img = angular.element(element.children()[0]);
 				var price = angular.element(element.children()[1]);
 				var description = angular.element(element.children()[2]);
-				angular.element(element.toggleClass('#contemplated_piece_<%=@contemplated_piece%>'));
+				angular.element(element.toggleClass('.contemplated_piece_<%=@contemplated_piece%>'));
 
 				img.css({
 					opacity: 0
@@ -273,8 +295,8 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 					opacity: 0
 				}, 500);
 
-				if angular.element(element.hasClass('#contemplated_piece_<%=@contemplated_piece.id%>')){
-					angular.element(element.removeClass('#contemplated_piece_<%=@contemplated_piece.id%>'));
+				if angular.element(element.hasClass('.contemplated_piece_<%=@contemplated_piece.id%>')){
+					angular.element(element.removeClass('.contemplated_piece_<%=@contemplated_piece.id%>'));
 				}	
 
 			}
@@ -288,21 +310,28 @@ function placeholder(){
 			
 	var element = this,
 
-	temp = {suggested_pieces: function(){
-					if (angular.element('#non_suggested_bottom_<%= gor_clothing.id %>').length){
-						return element.find('#non_suggested_bottom_<%= gor_clothing.id %>');
+	temp = {suggested_tops: function(){
+					if (angular.element('#suggested_bottom_<%= gor_clothing.id %>').length){
+						return 'suggested_top';
 					}
 				          else if (angular.element('#non_suggested_top_<%= gor_clothing.id %>').length){
-				         		return element.find('#non_suggested_top_<%= gor_clothing.id %>');
-					}
-					else if (angular.element('#suggested_piece_<%= suggested_piece.id %>').length){
-				         		return element.find('#suggested_piece_<%= suggested_piece.id %>');
+				         		return 'non_suggested_top';
 					}
 					else 
 						return false;
 				          }(),
+	            suggested_bottoms: function(){
+	            			if (angular.element('#suggested_bottom_<%= suggested_piece.id %>').length){
+				         		return 'suggested_bottom';
+					}
+					else if (angular.element('#non_suggested_bottom_<%= gor_clothing.id %>').length){
+						return 'non_suggested_bottom';
+					}
+					else
+						return false;
+	            			}(),
 		  contemplated_piece: function(){
-		  			if (angular.element('#contemplated_piece_<%=@contemplated_piece.id%>').length){
+		  			if (angular.element('.contemplated_piece_<%=@contemplated_piece.id%>').length){
 						return true;
 					}
 					else 
@@ -346,24 +375,6 @@ function placeholder(){
 	}
 }
 
-$('#possible_matches').keydown(function(e) {
-                                                   
-               $scope.stopAutomaticToggle();
-
-               switch(e.which) {
-                   case 37: // left
-                   break;
-
-                   case 38: // up
-                   break;
-
-                   case 39: // right
-                   break;
-
-                   case 40: // down
-                   break;
-
-                   default: return; // exit this handler for other keys
-               }
-}
+$('#possible_matches').keydown(
+	
 
