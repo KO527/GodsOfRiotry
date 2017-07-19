@@ -216,28 +216,6 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 								}
 						}
 
-						$rootScope.manualToggle = function(e) {
-                                                   
-					               $scope.stopAutomaticToggle();
-
-					               switch(e.which) {
-					                   case 37: // left
-					                   
-					                   break;
-
-					                   case 38: // up
-					                   break;
-
-					                   case 39: // right
-					                   break;
-
-					                   case 40: // down
-					                   break;
-
-					                   default: return; // exit this handler for other keys
-					               }
-						}
-
 						$scope.$on('$destroy', function(){
 							$scope.stopAutomaticToggle();
 						});
