@@ -1,23 +1,21 @@
 <span id = "possible_matches" ng-controller = 'PossibleMatches'>
 	<%= render partial: 'wardrobes/_update_wardrobe', locals: {possible_matches: @visible_gor_clothing}%>
 	<span class = 'possible_pieces_for_suggested_bottom' ng-if = 'suggested_piece.merch_type == bottom && suggested_piece.standalone !== true'>
-		<span class = "possible_pieces_suggested" ng-switch = 'suggested_piece.id'>		
-			<%= render partial: '_possible_pieces_suggested_bottom', locals: {possible_matches: @possible_match_extra_bottoms}%>
-		</span>
+			<%= render partial: '_possible_pieces_suggested_bottoms', locals: {possible_matches: @possible_match_suggested_bottoms}%>
 	</span>
 	<span class = 'possible_pieces_for_suggested_top' ng-if = "suggested_piece.merch_type == top && suggested_piece.standalone !== true">
-		<span class = "possible_pieces_suggested">
-			<%= render partial: '_possible_pieces_suggested_top', locals: {possible_matches: @possible_match_extra_tops}%>
-		</span>
+			<%= render partial: '_possible_pieces_suggested_tops', locals: {possible_matches: @possible_match_suggested_tops}%>
 	</span>
-	<span class = 'possible_pieces_for_standalone_top' ng-if = "tops.standalone == true">
-		<span class = 'possible_pieces_standalone'>
-			<%= render partial: '_possible_pieces_standalone_top', locals: {possible_matches: @gor_clothing_standalone_tops} %>
-		</span>
+	<span class = 'possible_pieces_for_standalone_top' ng-if = "suggested_piece.standalone == true">
+			<%= render partial: '_possible_pieces_standalone_tops', locals: {possible_matches: @gor_clothing_standalone_tops} %>
 	</span>
 	<span class = 'possible_pieces_for_standalone_bottom' ng-if = "bottoms.standalone == true">
-		<span class = 'possible_pieces_standalone'>
 			<%= render partial: '_possible_pieces_standalone_bottoms', locals: {possible_matches: @gor_clothing_standalone_bottoms}%>
-		</span>
+	</span>
+	<span class = 'possible_matches_for_extra_tops' ng-if = 'tops.filter(function(top){return top !== suggested_tops && top.standalone == false})'>
+			<%= render partial: '_possible_matches_extra_tops', locals: {possible_matches: @possible_matches_for_extra_tops}%>
+	</span>
+	<span class = 'possible_matches_for_extra_bottoms' ng-if = 'bottoms.filter(function(bottom){return bottom !== suggested_bottoms && bottom.standalone == false})'>
+			<%= render partial: '_possible_matches_extra_bottoms', locals: {possible_matches: @possible_matches_for_extra_bottoms} %>
 	</span>
 </span>

@@ -1,11 +1,11 @@
 <span ng-switch = 'bottom.id'>
-<% for gor_clothing in @gor_clothing_standalone_bottoms %>
-<span ng-switch-when = '{{bottom.id}}'>
-<li data-ng-keydown='manualToggle(e)' id='standalone_bottoms_<%= gor_clothing.id%>' class = 'possible_pieces'>
-	<%= link_to image_tag(ng_src = "{{bottom.image}}"), controller: Gor_Clothing, action: "detail", id: gor_clothing.id%>
-	<details ng-bind-html = 'renderHtml(bottom.price)' class = 'standalone_piece_price'></details>
-	<details ng-bind-html = 'renderHtml(bottom.description)' class = 'standalone_piece_description'></details>
-</li>
-</span>
-<%end%>
+	<% for gor_clothing in @gor_clothing_standalone_bottoms %>
+		<span ng-switch-when = '{{bottom.id}}'>
+			<li id = 'currently_visible_standalone_bottom' data-ng-keydown='manualToggle(e)' class='standalone_bottoms_<%= gor_clothing.id%>' class = 'possible_pieces' focus-image = 'currently_visible_standalone_bottom'>
+				<%= link_to(content_tag(:a, '', remote: true, controller: PossibleMatches, action: "show", id: @visible_gor_clothing.contemplated_piece, onclick = "return false;"), image_tag(ng_src = "{{bottomInPlay.image}}"), controller: Gor_Clothing, action: "detail", id: gor_clothing.id%>
+				<details ng-bind-html = 'renderHtml(bottomInPlay.price)' class = 'standalone_piece_price'></details>
+				<details ng-bind-html = 'renderHtml(bottomInPlay.description)' class = 'standalone_piece_description'></details>
+			</li>
+		</span>
+	<%end%>
 </span>

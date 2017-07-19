@@ -1,11 +1,12 @@
 <span ng-switch = 'top.id'>
-<% for gor_clothing in @gor_clothing_standalone_tops %>
-<span ng-switch-when = '{{top.id}}'>
-<li data-ng-keydown='manualToggle(e)' id='standalone_tops_<%= gor_clothing.id%>' class = 'possible_pieces'>
-	<%= link_to image_tag(ng_src = "{{top.image}}"), controller: Gor_Clothing, action: "detail", id: gor_clothing.id%>
-	<details ng-bind-html = 'renderHtml(top.price)' class = 'standalone_piece_price'></details>
-	<details ng-bind-html = 'renderHtml(top.description)' class = 'standalone_piece_description'></details>
-</li>
+	<% for gor_clothing in @gor_clothing_standalone_tops %>
+		<span ng-switch-when = '{{top.id}}'>
+			<li id = 'currently_visible_standalone_tops' data-ng-keydown='manualToggle(e)' class='standalone_tops_<%= gor_clothing.id%>' class = 'possible_pieces' focus-image = 'currently_visible_standalone_tops'>
+				<%= link_to image_tag(ng_src = "{{topInPlay.image}}"), controller: Gor_Clothing, action: "detail", id: gor_clothing.id%>
+				<details ng-bind-html = 'renderHtml(topInPlay.price)' class = 'standalone_piece_price'></details>
+				<details ng-bind-html = 'renderHtml(topInPlay.description)' class = 'standalone_piece_description'></details>
+			</li>
+		</span>
+	<%end%>
 </span>
-<%end%>
-</span>
+
