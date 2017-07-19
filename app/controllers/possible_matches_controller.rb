@@ -60,7 +60,7 @@ class PossibleMatchesController < VisbleGorClothingController
 	private
 
 		def possible_matches_params	
-			params.require(PossibleMatch).permit(:contemplated_piece_id, :suggested_piece_id, images_attributes: [:picture])
+			params.require(PossibleMatch).permit(:contemplated_piece_id, :suggested_piece_id, :gor_clothing_id, images_attributes: [:picture])
 		end
 
 end
