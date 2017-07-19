@@ -153,7 +153,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 					   	};
 					   	
 
-						$rootScope.automatic_toggle = function(){ //create directive for this functionality
+						$scope.automatic_toggle = function(){ //create directive for this functionality
 							if (angular.isDefined(initiateAutomaticToggle))
 								return;
 
