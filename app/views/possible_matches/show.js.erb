@@ -153,19 +153,22 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 					   	};
 					   	
 
-						$rootScope.temporary_fill_in = function(){
+						$rootScope.automatic_toggle = function(){ //create directive for this functionality
 							if (angular.isDefined(initiateAutomaticToggle))
 								return;
+
+							jQuery.extend('possible_pieces', Routes);
 							
 							var id = angular.element(document).find('.contemplated_piece_<%=@contemplated_piece.id%> > a > a').attr('id');
 							var path = Routes.possible_match_path(id);
+							
 							angular.element.post(path);
 
 							//JsRoutes --> make element a contemplated_piece
 							temporary_matches = new Array;
 
 							$scope.tops.forEach(function(element){
-								if (id in element))
+								if (id in element)
 									$scope.suggested_pieces = $scope.suggested_bottoms;
 							};
 							$scope.bottoms.forEach(function(element){
@@ -187,7 +190,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 							}();
 
 
-							var array = this.temporary_matches
+							var array = this.temporary_matches;
 
 						   	$timeout(function(){
 						   		$scope.suggested_piece = array[array.length - 1];
@@ -213,13 +216,13 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 								}
 						}
 
-						$scope.manualToggle = function(e) {
+						$rootScope.manualToggle = function(e) {
                                                    
 					               $scope.stopAutomaticToggle();
 
 					               switch(e.which) {
 					                   case 37: // left
-					               	  
+					                   
 					                   break;
 
 					                   case 38: // up
@@ -241,19 +244,167 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 
 
 					   }]);
+	
+
+	app.directive('focusImage', ['$timeout', '$parse', function($timeout, $parse){
+
+					
+			var possible_pieces = document.querySelectorAll('.possible_pieces');
+			var non_suggested_bottoms;
+			var non_suggested_tops;
+			var standalone_bottoms;
+			var standalone_tops;
+			var suggested_bottoms;
+			var suggested_tops;
+			
+			for(k = 0; k < possible_pieces.length; k++){
+				if (possible_pieces[k].getAttributeName('id') == 'currently_visible_bottom')
+					suggested_bottoms += possible_pieces[k];
+				else if (possible_pieces[k].getAttributeName('id') == 'currently_visible_top')
+					suggested_tops += possible_pieces[k];
+				else if (possible_pieces[k].getAttributeName('id') == 'currenly_visible_standalone_top')
+					standalone_tops += possible_pieces[k];
+				else if (possible_pieces[k].getAttributeName('id') == 'currently_visible_standalone_bottom')
+					standalone_bottoms += possible_pieces[k];
+				else if (possible_pieces[k].getAttributeName('id') == 'currently_visible_extra_top')
+					non_suggested_tops += possible_pieces[k];
+				else if (possible_pieces[k].getAttributeName('id') == 'currently_visible_extra_bottom')
+					non_suggested_bottoms += possible_pieces[k];
+				else
+					break;
+			}
+
+			var TopArray;
+			var BottomArray;
+
+			function addToArray(arraylist, declaredArray){
+				for(i = 0; i < arraylist.length; i++){
+					declaredArray += arraylist[i];
+				}
+				return arraylist;
+			}
+
+			addToArray(suggested_tops, TopArray);
+			addToArray(non_suggested_tops, TopArray);
+			addToArray(standalone_tops, TopArray);
+
+			addToArray(suggested_bottoms, BottomArray);
+			addToArray(non_suggested_bottoms, BottomArray);
+			addToArray(standalone_bottoms, BottomArray);
+
+		return {
+			link: function(scope, element, attrs){
+
+				element.bind('keydown', function(event){
+					if (event.which == 40 && ActiveTop == document.activeElement){
+						$timeout(function(){
+							ActiveBottom.focus();
+						}).catch(function(err){
+							console.log(err);
+						});
+					}
+					else if (event.which == 38 && ActiveBottom == document.activeElement){
+						$timeout(function(){
+							ActiveTop.focus();
+						}).catch(function(err){
+							console.log(err);
+						});
+					}
+					else if (event.which == 37 && ActiveTop == document.activeElement){
+						for(i = 0; i < TopArray.length < 1; i++){
+							if (activeTop == TopArray[i]){
+								i--;
+								if (i < 0){
+								     i = TopArray.length - 1;
+								}
+								TopArray[i].focus();
+								$timeout(function(){
+									ActiveTop = TopArray[i];
+									$scope.TopInPlay = TopArray[i];
+								});
+							}
+						}
+					}
+					else if (event.which == 39 && ActiveTop == document.activeElement){
+						for(i = 0; i < TopArray.length - 1; i++){
+							if (activeTop == TopArray[i]){
+								if (activeTop > TopArray[i]){
+									i = 0;
+								}
+								TopArray[i].focus();
+								$timeout(function(){
+									ActiveTop = TopArray[i];
+									$scope.TopInPlay = TopArray[i];
+								});
+								break;
+							}
+							else
+								continue;
+						}
+					}
+					else if (event.which == 37 && ActiveBottom == document.activeElement){
+						for(i = 0; i < BottomArray.length; i++){
+							if (activeBottom == BottomArray){
+								if (i < 0){
+									i = BottomArray.length - 1;
+								}
+								BottomArray[i].focus();
+								timeout(function(){
+									ActiveBottom = BottomArray[i];
+									$scope.bottomInPlay = BottomArray[i];
+								}).catch(function(err){
+									console.log(err);
+								})
+								break;
+							}
+							else
+								continue;
+						}
+					}
+					else if (event.which == 39 && ActiveBottom == document.activeElement){
+						for(i = 0; i < BottomArray.length - 1; i++){
+							i++;
+							if (ActiveBottom == BottomArray[i]){
+								i++;
+								if (i > BottomArray.length - 1){
+									i = 0;
+								}
+								BottomArray[i].focus();
+								timeout(function(){
+									ActiveBottom = BottomArray[i];
+									$scope.bottomInPlay = BottomArray[i];
+								}).catch(function(err){
+									console.log(err);
+								});
+								break;
+							}
+							else
+								continue;
+						}
+					}
+					else
+						return;
+				});
+			}
+		}
+	}]);
+					
 
 
-	app.animation('.possible_pieces', ['$timeout', '$rootScope' function($timeout){
+
+	app.animation('.possible_pieces', ['$timeout', '$rootScope', function($timeout, $rootScope){
 
 		return {
 
 
 			enter: function(element, done){
 
+				angular.element(element).setAttribute('focusImage', true);
+				$rootScope.elementInPlay = angular.element(element);
+
 				var img = angular.element(element.children()[0]);
 				var price = angular.element(element.children()[1]);
 				var description = angular.element(element.children()[2]);
-				angular.element(element.toggleClass('.contemplated_piece_<%=@contemplated_piece%>'));
 
 				img.css({
 					opacity: 0
@@ -267,9 +418,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 				img.animate({
 					opacity: 1
 				}, 500, function(){
-					var eventfire = false;
 					img.on('mouseover', function(){
-						eventfire = true;
 						price.css({opacity: 1});
 						description.css({opacity: 1});
 					}).off('mouseover', function(){
@@ -281,7 +430,9 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 				}());
 			},
 
-			leave: function(element, done){
+			leave: function(element, attrs, done){
+
+				angular.element(element).attrs.focusImage = false;
 
 				var img = angular.element(element.children()[0]);
 				var price = angular.element(element.children()[1]);
@@ -295,86 +446,8 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 					opacity: 0
 				}, 500);
 
-				if angular.element(element.hasClass('.contemplated_piece_<%=@contemplated_piece.id%>')){
-					angular.element(element.removeClass('.contemplated_piece_<%=@contemplated_piece.id%>'));
-				}	
-
 			}
 		};
 	}]);
 })();
 <%end%>
-
-//manual toggling
-function placeholder(){
-			
-	var element = this,
-
-	temp = {suggested_tops: function(){
-					if (angular.element('#suggested_bottom_<%= gor_clothing.id %>').length){
-						return 'suggested_top';
-					}
-				          else if (angular.element('#non_suggested_top_<%= gor_clothing.id %>').length){
-				         		return 'non_suggested_top';
-					}
-					else 
-						return false;
-				          }(),
-	            suggested_bottoms: function(){
-	            			if (angular.element('#suggested_bottom_<%= suggested_piece.id %>').length){
-				         		return 'suggested_bottom';
-					}
-					else if (angular.element('#non_suggested_bottom_<%= gor_clothing.id %>').length){
-						return 'non_suggested_bottom';
-					}
-					else
-						return false;
-	            			}(),
-		  contemplated_piece: function(){
-		  			if (angular.element('.contemplated_piece_<%=@contemplated_piece.id%>').length){
-						return true;
-					}
-					else 
-						return false;
-				          }(),
-		  standalone_tops: function(){
-		  			if (angular.element('#standalone_tops_<%= gor_clothing.id%>').length){
-		  				return true;
-		  			}
-		  			else
-		  				return false;
-		  		          }(),
-		  standalone_bottoms: function(){
-		  			if (angular.element('#standalone_bottoms_<%= gor_clothing.id %>').length){
-		  				return true;
-		  			}
-		  			else
-		  				return false;
-		  		          }()
-	};				    
-	
-	switch(temp){
-		case temp.suggested_pieces:
-		break;
-
-		case temp.contemplated_piece:
-			timeout(function(){
-				$scope.temporary_matches();
-				if 
-				  
-			}, 6000);
-		break;
-
-		case temp.standalone_tops:
-		break;
-
-		case temp.standalone_bottoms:
-		break;
-
-		default:
-	}
-}
-
-$('#possible_matches').keydown(
-	
-
