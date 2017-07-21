@@ -3,9 +3,10 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 (function(){
 	var app = angular.module('GodsOfRiotry', ['ngRoute', 'ngAnimate']);
 
-	app.controller('PossibleMatches', ['$scope', '$rootScope', '$timeout', '$interval', '$sce', 
-					   function($scope, $rootScope, $timeout, $interval, $sce){
+	app.controller('PossibleMatches', ['$scope', '$timeout', '$interval', '$sce', 
+					   function($scope, $timeout, $interval, $sce){
 					   	
+
 					   	$scope.suggested_tops = function(){
 					   		
 					   		suggested_tops = new Array();
@@ -187,7 +188,9 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 										   merch_type: $scope.suggested_pieces[i].merch_type
 									}
 								}
-							}();
+							};
+
+							initiateAutomaticToggle();
 
 
 							var array = this.temporary_matches;
@@ -224,7 +227,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 					   }]);
 	
 
-	app.directive('focusImage', ['$timeout', '$parse', function($timeout, $parse){
+	app.directive('focusImage', ['$timeout', '$animate', function($timeout, $animate){
 
 					
 			var possible_pieces = document.querySelectorAll('.possible_pieces');
@@ -236,7 +239,9 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 			var suggested_tops;
 			
 			for(k = 0; k < possible_pieces.length; k++){
-				if (possible_pieces[k].getAttributeName('id') == 'currently_visible_bottom')
+				if (possible_pieces[k].getAttributeName('id') == 'currently_contemplated')
+					contemplated_piece += possible_pieces[k];
+				else if (possible_pieces[k].getAttributeName('id') == 'currently_visible_bottom')
 					suggested_bottoms += possible_pieces[k];
 				else if (possible_pieces[k].getAttributeName('id') == 'currently_visible_top')
 					suggested_tops += possible_pieces[k];
@@ -255,6 +260,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 			var TopArray;
 			var BottomArray;
 
+
 			function addToArray(arraylist, declaredArray){
 				for(i = 0; i < arraylist.length; i++){
 					declaredArray += arraylist[i];
@@ -270,9 +276,27 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 			addToArray(non_suggested_bottoms, BottomArray);
 			addToArray(standalone_bottoms, BottomArray);
 
+			var ActiveTop;
+			var ActiveBottom;
+
+			 	if (<%= @contemplated_piece.merch_type %> == 'bottom' && <%= @contemplated_piece.standalone %> == false){
+					ActiveBottom = contemplated_piece;
+					ActiveTop = suggested_tops[0];
+					BottomArray.unshift(contemplated_piece)
+				}
+				else if (<%= @contemplated_piece.merch_type %> == 'top' && <%= @contemplated_piece.standalone %> == false){
+					ActiveTop = contemplated_piece;
+					ActiveBottom = suggested_bottoms[0];
+					TopArray.unshift(contemplated_piece)
+				}
+				else {
+					console.log('Read Differently');
+				}
+
+			//As long as TopArray does not include identical contemplated_piece and suggested_tops 
+
 		return {
 			link: function(scope, element, attrs){
-
 				element.bind('keydown', function(event){
 					if (event.which == 40 && ActiveTop == document.activeElement){
 						$timeout(function(){
@@ -290,7 +314,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 					}
 					else if (event.which == 37 && ActiveTop == document.activeElement){
 						for(i = 0; i < TopArray.length < 1; i++){
-							if (activeTop == TopArray[i]){
+							if (ActiveTop == TopArray[i]){
 								i--;
 								if (i < 0){
 								     i = TopArray.length - 1;
@@ -298,21 +322,24 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 								TopArray[i].focus();
 								$timeout(function(){
 									ActiveTop = TopArray[i];
-									$scope.TopInPlay = TopArray[i];
+									$scope.topInPlay = TopArray[i];
 								});
 							}
+							else
+								continue;
 						}
 					}
 					else if (event.which == 39 && ActiveTop == document.activeElement){
 						for(i = 0; i < TopArray.length - 1; i++){
-							if (activeTop == TopArray[i]){
-								if (activeTop > TopArray[i]){
+							if (ActiveTop == TopArray[i]){
+								i++;
+								if (i > TopArray.length - 1){
 									i = 0;
 								}
 								TopArray[i].focus();
 								$timeout(function(){
 									ActiveTop = TopArray[i];
-									$scope.TopInPlay = TopArray[i];
+									$scope.topInPlay = TopArray[i];
 								});
 								break;
 							}
@@ -322,7 +349,8 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 					}
 					else if (event.which == 37 && ActiveBottom == document.activeElement){
 						for(i = 0; i < BottomArray.length; i++){
-							if (activeBottom == BottomArray){
+							if (ActiveBottom == BottomArray[i]){
+								i--;
 								if (i < 0){
 									i = BottomArray.length - 1;
 								}
@@ -341,7 +369,6 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 					}
 					else if (event.which == 39 && ActiveBottom == document.activeElement){
 						for(i = 0; i < BottomArray.length - 1; i++){
-							i++;
 							if (ActiveBottom == BottomArray[i]){
 								i++;
 								if (i > BottomArray.length - 1){
@@ -367,18 +394,17 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 		}
 	}]);
 					
+	app.animation('', ['$timeout', function($timeout){
+
+	}]);
 
 
-
-	app.animation('.possible_pieces', ['$timeout', '$rootScope', function($timeout, $rootScope){
+	app.animation('.possible_pieces', ['$timeout', function($timeout, $rootScope){
 
 		return {
 
 
 			enter: function(element, done){
-
-				angular.element(element).setAttribute('focusImage', true);
-				$rootScope.elementInPlay = angular.element(element);
 
 				var img = angular.element(element.children()[0]);
 				var price = angular.element(element.children()[1]);
@@ -394,8 +420,9 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 					opacity: 0
 				});
 				img.animate({
+					right: '75px',
 					opacity: 1
-				}, 500, function(){
+				}, 500, 'easeOutCirc', function(){
 					img.on('mouseover', function(){
 						price.css({opacity: 1});
 						description.css({opacity: 1});
@@ -409,8 +436,6 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 			},
 
 			leave: function(element, attrs, done){
-
-				angular.element(element).attrs.focusImage = false;
 
 				var img = angular.element(element.children()[0]);
 				var price = angular.element(element.children()[1]);
