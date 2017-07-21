@@ -6,7 +6,7 @@
   <title><%= content_for?(:title) ? yield(:title) : 'GodsOfRiotry' %></title>
   <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Learn Rails" %>">
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= include_gon %>
+  <%= include_gon(watch: true) %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <%= yield(:head) %>
