@@ -1,0 +1,37 @@
+.possible_pieces.ng-enter{
+	-moz-transition: all 0.5s easeOutCirc;
+	-o-transition: all 0.5s easeOutCirc;
+	-webkit-transition: all 0.5s easeOutCirc;
+	transition: all 0.5s easeOutCirc;
+	opacity: 0;
+	right: -150px;
+}
+
+.possible_pieces.ng-enter-active{	
+	opacity: 1;
+	right: 0;
+}
+
+
+.possible_pieces.ng-move {
+	-moz-transition: all 0.5s easeOutCirc;
+	-o-transition: all 0.5s easeOutCirc;
+	-webkit-transtion: all 0.5s easeOutCirc;
+	transition: all 0.5s easeOutCirc;
+	opacity: 0;
+	left: -150px;
+}
+
+.possible_pieces.ng-move-active {
+	opacity: 1;
+	left: 0;
+}
+
+.possible_pieces.ng-leave{
+	opacity: 1;
+	left: 0;
+}
+
+.possible_pieces.ng-leave.ng-leave-active {
+	
+}
