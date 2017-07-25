@@ -1,4 +1,4 @@
-<li id='currently_contemplated' class='contemplated_piece_<%=@contemplated_piece.id%>' class =  'possible_pieces' focus-image = 'currently_visible_to'>
+<li id='currently_contemplated' class='contemplated_piece_<%=@contemplated_piece.id%>' class =  'possible_pieces' focus-image>
 	 <%= link_to(content_tag(:a, "", remote: true, controller: PossibleMatches, action: "show", id: @visible_gor_clothing.contemplated_piece_id, onclick = "return false;"), image_tag(ng_src = "{{contemplated_piece.image}}"), controller: Gor_Clothing, action: "detail", id: @contemplated_piece.id)%>
 	 <details ng-bind-html = 'renderHtml(contemplated_piece.price)' class = 'contemplated_piece_price'></details>
 	 <details ng-bind-html = 'renderHtml(contemplated_piece.description)' class = 'contemplated_piece_description'></details>
