@@ -331,6 +331,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 								}
 								$timeout(function(){
 									ActiveTop = TopArray[i];
+									scope.toRight = false;
 									scope.toLeft = true;
 									$animate.enter(ActiveTop, parentNode);
 									TopArray[i].focus();
@@ -349,6 +350,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 								}
 								$timeout(function(){
 									ActiveTop = TopArray[i];
+									scope.toLeft = false;
 									scope.toRight = true;
 									$animate.move(ActiveTop, parentNode);
 									TopArray[i].focus();
@@ -368,6 +370,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 								}
 								timeout(function(){
 									ActiveBottom = BottomArray[i];
+									scope.toRight = false;
 									scope.toLeft = true;
 									$animate.enter(ActiveBottom, parentNode);
 									BottomArray[i].focus();
@@ -389,6 +392,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 								}
 								timeout(function(){
 									ActiveBottom = BottomArray[i];
+									scope.toLeft = false;
 									scope.toRight = true;
 									$animate.move(ActiveBottom, parentNode);
 									BottomArray[i].focus();
@@ -437,9 +441,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 					}).off('mouseover', function(){
 						price.css({opacity: 0});
 						description.css({opacity: 0});
-					});
-						//Show reminder to user
-						
+					});						
 				}());
 			},
 
@@ -466,8 +468,6 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 						price.css({opacity: 0});
 						description.css({opacity: 0});
 					});
-						//Show reminder to user
-						
 				}());
 			}
 		};
