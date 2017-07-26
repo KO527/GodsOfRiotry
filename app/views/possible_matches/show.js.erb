@@ -297,6 +297,16 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 				//ng-animate ActiveTop and ActiveBottom
 		return {
 			link: function(scope, element, attrs){
+				
+				scope.toLeft = false;
+				scope.toRight = false;
+
+				parentNode = element.parent().parent().parent().parent();
+				
+				scope.toLeft = true;
+				scope.toRight = false;
+				
+
 				element.bind('keydown', function(event){
 					if (event.which == 40 && ActiveTop == document.activeElement){
 						$timeout(function(){
@@ -319,10 +329,11 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 								if (i < 0){
 								     i = TopArray.length - 1;
 								}
-								TopArray[i].focus();
 								$timeout(function(){
 									ActiveTop = TopArray[i];
-									$scope.topInPlay = TopArray[i];
+									scope.toLeft = true;
+									$animate.enter(ActiveTop, parentNode);
+									TopArray[i].focus();
 								});
 							}
 							else
@@ -336,10 +347,11 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 								if (i > TopArray.length - 1){
 									i = 0;
 								}
-								TopArray[i].focus();
 								$timeout(function(){
 									ActiveTop = TopArray[i];
-									$scope.topInPlay = TopArray[i];
+									scope.toRight = true;
+									$animate.move(ActiveTop, parentNode);
+									TopArray[i].focus();
 								});
 								break;
 							}
@@ -354,10 +366,11 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 								if (i < 0){
 									i = BottomArray.length - 1;
 								}
-								BottomArray[i].focus();
 								timeout(function(){
 									ActiveBottom = BottomArray[i];
-									$scope.bottomInPlay = BottomArray[i];
+									scope.toLeft = true;
+									$animate.enter(ActiveBottom, parentNode);
+									BottomArray[i].focus();
 								}).catch(function(err){
 									console.log(err);
 								})
@@ -374,10 +387,11 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 								if (i > BottomArray.length - 1){
 									i = 0;
 								}
-								BottomArray[i].focus();
 								timeout(function(){
 									ActiveBottom = BottomArray[i];
-									$scope.bottomInPlay = BottomArray[i];
+									scope.toRight = true;
+									$animate.move(ActiveBottom, parentNode);
+									BottomArray[i].focus();
 								}).catch(function(err){
 									console.log(err);
 								});
@@ -429,21 +443,6 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 				}());
 			},
 
-			leave: function(element, done){
-
-				var img = angular.element(element.children()[0]);
-				var price = angular.element(element.children()[1]);
-				var description = angular.element(element.children()[2]);
-
-				img.css({
-					opacity: 1
-				});
-
-				img.animate({
-					opacity: 0
-				}, 500);
-
-			}
 			move: function(element, done){
 
 				var img = angular.element(element.children()[0]);
