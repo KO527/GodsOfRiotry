@@ -1,8 +1,8 @@
 <span ng-switch = 'top.id'>
 	<% for gor_clothing in @possible_match_extra_tops %>
 		<span ng-switch-when = '{{top.id}}'>
-			<li id = 'currently_visible_extra_top' class='non_suggested_top_<%= gor_clothing.id%>' class = 'possible_pieces' focus-image>
-				<%= link_to(content_tag(:a, '', remote: true, controller: PossibleMatches, action: "show", id: @visible_gor_clothing.contemplated_piece, onclick = "return false;"), image_tag(ng-src = "{{topInPlay.image}}"), controller: Gor_Clothing, action: "detail", id: gor_clothing.id%>
+			<li id = 'currently_visible_extra_top' class='non_suggested_top_<%= gor_clothing.id%>' class = 'possible_pieces' focus-image ng-class = "{'toLeft': toLeft, 'toRight': toRight}">
+				<%= link_to(content_tag(:a, '', remote: true, controller: PossibleMatches, action: "show", id: @visible_gor_clothing.contemplated_piece, onclick = "return false;"), image_tag(ng-src = "{{topInPlay.image}}"), controller: Gor_Clothing, action: "detail", id: gor_clothing.id%> 
 				<details ng-bind-html = 'renderHtml(topInPlay.price)' class = 'piece_price'></details>
 				<details ng-bind-html = 'renderHtml(topInPlay.description)' class = 'piece_description'></details>
 			</li>
