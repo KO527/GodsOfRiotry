@@ -293,8 +293,7 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 					console.log('Read Differently');
 				}
 
-			$animate.enter()
-				//ng-animate ActiveTop and ActiveBottom
+			
 		return {
 			link: function(scope, element, attrs){
 				
@@ -303,9 +302,10 @@ $('#possible_matches').html("<%= escape_javascript(render('show_possibilities'),
 
 				parentNode = element.parent().parent().parent().parent();
 				
-				scope.toLeft = true;
-				scope.toRight = false;
-				
+				$timeout(function(){
+					$animate.enter(ActiveTop, parentNode);
+					$animate.enter(ActiveBottom, parentNode);
+				});
 
 				element.bind('keydown', function(event){
 					if (event.which == 40 && ActiveTop == document.activeElement){
