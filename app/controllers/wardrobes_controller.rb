@@ -38,11 +38,11 @@ class WardrobesController < VisibleGorClothingController
 				flash.now[:notice] = "You already have this match in the wardrobe."
 				format.html {render :show}
 			elsif PossibleMatch.exists?(:contemplated_piece_id => @visible_gor_clothing.contemplated_piece_id, :suggested_piece_id => @visible_gor_clothing.suggested_piece_id)
-				@new_patch = PossibleMatch.find(params(@visible_gor_clothing))
+				@new_patch = PossibleMatch.find(params[:visible_gor_clothing])
 				# format.html{ render :}
 				# format.js
 			else
-			 	PossibleMatch.fetch((:contemplated_piece_id => @visible_gor_clothing.contemplated_piece_id, :suggested_piece_id => @visible_gor_clothing.suggested_piece_id), :contemplated_piece_id => @visible_gor_clothing.contemplated_piece_id)
+			 	PossibleMatch.fetch((:contemplated_piece_id, :suggested_piece_id), :contemplated_piece_id)
 			end
 		end
 			
