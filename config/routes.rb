@@ -15,6 +15,12 @@
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
 
+  get '/soundcloud/connect' => 'soundcloud#connect'
+
+  get '/soundcloud/callback' => 'soundcloud#connected'
+
+  get '/logout', to: 'soundcloud#destroy', as: 'logout'
+
   # get '/sessions/:page' => "sessions#show"
   get '/edit', to: 'users#edit'
 
@@ -69,7 +75,6 @@
   		member do
   			get '/', to: :detail
   			resources :possible_matches do
-  				match :create, to: 'possible_matches#create', via: [:post], on: :collection
   				match :destroy, to: 'possible_matches#destroy', via: [:delete], on: :collection
   			end
   			resources :images, except: [:edit, :update] do
