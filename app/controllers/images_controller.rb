@@ -42,4 +42,5 @@ class ImagesController < ApplicationController
 		def Image_params
 			params.require(:Image).permit(:type_of_image, :picture)
 		end
+		
 end

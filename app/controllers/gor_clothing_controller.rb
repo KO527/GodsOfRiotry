@@ -62,15 +62,12 @@ class GorClothingController < ApplicationController
 
 		redirect_to admin_gor_clothing_index_path
 	end
-	
-	def detail
-		respond_with(@gor_clothing, :location => admin_gor_clothing_index_path)
-	end
+
 
 	private
 
 		def gor_clothing_params
-		    params.require(:Gor_Clothing).permit(:price, :description, :quantity, :gender, :size, images_attributes: [:picture, :type_of_image])
+		    params.require(:Gor_Clothing).permit(:price, :description, :quantity, :gender, :size, images_attributes: [:picture])
 		end	
 
 end

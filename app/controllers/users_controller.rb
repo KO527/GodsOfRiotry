@@ -72,7 +72,7 @@ class UsersController < ApplicationController
 		end
 
 		def artists_preferences_params
-			params.require(:user).permit(:artist1, :artist2, :artist3, :artist4, :artist5)
+			params.require(:user).permit(:preference_attributes => [:artists_attributes => [:artist, :artist, :artist, :artist, :artist]])
 		end
 
 
@@ -91,6 +91,6 @@ class UsersController < ApplicationController
 
 
 		def user_params
-			params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :uid, :provider_location, :provider_full_name, :provider_nickname, :access_token)
+			params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
 		end
 end

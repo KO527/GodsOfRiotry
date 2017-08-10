@@ -33,19 +33,28 @@ class WardrobesController < VisibleGorClothingController
 
 	def update
 		# Setup cookies for Wardrobe model
-		respond_to do |format|
 			if current_user.wardrobes.find(:all).include?(@visible_gor_clothing)			
 				flash.now[:notice] = "You already have this match in the wardrobe."
-				format.html {render :show}
+				respond_to do |format|
+					format.html {render :show}
+					format.js
+				end
 			elsif PossibleMatch.exists?(:contemplated_piece_id => @visible_gor_clothing.contemplated_piece_id, :suggested_piece_id => @visible_gor_clothing.suggested_piece_id)
 				@new_patch = PossibleMatch.find(params[:visible_gor_clothing])
-				# format.html{ render :}
-				# format.js
+				if @new_patch
+					#replace_html
+				respond_to do |format|
+				     format.html{ render :show}
+				     format.js
+				end
 			else
-			 	PossibleMatch.fetch((:contemplated_piece_id, :suggested_piece_id), :contemplated_piece_id)
-			end
-		end
-			
+			 	@new_patch = PossibleMatch.fetch((:contemplated_piece_id, :suggested_piece_id), :contemplated_piece_id)
+			 	if @new_patch
+			 		#replace_html
+				 	respond_to do |format|
+				 		format.html{ render :show}
+				 		format.js
+					end			
 	end
 
 	private
