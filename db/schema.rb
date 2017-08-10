@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170805220549) do
+ActiveRecord::Schema.define(version: 20170810184916) do
 
   create_table "acts", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -122,6 +122,12 @@ ActiveRecord::Schema.define(version: 20170805220549) do
 
   add_index "preferences", ["user_id"], name: "index_Preferences_on_user_id"
 
+  create_table "roles", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "songs", force: :cascade do |t|
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
@@ -151,7 +157,10 @@ ActiveRecord::Schema.define(version: 20170805220549) do
     t.boolean  "admin"
     t.string   "full_name"
     t.integer  "gender",          default: 0, null: false
+    t.integer  "role_id"
   end
+
+  add_index "users", ["role_id"], name: "index_users_on_role_id"
 
   create_table "wardrobes", force: :cascade do |t|
     t.datetime "created_at", null: false
