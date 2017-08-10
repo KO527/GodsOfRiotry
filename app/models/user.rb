@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
 	has_secure_password
 
 	validates :password, presence: true, length: {minimum: 6}, allow_nil: true
+	validates_presence_of [:preferences][:artist], on: :create
 
 	def User.digest(string)
 		cost = ActiveRecord::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
@@ -51,31 +52,20 @@ class User < ActiveRecord::Base
 		update_attribute(:remember_digest, nil)
 	end
 
-	# #put inside of soundcloud service
-	# def self.sign_in_from_omniauth(auth)
-	# 	find_by(provider: auth['provider'], uid: auth['uid']) || create_from_omniauth_hash(auth)
-	# end
-	
-	# def self.create_from_omniauth(auth)
-	# 	#create new user if self.soundcloud_user_playlist !== 
-	# 	# return "hello" unless auth_hash
-	# 	create!(
-	# 		provider: auth['provider'],
-	# 		uid: auth['uid'],
-	# 		provider_location: auth['provider_location'],
-	# 		provider_full_name: auth['provider_full_name'],
-	# 		provider_nickname: auth['provider_nickname'],
-	# 		access_token: auth['credentials']['token']
-	# 	)
-	# end
+	def self.create_from_soundcloud(access_token)
 
+	  create! do |user|
+	    user.soundcloud_user_id = soundcloud_user["id"]
+	    user.soundcloud_access_token = access_token["access_token"]
+	  end
+	end
 
+	def self.remove_soundcloud_credentials
 
-	# def self.create_from_soundcloud(access_token)
+		destroy! do |user|
+			user.soundcloud_user_id = nil
+			user.soundcloud_access_token = nil
+		end
+	end
 
-	# 	create! do |user|
-	# 		user.soundcloud_user_id = soundcloud_user["id"]
-	# 		user.soundcloud_access_token = access_token["access_token"]
-	# 	end
-	# end
 end

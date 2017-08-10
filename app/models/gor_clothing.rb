@@ -1,7 +1,6 @@
 class GorClothing < ActiveRecord::Base
 	enum purchase_status: [:on_shelf, :purchased]
 	enum status: [:unfavorited, :favorited]
-	enum gender: [:male, :female, :androgynous]
 	has_attached_file :image, :styles => {large: "90x90>", medium: "70x70>", thumb: "45x45#"}
 	validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
 	

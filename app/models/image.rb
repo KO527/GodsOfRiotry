@@ -29,7 +29,5 @@ class Image < ActiveRecord::Base
 		def check_for_existing_image_type
 			errors.add(:type_of_image, "A %{type_of_image} image is present already. Would you like to override?") if self.gor_clothing_id.include?(images.where(type_of_image: params[:type_of_image]))
 		end
-
-
 end
 
