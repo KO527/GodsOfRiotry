@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170618063347) do
+ActiveRecord::Schema.define(version: 20170805220549) do
 
   create_table "acts", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -141,23 +141,16 @@ ActiveRecord::Schema.define(version: 20170618063347) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "remember_digest"
     t.string   "password_digest"
     t.string   "email"
-    t.string   "provider"
     t.string   "uid"
-    t.string   "provider_name"
-    t.string   "provider_location"
-    t.integer  "provider_followers_count"
-    t.integer  "provider_playlist_count"
-    t.string   "provider_full_name"
-    t.string   "provider_nickname"
     t.string   "access_token"
     t.boolean  "admin"
     t.string   "full_name"
-    t.integer  "gender",                   default: 0, null: false
+    t.integer  "gender",          default: 0, null: false
   end
 
   create_table "wardrobes", force: :cascade do |t|

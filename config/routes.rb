@@ -19,7 +19,7 @@
 
   get '/soundcloud/callback' => 'soundcloud#connected'
 
-  get '/logout', to: 'soundcloud#destroy', as: 'logout'
+  get '/logout', to: 'soundcloud#destroy'
 
   # get '/sessions/:page' => "sessions#show"
   get '/edit', to: 'users#edit'
