@@ -8,10 +8,7 @@ class Preference < ActiveRecord::Base
 
 	validates :subscriber_id, presence: true
 	validates :fav_count, presence: true, numericality: {integer: true}, allow_nil: true
-	validates_numericality_of :artists, :only_integer => true, :greater_than_or_equal_to => 3
 	
-
-
 	accepts_nested_attributes_for :artists
 	accepts_nested_attributes_for :events
 

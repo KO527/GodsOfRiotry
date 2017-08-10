@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 
 	before_save {self.email = email.downcase}
 	
+	belongs_to :role
 	has_many :favorited_events, through: :preferences, class_name: "Event_ticket"
 	has_many :favorited_songs, through: :preferences, class_name: "Song"
 	has_many :favorited_outfits, through: :preferences, class_name: "Gor_clothing"
@@ -25,7 +26,6 @@ class User < ActiveRecord::Base
 	has_secure_password
 
 	validates :password, presence: true, length: {minimum: 6}, allow_nil: true
-	validates_presence_of [:preferences][:artist], on: :create
 
 	def User.digest(string)
 		cost = ActiveRecord::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
@@ -68,4 +68,17 @@ class User < ActiveRecord::Base
 		end
 	end
 
+	def validate_minimum_number_of_artists_have_not_been_reached
+		errors.add_to_base("You need to add at least these artists") unless self.preferences.artists >= 3
+	end
+	
+	def validate_maximum_number_of_artists_have_been_reached
+		errors.add_to_base("You only need to add five artists at the most") unless self.preferences.artists <= 5
+	end
+
+	private 
+	
+	def set_default_role
+		self.role ||= Role.find_by_name('registered')
+	end
 end
