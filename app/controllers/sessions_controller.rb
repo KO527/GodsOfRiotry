@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
 
 	def new
+		
 	end
 
 	def show
@@ -21,7 +22,6 @@ class SessionsController < ApplicationController
 
 	def omniauth_create
 		auth = request.env['omniauth.auth']
-		return "hello" unless auth
 		session[:omniauth] = auth.except('extra')
 		user = User.sign_in_from_omniauth(auth)
 		session[:user_id] = user.id
@@ -36,6 +36,7 @@ class SessionsController < ApplicationController
 	def destroy 
 		log_out if logged_in?
 		session[:omniauth] = nil
+		session[:user_id] = nil
  		redirect_to root_url, notice: 'SIGNED OUT'
 	end
 

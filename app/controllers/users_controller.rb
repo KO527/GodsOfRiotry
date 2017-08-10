@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
 	before_action :logged_in_user, only: [:show, :index, :edit, :update]	
 	before_action :correct_user, only: [:edit, :update]
-	before_action :admin_user, only: [:index] 
-	
+	before_action :is_admin?, only: [:index] 
+	before_action :validate_minimum_number_of_artists_have_not_been_reached, only: [:create]
+	before_action :validate_maximum_number_of_artists_have_been_reached, only: [:create]
 
 	def index
 		@users = User.paginate(page: params[:page])
@@ -23,7 +24,7 @@ class UsersController < ApplicationController
 		@user = User.new(user_params)
 		if @user.save
 			log_in @user
-			flash[:success] = "Welcome to GodsOfRiotry" + @user.first_name + "!"
+			flash[:success] = "Welcome to GodsOfRiotry " + @user.first_name + "!"
 			redirect_to @user
 		else
 			render 'new'
@@ -41,6 +42,10 @@ class UsersController < ApplicationController
 	end
 
 	private
+
+		def is_admin?
+			self.role == 'admin'
+		end
 
 		def next_piece_of_info
 			respond_to do |format|
