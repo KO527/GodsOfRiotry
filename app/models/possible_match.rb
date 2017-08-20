@@ -7,7 +7,7 @@ class PossibleMatch < ActiveRecord::Base
 	has_one :image
 	validates_associated :image
 
-	validates_uniqueness_of :image, conditions: -> {where (type_of_image: 'show_picture')
+	validates_uniqueness_of :image, conditions: -> {where(type_of_image: 'show_picture')}
 	# accepts_nested_parameters_for :image, reject_if: proc {|attributes| attributes[:type_of_image] != :show_picture !! :front_shot}
 	private
 
@@ -27,7 +27,6 @@ class PossibleMatch < ActiveRecord::Base
 		def previous_suggested_female
 		 	Gor_Clothing.where("gor_clothings.id <= ? AND gor_clothing.gender = ?", gor_clothing.last.id, female).order("gor_clothings.id DESC")
 		end
-	end
 	
 end
 
