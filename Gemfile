@@ -74,7 +74,7 @@ gem 'rails_12factor', group: :production
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+  gem 'byebug', '~> 9.0.6'
 
   gem 'minitest-reporters'
 
