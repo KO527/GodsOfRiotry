@@ -27,7 +27,7 @@ class GorClothing < ActiveRecord::Base
 			  	       foreign_key: :contemplated_piece_id,
 			  	       dependent: :destroy
 
-	has_many :suggested_pieces, through: :static_pieces
+	has_many :suggested_pieces, through: :static_pieces, source: :suggested_piece
 	has_one :contemplated_piece, through: :toggled_pieces
 
 	has_many :images
