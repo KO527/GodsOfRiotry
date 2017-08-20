@@ -13,6 +13,8 @@ class EventTicketsController < ApplicationController
 		@PopularFests = Event_tickets.ParsePopularFests
 	end
 
+	private 
+
 	def artist_events
 		@Event_tickets = Event_tickets.EventsByArtist.find(params[:performer_name])
 	end
@@ -21,14 +23,4 @@ class EventTicketsController < ApplicationController
 		@Event_tickets = Event_tickets.for(params[:search])
 	end
 
-	private 
-
-
-		def performer_name
-			@performer_name
-		end
-
-		def search
-			@search
-		end
 end

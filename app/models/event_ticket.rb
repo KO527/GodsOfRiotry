@@ -4,6 +4,7 @@ class EventTicket < ActiveRecord::Base
  	has_and_belongs_to_many :acts
  	has_and_belongs_to_many :teams
  	belongs_to :subscriber_id, class_name: "User"
+ 	has_many :performers
 
  	validates :fav_count, presence: true, numericality: {only_integer: true}, allow_nil: true
  	validates :venue, presence: true, length: {maximum: 255}
