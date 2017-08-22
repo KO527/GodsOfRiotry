@@ -20,5 +20,4 @@
  *= require angular-animate
  *= require angular-route
  *= require js-routes
- *= require modernizr
  */
