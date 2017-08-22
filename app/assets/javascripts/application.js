@@ -17,8 +17,8 @@
  *= require jquery 
  *= require jquery_ujs
  *= require_self
- *= require ./admin/admin
  *= require angular-animate
  *= require angular-route
  *= require js-routes
+ *= require modernizr
  */
