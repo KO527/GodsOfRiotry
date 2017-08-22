@@ -264,6 +264,7 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
+    modernizr-rails (2.7.1)
     multi_json (1.12.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -431,6 +432,7 @@ DEPENDENCIES
   jshint
   mini_magick (~> 4.5.1)
   minitest-reporters
+  modernizr-rails
   omniauth-facebook (~> 2.0.0.pre1)
   omniauth-oauth2 (~> 1.1.0)
   omniauth-soundcloud (~> 1.0.0)

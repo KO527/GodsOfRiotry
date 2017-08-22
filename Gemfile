@@ -68,6 +68,8 @@ gem 'paloma', '~> 5.0.0'
 
 gem 'gon'
 
+gem 'modernizr-rails'
+
 gem 'rails_12factor', group: :production
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
