@@ -9,7 +9,7 @@ gem 'rails', '4.2.2'
 # gem 'sass-rails', '~> 5.0'
 gem 'js-routes'
 
-gem 'pg'
+gem 'pg', '~> 0.20.0'
 
 gem 'figaro'
 # Use Uglifier as compressor for JavaScript assets
@@ -67,6 +67,8 @@ gem 'rails_admin'
 gem 'paloma', '~> 5.0.0'
 
 gem 'gon'
+
+gem 'puma', '~> 3.8.2'
 
 gem 'modernizr-rails'
 
