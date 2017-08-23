@@ -13,7 +13,8 @@
  * style scope.
  *= require angular
  *= require angular-ui-router
- *= require bootstrap
+ *= require bootstrap-sprockets
+ *= require_tree .
  *= require jquery 
  *= require jquery_ujs
  *= require_self
