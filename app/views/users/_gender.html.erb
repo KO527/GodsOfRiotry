@@ -1,0 +1,12 @@
+<% form_for(@user) do |f| %>
+	<%= render 'shared/messages' %>
+
+	<div class = 'buttons'>
+		<%= f.radio_button :gender, 'male', :checked => true %>
+		<%= f.label :gender, 'Male' %>
+		<%= f.radio_button :gender, 'female', :checked => true %>
+		<%= f.label :gender, Female %>
+	</div>
+
+	<%= f.submit 'Enter' %>
+<%end%>

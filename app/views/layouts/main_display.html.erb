@@ -1,10 +1,76 @@
 <% content_for :main do %>
 	<div class = 'main'>
-		<section class = "Intro">
+		<header>
+			<nav class="main-nav">
+				<ul>
+					<!-- inser more links here -->
+					<li><a class="cd-signin" href="#0">Sign in</a></li>
+					<li><a class="cd-signup" href="#0">Sign up</a></li>
+				</ul>
+			</nav>
+		</header>
+		<section class = 'Intro cd-user-modal'> <!-- this is the entire modal form, including the background -->
+			<div class = "cd-user-modal-container"> <!-- this is the container wrapper -->
+				<ul class="cd-switcher">
+					<li><a href="#0">Sign in</a></li>
+					<li><a href="#0">New account</a></li>
+				</ul>
+				<div id="cd-login"> <!-- log in form -->
+					<%= form_for(@user) class: "cd-form" %>
+						<p class="fieldset">
+							<%= f.label :email, class: "image-replace cd-email" %>
+							<%= f.text_field :email, class: "full-width has-padding has-border", id: "signin-email",placeholder: "E-mail" %>
+							<span class="cd-error-message">Error message here!</span>
+						</p>
+
+						<p class="fieldset">
+							<%= f.label :password, class="image-replace cd-password", for: "signin-password" %>
+							<%= f.text_field :password, class: "full-width has-padding has-border", id: "signin-password", placeholder: "Password" %>
+							<a href="#0" class="hide-password">Hide</a>
+							<span class="cd-error-message">Error message here!</span>
+						</p>
+
+						<p class = 'fieldset'>
+							<%= f.label :remember_me, id: 'remember-me' do %>
+								<%= f.check_box :remember_me %>
+								<span>Remember me on this computer</span>
+							<%end%>
+						</p>
+
+						<p class="fieldset">
+							<%= f.submit class: "full-width", value: "Login" %>
+						</p>
+					<% end %>
+					
+					<p class="cd-form-bottom-message"><a href="#0">Forgot your password?</a></p>
+					<a href="#0" class="cd-close-form">Close</a>
+				</div>
+
+				<div id="cd-reset-password"> <!-- reset password form -->
+					<p class="cd-form-message">Lost your password? Please enter your email address. You will receive a link to create a new password.</p>
+
+					<% form_for(@user) class: "cd-form" do |f| %>
+						<p class="fieldset">
+							<%= f.label :email, class: "image-replace cd-email" %>
+							<%= f.text_field :email, class: "full-width has-padding has-border", id:"reset-email", placeholder: "E-mail" %>
+							<span class="cd-error-message">Error message here!</span>
+						</p>
+
+						<p class="fieldset">
+							<%= button_tag(type: 'submit', class: 'full-width has-padding') do %>
+								<i>Reset Password</i>
+							<%end%>
+						</p>
+					<%end%>
+
+					<p class="cd-form-bottom-message"><a href="#0">Back to log-in</a></p>
+				</div>
+				<a href="#0" class="cd-close-form">Close</a>
+			</div>
 		</section>
 		<section class = "Songs">
 		</section>
-		<section class = "GetReady">
+		<section class = "GetReady"> addClass Darken to this section when the user scrolls down to this level in DOM
 		<div class = "darken"></div>
 		<% flash.each do |name, msg| -%>
 			<%= content_tag :span, msg, class: name %>
