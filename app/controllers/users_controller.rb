@@ -43,10 +43,6 @@ class UsersController < ApplicationController
 
 	private
 
-		def is_admin?
-			self.role == 'admin'
-		end
-
 		def next_piece_of_info
 			respond_to do |format|
 				unless logged_in?
@@ -62,7 +58,7 @@ class UsersController < ApplicationController
 						render partial: 'soundcloud_connect'
 						format.js
 					else
-						return;
+						return
 					end
 				end
 			end
