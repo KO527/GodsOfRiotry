@@ -1,4 +1,4 @@
-class PossibleMatchesController < VisbleGorClothingController
+class PossibleMatchesController < VisibleGorClothingController
 	before_action :admin, only: [:new, :create, :edit, :destroy]
 	respond_to :js, :html
 
