@@ -1,6 +1,6 @@
 class SongsController < ApplicationController
 
-	before_action :admin_user	only: [:show]
+	before_action :is_admin?, only: [:show]
 
 	
 	def favorite
