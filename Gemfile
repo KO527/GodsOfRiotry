@@ -68,6 +68,8 @@ gem 'paloma', '~> 5.0.0'
 
 gem 'gon'
 
+gem 'pry'
+
 gem 'puma', '~> 3.8.2'
 
 gem 'modernizr-rails'
