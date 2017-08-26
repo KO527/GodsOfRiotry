@@ -39,25 +39,30 @@ class WardrobesController < VisibleGorClothingController
 					format.html {render :show}
 					format.js
 				end
-			elsif PossibleMatch.exists?(:contemplated_piece_id => @visible_gor_clothing.contemplated_piece_id, :suggested_piece_id => @visible_gor_clothing.suggested_piece_id)
+			elsif both_pieces_present?
 				@new_patch = PossibleMatch.find(params[:visible_gor_clothing])
-				if @new_patch
-					#replace_html
 				respond_to do |format|
 				     format.html{ render :show}
 				     format.js
 				end
 			else
-			 	@new_patch = PossibleMatch.fetch((:contemplated_piece_id, :suggested_piece_id), :contemplated_piece_id)
-			 	if @new_patch
-			 		#replace_html
-				 	respond_to do |format|
-				 		format.html{ render :show}
-				 		format.js
-					end			
+			 	@new_patch = PossibleMatch.fetch(both_pieces, :contemplated_piece_id)			 	
+			 	respond_to do |format|
+			 		format.html{ render :show}
+			 		format.js
+				end
+			end		
 	end
 
 	private
+		def both_pieces_present?
+			PossibleMatch.exists?(:contemplated_piece_id => @visible_gor_clothing.contemplated_piece_id, :suggested_piece_id => @visible_gor_clothing.suggested_piece_id)
+		end
+
+		def both_pieces
+			if both_pieces_present?
+			Struct.new(:contemplated_piece_id, :suggested_piece_id)
+		end
 
 		def wardrobe_params
 			params.require(:wardrobe).permit(possible_match_attributes: [:contemplated_piece_id, :suggested_piece_id, images_attributes: [:picture, :_destroy]])
