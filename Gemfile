@@ -68,7 +68,7 @@ gem 'paloma', '~> 5.0.0'
 
 gem 'gon'
 
-gem 'pry'
+gem 'pry', '~> 0.10.4'
 
 gem 'puma', '~> 3.8.2'
 
