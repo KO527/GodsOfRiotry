@@ -61,7 +61,8 @@ class WardrobesController < VisibleGorClothingController
 
 		def both_pieces
 			if both_pieces_present?
-			Struct.new(:contemplated_piece_id, :suggested_piece_id)
+				Struct.new(:contemplated_piece_id, :suggested_piece_id)
+			end
 		end
 
 		def wardrobe_params
