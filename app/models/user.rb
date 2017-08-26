@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 
 	before_save {self.email = email.downcase}
 
-	enum role: [:registered, :admin]
+	enum role: [:observer, :registered, :admin]
 	
 	has_many :favorited_events, through: :preferences, class_name: "Event_ticket"
 	has_many :favorited_songs, through: :preferences, class_name: "Song"
@@ -79,9 +79,13 @@ class User < ActiveRecord::Base
 		errors.add_to_base("You only need to add five artists at the most") unless self.preferences.artists <= 5
 	end
 
+	def is_admin?
+		self.role == 'admin'
+	end
+
 	private
 
 	def set_default_role
-		self.role ||= User.find_by_role('registered')
+		self.role ||= User.find_by_role('observer')
 	end
 end
