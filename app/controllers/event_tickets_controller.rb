@@ -1,6 +1,6 @@
 class EventTicketsController < ApplicationController
-	# require 'Time'
-	require '../models/event_tickets_api'
+	require 'time'
+	require 'event_tickets_api'
 	
 	respond_to :html, :js
 
