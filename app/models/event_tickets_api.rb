@@ -4,7 +4,7 @@ require 'httparty'
 require 'pry'
 require 'time'
 require 'json'
-require 'URI'
+require 'uri'
 
 class Event_tickets
 
