@@ -7,6 +7,6 @@ class Wardrobe < ActiveRecord::Base
 
 
 	# accepts_nested_attributes_for :gor_clothing, allow_destroy: true, limit: 12, reject_if: proc {|attributes| attributes[:image][:type_of_image] != :show_picture || attributes[:image][:picture].blank?}, on: :update
-	has_many :images
-	validates_associated :image, conditions: -> {where (type_of_image: 'show_picture')}
+	has_many :images, through: :possible_matches
+	validates_associated :possible_match, :if => Proc.new{ |w| w.possible_match.image.type_of_image == 'show_picture'})
 end	
