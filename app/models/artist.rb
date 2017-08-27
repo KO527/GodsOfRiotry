@@ -1,6 +1,7 @@
 class Artist < ActiveRecord::Base
 	before_save :default_values
 
+	self.primary_key = 'name'
 	enum status: [:favorited, :unfavorited]
 	has_many :songs
 	belongs_to :playlist
