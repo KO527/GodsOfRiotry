@@ -16,7 +16,7 @@
 					<li><a href="#0">New account</a></li>
 				</ul>
 				<div id="cd-login"> <!-- log in form -->
-					<%= form_for(@user) :html => {:class => "cd-form"} do |f| %>
+					<%= form_for(@user), :html => {:class => "cd-form"} do |f| %>
 						<p class="fieldset">
 							<%= f.label :email, class: "image-replace cd-email" %>
 							<%= f.text_field :email, class: "full-width has-padding has-border", id: "signin-email",placeholder: "E-mail" %>
@@ -49,7 +49,7 @@
 				<div id="cd-reset-password"> <!-- reset password form -->
 					<p class="cd-form-message">Lost your password? Please enter your email address. You will receive a link to create a new password.</p>
 
-					<% form_for(@user) :html => {:class => "cd-form"} do |f| %>
+					<% form_for(@user), :html => {:class => "cd-form"} do |f| %>
 						<p class="fieldset">
 							<%= f.label :email, class: "image-replace cd-email" %>
 							<%= f.text_field :email, class: "full-width has-padding has-border", id:"reset-email", placeholder: "E-mail" %>
