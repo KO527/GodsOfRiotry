@@ -40,6 +40,10 @@ class SessionsController < ApplicationController
  		redirect_to root_url, notice: 'SIGNED OUT'
 	end
 
+	
+	def is_admin?
+		current_user.role == 'admin'
+	end
 	# protected 
 
 	# 	def auth_hash
