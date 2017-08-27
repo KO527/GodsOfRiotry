@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170825104757) do
+ActiveRecord::Schema.define(version: 20170827053551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 20170825104757) do
     t.datetime "updated_at", null: false
     t.integer  "fav_count"
     t.integer  "user_id"
+    t.string   "artists_id"
   end
 
   add_index "preferences", ["user_id"], name: "index_preferences_on_user_id", using: :btree
@@ -95,18 +96,16 @@ ActiveRecord::Schema.define(version: 20170825104757) do
   create_table "songs", force: :cascade do |t|
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.string   "song_name"
-    t.string   "artist_name"
     t.integer  "fav_count"
     t.integer  "playlist_id"
     t.integer  "preference_id"
     t.integer  "artist_id"
+    t.string   "name"
   end
 
   add_index "songs", ["artist_id"], name: "index_songs_on_artist_id", using: :btree
   add_index "songs", ["playlist_id"], name: "index_songs_on_playlist_id", using: :btree
   add_index "songs", ["preference_id"], name: "index_songs_on_preference_id", using: :btree
-  add_index "songs", ["song_name", "artist_name"], name: "index_songs_on_song_name_and_artist_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at",                  null: false
