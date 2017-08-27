@@ -16,7 +16,7 @@
 					<li><a href="#0">New account</a></li>
 				</ul>
 				<div id="cd-login"> <!-- log in form -->
-					<%= form_for @user, :html => {:class => "cd-form"} do |f| %>
+					<%= form_for @user, :html => {class: "cd-form"} do |f| %>
 						<p class="fieldset">
 							<%= f.label :email, class: "image-replace cd-email" %>
 							<%= f.text_field :email, class: "full-width has-padding has-border", id: "signin-email",placeholder: "E-mail" %>
