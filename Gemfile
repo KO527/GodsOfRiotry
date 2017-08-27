@@ -58,7 +58,7 @@ gem 'certified', '~> 1.0.0'
 # gem 'unicorn'
 gem 'web-console', group: :development
 
-gem 'devise'
+# gem 'devise'
 
 gem 'rack-utf8_sanitizer'
 
