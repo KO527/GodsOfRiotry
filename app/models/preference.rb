@@ -1,7 +1,7 @@
 class Preference < ActiveRecord::Base
 
 	belongs_to :subscriber_id, class_name: "User", counter_cache: true
-	has_many :favorited_artists, -> {where status: favorited}, class_name: "Artist", dependent: :destroy
+	has_many :favorited_artists, -> {where status: favorited}, class_name: "Artists", dependent: :destroy
 	has_many :favorited_songs, -> {where status: favorited}, class_name: "Song", dependent: :destroy
 	has_many :favorited_events, -> {where status: favorited}, class_name: "Event_ticket",  dependent: :destroy
 	has_many :favorited_outfits, -> {where status: favorited}, class_name: "Gor_Clothing", dependent: :destroy
