@@ -14,14 +14,14 @@ class UsersController < ApplicationController
 	end
 
 	def new
-		@user = User.new
+		next_piece_of_info
 	end
 
 	def edit
 	end
 
 	def create
-		@user = User.new(user_params)
+		@user = User.new(basic_info_params, artists_preferences, gender_params)
 		if @user.save
 			log_in @user
 			flash[:success] = "Welcome to GodsOfRiotry " + @user.first_name + "!"
@@ -54,9 +54,9 @@ class UsersController < ApplicationController
 					elsif gender_params.valid?
 						render partial: 'artists_preferences'
 						format.js
-					elsif artists_preferences.valid?
-						render partial: 'soundcloud_connect'
-						format.js
+					# elsif artists_preferences.valid?
+					# 	render partial: 'soundcloud_connect'
+					# 	format.js
 					else
 						return
 					end
@@ -76,6 +76,11 @@ class UsersController < ApplicationController
 			params.require(:user).permit(:preference_attributes => [:artists_attributes => [:artist, :artist, :artist, :artist, :artist]])
 		end
 
+		def user_params
+			gender_params
+			basic_info_params
+			artists_preferences_params
+		end
 
 		def logged_in_user
 		    unless logged_in?
@@ -90,8 +95,4 @@ class UsersController < ApplicationController
 			redirect_to(root_url) unless current_user?(@user)
 		end
 
-
-		def user_params
-			params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
-		end
 end
