@@ -13,11 +13,10 @@
 		<section class = "Songs">
 		</section>
 		<section class = "<%= if content_for?(:wardrobe) && content_for?(:possible_matches) return 'two_column' else render status: 503 %>">
-		<%= yield(:wardrobe) %> <!-- add 'shared/_error_messages' -->
-		<%= yield(:possible_matches) %> <!-- add 'shared/_error_messages' -->
+		<%= yield(:wardrobe) %>
+		<%= yield(:possible_matches) %>
 		</section>
 		<section class = "FunTimes">
-		<!-- add 'shared/_error_messages' -->
 		<%= yield(:event_tickets) %>
 		</section>
 	</div>
