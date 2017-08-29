@@ -12,7 +12,7 @@
 		</section>
 		<section class = "Songs">
 		</section>
-		<section class = "<% if <%= content_for?(:wardrobe) && content_for?(:possible_matches) return 'two_column' %> else render status: 503 %>">
+		<section class = 'two_column'>
 		<%= yield(:wardrobe) %>
 		<%= yield(:possible_matches) %>
 		</section>
