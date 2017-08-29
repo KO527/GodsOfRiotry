@@ -452,7 +452,7 @@ DEPENDENCIES
   rails_admin
   rake (~> 12.0.0)
   responders (~> 2.0)
-  sass-rails (>= 3.2)
+  sass (~> 3.4.0)
   scrollmagicjs-rails (~> 0.0.1)
   sdoc (~> 0.4.0)
   spring
