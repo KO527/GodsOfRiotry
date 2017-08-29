@@ -3,8 +3,8 @@
 		<header>
 			<nav class="main-nav">
 				<ul>
-					<li><%= link_to 'Sign In', class: "cd-signin", login_path %></li>
-					<li><%= link_to 'Sign Up', class: "cd-signup", new_user_path %></li>
+					<li><%= link_to 'Sign In', login_path, class: "cd-signin" %></li>
+					<li><%= link_to 'Sign Up', new_user_path, class: "cd-signup" %></li>
 				</ul>
 			</nav>
 		</header>
@@ -12,7 +12,7 @@
 		</section>
 		<section class = "Songs">
 		</section>
-		<section class = "<%= if content_for?(:wardrobe) && content_for?(:possible_matches) return 'two_column' else render status: 503 %>">
+		<section class = "<% if <%= content_for?(:wardrobe) && content_for?(:possible_matches) return 'two_column' %> else render status: 503 %>">
 		<%= yield(:wardrobe) %>
 		<%= yield(:possible_matches) %>
 		</section>
