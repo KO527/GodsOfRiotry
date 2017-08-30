@@ -76,7 +76,7 @@ gem 'bootstrap-sass', '~> 3.3.6'
 
 gem 'sass', '~> 3.4.0'
 
-gem 'sass-rails', '~> 4.0.2'
+gem 'sass-rails', '4.0.2'
 
 gem 'rails_12factor', group: :production
 # Use Capistrano for deployment
