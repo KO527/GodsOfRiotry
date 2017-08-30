@@ -72,11 +72,11 @@ gem 'puma', '~> 3.8.2'
 
 gem 'modernizr-rails'
 
-gem 'bootstrap-sass', '~> 3.3.6'
+gem 'bootstrap-sass', '~> 3.3', '>= 3.3.4.1'
 
 gem 'sass', '~> 3.4.0'
 
-gem 'sass-rails', '4.0.2'
+gem 'sass-rails', '~> 6.0.0.beta1'
 
 gem 'rails_12factor', group: :production
 # Use Capistrano for deployment
