@@ -5,13 +5,13 @@
 #   gem 'sqlite3'
 #
 default: &default
-  adapter: postgresql
+  adapter: sqlite3
   encoding: unicode
   pool: 5
 
 development:
   <<: *default
-  database: postgres
+  database: db/development.sqlite3
   host: localhost
   username: KO527
 
@@ -26,4 +26,5 @@ test:
 
 production:
   <<: *default
-  database: postgres
+  database: db/development.sqlite3
+
